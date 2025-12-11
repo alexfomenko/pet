@@ -1,0 +1,21 @@
+{
+  "name": "pet",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "start": "node gpt/server1_gpt.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.0"
+  },
+  "description": ""
+}

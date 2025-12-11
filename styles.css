@@ -1,0 +1,195 @@
+/*.reviews-container {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+
+/*}*/
+
+/*.review-header {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+
+/*}*/
+
+/*.review-item {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
+
+/*.column {*/
+/*    flex: 1;*/
+/*}*/
+
+.layout {
+    display: flex;
+    gap: 20px;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column; /* кнопка справа */
+    align-items: stretch;
+    width: 100%;
+
+}
+
+
+.show-form-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-right: 20px;
+}
+
+.show-form-btn:hover {
+    background: #0056b3;
+}
+
+.table-form-container-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
+.reviews-container {
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px;
+}
+
+/* Стили для строк с заголовками */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Стили для элементов отзывов */
+.review-item {
+    /*display: flex;*/
+    /*padding: 10px;*/
+    /*border-bottom: 1px solid #ddd;*/
+    /*background-color: #fff;*/
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Стили для отдельных колонок (ячеек) */
+.column {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #c00;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.company { flex: 2; }  /* 20% ширины */
+.rating  { flex: 1; }  /* 10% */
+.review  { flex: 5; }  /* 50% */
+.date    { flex: 1; }  /* 20% */
+
+.review-item:hover {
+    background-color: #f9f9f9;
+}
+
+
+/* form */
+
+.review-form {
+    flex: 1;
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    max-width: 600px;
+}
+
+.review-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.review-form input,
+.review-form textarea {
+    display: block;
+    width: 90%;
+    margin-bottom: 15px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.review-form #results {
+    list-style-type: none;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.page-btn {
+    padding: 6px 12px;
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.page-btn:hover {
+    background-color: #e4e4e4;
+}
+
+.page-btn.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    cursor: default;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+
+/*.review-form select {*/
+/*    border: none;*/
+/*    border-left: 1px solid #ccc;*/
+/*    background: #f2f2f2;*/
+/*    padding: 8px;*/
+/*    font-size: 14px;*/
+/*    cursor: pointer;*/
+/*    outline: none;*/
+/*}*/
+
+/*.hidden {*/
+/*  display: none;*/
+/*}*/

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="layout">
+<div class="wrap">
+    <h1> All reviews </h1>
+
+    <!-- filter and sort bars -->
+    <div class="review-table-header">
+        <select id="filterBar">
+            <option value="">All companies</option>
+        </select>
+
+        <!--    filterBar - company filtering-->  <!-- sortBar - reviews sorting -->
+        <select id="sortBar">
+            <option value="">Sort by </option>
+            <option value="date_new_to_old">Data - new > old </option>
+            <option value="date_old_to_new">Data - old > new </option>
+            <option value="rating_low_to_high">Rating - low > high </option>
+            <option value="rating_high_to_low">Rating - high > low </option>
+        </select>
+    </div>
+
+
+
+    <button class="show-form-btn" id="showFormButton"> Add review </button>
+
+<!--    main table container-->
+    <div class="table-form-container-wrap">
+
+    <div class="reviews-container" id="reviewsContainer">
+    <!-- Заголовки таблицы -->
+    <div class="review-header">
+        <div class="column company">Компания</div>
+        <div class="column rating ">Рейтинг</div>
+        <div class="column review">Отзыв</div>
+        <div class="column date">Дата</div>
+    </div>
+
+    <!-- Данные отзывов -->
+    <div class="review-item">
+        <div class="column company">Tech Solutions</div>
+        <div class="column rating">★★★☆☆</div>
+        <div class="column review">Компания с хорошим потенциалом для роста</div>
+        <div class="column date">22 апр 2024</div>
+    </div>
+
+    <div class="review-item">
+        <div class="column company">Innovative IT</div>
+        <div class="column rating">★★★★☆</div>
+        <div class="column review">Отличное руководство и возможности для карьеры</div>
+        <div class="column date">19 июн 2024</div>
+    </div>
+
+    <div class="review-item">
+        <div class="column company">Global Tech</div>
+        <div class="column rating">★★☆☆☆</div>
+        <div class="column review">Среднее место для работы, но с большим рабочим стрессом</div>
+        <div class="column date">15 июл 2024</div>
+    </div>
+</div>
+
+
+    <!-- Форма отзыва -->
+    <div class="review-form hidden" id="reviewForm">
+        <h3>Add review</h3>
+
+        <label for="company">Company:</label>
+        <input type="text" id="company" placeholder="Company">
+        <ul id="results"></ul>
+
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" placeholder="1-5" min="1" max="5">
+
+        <label for="review">Review</label>
+        <textarea id="review" placeholder="Your review"></textarea>
+
+        <button class="send" id="sendReviewButton">Send</button>
+
+    </div>
+
+<!--        <form class="review-form hidden" id="reviewForm">-->
+<!--            <h3>Add review</h3>-->
+
+<!--            <label for="company">Company:</label>-->
+<!--            <input type="text" id="company" name="company" placeholder="Company">-->
+
+<!--            <label for="rating">Rating:</label>-->
+<!--            <input type="number" id="rating" name="rating" placeholder="1-5" min="1" max="5">-->
+
+<!--            <label for="review">Review</label>-->
+<!--            <textarea id="review" name="review" placeholder="Your review"></textarea>-->
+
+<!--            <button class="send" id="sendReviewButton" type="submit">Send</button>-->
+<!--        </form>-->
+
+    </div>
+
+    <div class="review-table-footer">
+        <div class="pagination" id="paginationEl"></div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+<script type="module" src="script.js">
+</script>
+</body>
+</html>
+

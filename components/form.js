@@ -1,0 +1,168 @@
+import {sendPostRequest} from '../api/api.js';
+import {createNewRow} from "./newReviewItem.js";
+import {createReviewColumn} from "../utils/utils.js";
+import {createButton} from "./button.js";
+
+let showFormButton = document.getElementById('showFormButton');
+let reviewForm = document.getElementById('reviewForm');
+let sendReviewButton = document.getElementById('sendReviewButton');
+let reviewContainer = document.getElementById('reviewsContainer');
+console.log('FORM:', document.getElementById('reviewForm'));
+
+// SHOW FORM
+
+showFormButton.addEventListener('click', () => {
+    // reviewForm.classList.toggle('.hidden');
+    // console.log("Hello")
+    reviewForm.style.display = reviewForm.style.display === 'block' ? 'none' : 'block';
+})
+
+// POST REQUEST - SUBMIT REVIEW
+
+//sending data to the server
+// async function sendPostRequest(data) {
+//     try {
+//         let sendRequest = await fetch('/submit-review', {
+//             method: 'POST',
+//             headers: {'Content-Type': 'application/json'},
+//             body: JSON.stringify(data),
+//         });
+//         let json = await sendRequest.json();
+//         return {ok: sendRequest.ok, status: sendRequest.status, json};
+//     }
+//     catch (error) {
+//         throw new Error('Failed to send the data');
+//     }
+// }
+
+//
+sendReviewButton.addEventListener('click', async (e) => {
+    // e.preventDefault(); is required only for submit
+
+    //saving data from the form
+    let reviewsContainer = document.getElementById('reviewsContainer');
+
+    let companyValue = document.getElementById('company').value.trim();
+    let ratingValue = document.getElementById('rating').value.trim();
+    let reviewValue = document.getElementById('review').value.trim();
+
+    //creating delete button
+    let deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-btn');
+    deleteButton.title = 'Delete review';
+    deleteButton.textContent = '🗑️';
+
+    // checking all the fields were filled out
+    if (!companyValue || !ratingValue || !reviewValue) {
+        alert("Please fill out all the fields")
+        return;
+    }
+
+    // getting the current date and converting it
+    let currentDate = new Date().toISOString();
+    // let date = today.toLocaleDateString('ru-RU', {day: 'numeric', month: 'short', year: 'numeric'});
+
+    // unifying data
+    let data = {
+        company: companyValue,
+        rating: ratingValue,
+        review: reviewValue,
+        date: currentDate,
+    };
+
+    //adding review to the page if the request was successful
+
+    let requestResult = await sendPostRequest(data);
+    let reviewId = requestResult.json.id;
+    console.log(reviewId)
+    // if(requestResult.status === 201) {    or   // if(requestResult.success === 201) {
+
+    if (requestResult.ok) {
+//         // creating a new row
+//         let newReviewItem = document.createElement('div');
+//         newReviewItem.classList.add("review-item");
+//         // newReviewItem.appendChild(deleteButton);
+//
+//         //adding review data to the table
+//         newReviewItem.dataset.id = reviewId;
+// //         newReviewItem.innerHTML = `
+// //              <div class="column company"> ${companyValue} </div>
+// //              <div class="column rating"> ${ratingValue} </div>
+// //              <div class="column review"> ${reviewValue} </div>
+// //              <div class="column date"> ${date} </div>
+// //              <button class ="edit-btn" title = "Update review"> ✏️</button>
+// //              <button class = 'delete-btn' title="Delete review">🗑️</button>
+// // `
+//         newReviewItem.appendChild(createReviewColumn(companyValue, 'column', 'company'));
+//         newReviewItem.appendChild(createReviewColumn(ratingValue, 'column', 'rating'));
+//         newReviewItem.appendChild(createReviewColumn(reviewValue, 'column', 'review'));
+//         newReviewItem.appendChild(createReviewColumn(date, 'column', 'date'));
+//
+//         newReviewItem.appendChild(createButton('edit-btn', 'Update review', '✏️'));
+//         newReviewItem.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
+
+        let newReviewItem = createNewRow(reviewId, companyValue, ratingValue, reviewValue, date);
+
+        reviewsContainer.appendChild(newReviewItem);
+
+        //clean the form
+        document.getElementById('company').value = '';
+        document.getElementById('rating').value = '';
+        document.getElementById('review').value = '';
+
+        //hide the form
+        document.getElementById('reviewForm').style.display = 'none';
+    }
+})
+
+
+let companies = ["Huytam", "Huyvam", "Huytebe", "Kedi"];
+let searchInput = document.getElementById("company");
+let results = document.getElementById("results");
+
+searchInput.addEventListener('click', (event) => {
+    showCompanies(companies);
+})
+
+function showCompanies(list) {
+    results.style.display = "block";
+    results.innerHTML = "";
+
+    list.forEach((country) => {
+        let li = document.createElement('li');
+        li.textContent = country;
+        results.appendChild(li);
+
+        li.addEventListener('click', (event) => {
+            searchInput.value = li.textContent;
+            results.style.display = "none";
+        })
+    })
+}
+
+searchInput.addEventListener('input', (e) => {
+    results.style.display = "block";
+    results.innerHTML = "";
+
+    let userCompanySearch = searchInput.value.toLowerCase();
+    if(userCompanySearch) {
+        let matchingCountries = companies.filter((country) => {
+            return country.toLowerCase().includes(userCompanySearch);
+        })
+
+        showCompanies(matchingCountries);
+
+        // matchingCountries.forEach((country) => {
+        //     let li = document.createElement('li');
+        //     li.textContent = country;
+        //     results.appendChild(li);
+        //
+        //     li.addEventListener('click', (event) => {
+        //         searchInput.value = li.textContent;
+        //         results.style.display = "none";
+        //
+        //     })
+        // })
+    }
+})
+
