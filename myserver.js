@@ -339,7 +339,7 @@ const server = http.createServer(async(req, res) => {
                 // comparing password and confirmPassword values match
                 if(password !== confirmPassword) return sendResponse(res, 400, "Passwords don't match");
                 // checking password length
-                if(password.length < 2) return sendResponse(res, 400, "Password length should be more than 2 letters");
+                if(password.length < 3) return sendResponse(res, 400, "Password length should be more than 3 letters");
                 // //checking password strength
                 // let passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
                 // let isStrongPassword = passwordRegex.test(password);

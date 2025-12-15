@@ -113,3 +113,13 @@ input:focus {
     color: #6366f1;
     text-decoration: none;
 }
+
+input.error {
+    border: 1px solid #ff4d4d;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: 4px;
+}
