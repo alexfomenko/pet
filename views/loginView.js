@@ -1,7 +1,5 @@
 import {userLogIn} from '../api/auth.js';
 
-
-
 let button = document.getElementById('sign-in-button');
 
 button.addEventListener('click', async(e) => {

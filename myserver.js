@@ -12,8 +12,13 @@ let url =  require("url");
 let port = 3000;
 const SECRET = 'super_secret_key';
 
-let NOTES_FILE = path.join(__dirname, 'notes.json');
-let USERS_FILE = path.join(__dirname, 'users.json');
+const DATA_DIR = path.join(__dirname, 'json');
+
+const NOTES_FILE = path.join(DATA_DIR, 'notes.json');
+const USERS_FILE = path.join(DATA_DIR, 'users.json');
+
+// let NOTES_FILE = path.join(__dirname, 'notes.json');
+// let USERS_FILE = path.join(__dirname, 'users.json');
 
 let notes = [];
 let users = [{ id: '1', email: 'test@mail.com', passwordHash: bcrypt.hashSync('123456', 10)}];
@@ -24,15 +29,28 @@ function getIdFromUrl(req) {
     return pathname.split('/')[2];
 }
 
-async function getNotes() {
+//read notes from file
+async function getNotesFromFile() {
     try {
         let notes = await fs.readFile(NOTES_FILE, 'utf-8');
-        console.log(notes);
+        // console.log(notes);
         if(notes.length > 0) {
             return JSON.parse(notes);
         } else {
             return [];
         }
+    }
+    catch (error) {
+        if (error.code === "ENOENT") return [];
+        throw error;
+    }
+}
+
+//read users from file
+async function getUsersFromFile() {
+    try{
+        let users = await fs.readFile(USERS_FILE, 'utf-8');
+        return users.length > 0 ? JSON.parse(users) : [];
     }
     catch (error) {
         if (error.code === "ENOENT") return [];
@@ -75,75 +93,65 @@ const server = http.createServer(async(req, res) => {
     // }
 
     // GET STATICS
-    if(req.method === 'GET' && req.url === '/') {
-        sendStaticFile(res, 'index.html', 'text/html')
+    if(req.method === 'GET' && req.url === '/html/index') {
+        sendStaticFile(res, 'html/index.html', 'text/html')
     }
-    else if(req.method === 'GET' && req.url === '/login') {
+    else if(req.method === 'GET' && req.url === '/html/login') {
         // fs.readFile(path.join(__dirname,'index.html'))
         // .then((data) => {
         //     res.writeHead(200, {'Content-type': 'text/html'})
         //     res.end(data);
         // })
         //or
-        sendStaticFile(res, 'login.html', 'text/html')
+         sendStaticFile(res, 'html/login.html', 'text/html')
     }
-
     else if(req.method === 'GET' && req.url === '/html/signup') {
-        sendStaticFile(res, 'html/signup.html', 'text/html')
+         sendStaticFile(res, 'html/signup.html', 'text/html')
     }
-    else if(req.method === 'GET' && req.url === '/styles.css') {
-        sendStaticFile(res, 'styles.css', 'text/css')
+    else if(req.method === 'GET' && req.url === '/css/styles.css') {
+         sendStaticFile(res, 'css/styles.css', 'text/css')
     }
-    else if(req.method === 'GET' && req.url === '/login.css') {
-        sendStaticFile(res, 'login.css', 'text/css')
+    else if(req.method === 'GET' && req.url === '/css/login.css') {
+         sendStaticFile(res, 'css/login.css', 'text/css')
     }
-    else if(req.method === 'GET' && req.url === '/script.js') {
-        sendStaticFile(res, 'script.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/main.js') {
-        console.log('hi')
-        sendStaticFile(res, 'main.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/api/auth.js') {
-        console.log('hi')
-        sendStaticFile(res, 'api/auth.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/api/api.js') {
-        console.log('hi')
-        sendStaticFile(res, 'api/api.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/components/button.js') {
-        console.log('hi')
-        sendStaticFile(res, 'components/button.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/components/form.js') {
-        console.log('hi')
-        sendStaticFile(res, 'components/form.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/components/newReviewItem.js') {
-        console.log('hi')
-        sendStaticFile(res, 'components/newReviewItem.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/components/pagination.js') {
-        console.log('hi')
-        sendStaticFile(res, 'components/pagination.js', 'application/javascript')
-    }
-    else if(req.method === 'GET' && req.url === '/utils/utils.js') {
-        console.log('hi')
-        sendStaticFile(res, 'utils/utils.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/views/oldFirstScript.js') {
+         sendStaticFile(res, 'views/oldFirstScript.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/views/reviewsView.js') {
         console.log('hi')
-        sendStaticFile(res, 'views/reviewsView.js', 'application/javascript')
+         sendStaticFile(res, 'views/reviewsView.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/api/auth.js') {
+         sendStaticFile(res, 'api/auth.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/api/api.js') {
+         sendStaticFile(res, 'api/api.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/button.js') {
+         sendStaticFile(res, 'components/button.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/form.js') {
+         sendStaticFile(res, 'components/form.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/newReviewItem.js') {
+         sendStaticFile(res, 'components/newReviewItem.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/pagination.js') {
+         sendStaticFile(res, 'components/pagination.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/utils/utils.js') {
+         sendStaticFile(res, 'utils/utils.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/reviewsTable.js') {
+         sendStaticFile(res, 'components/reviewsTable.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/views/loginView.js') {
-        console.log('hi')
-        sendStaticFile(res, 'views/loginView.js', 'application/javascript')
+         sendStaticFile(res, 'views/loginView.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/views/signUpView.js') {
-        console.log('hi')
-        sendStaticFile(res, 'views/signUpView.js', 'application/javascript')
+         sendStaticFile(res, 'views/signUpView.js', 'application/javascript')
     }
+
 
     // getting data
 
@@ -378,11 +386,18 @@ const server = http.createServer(async(req, res) => {
             }
         })
     }
+    // else {
+    //     return sendResponse(res, 404, "Not found")
+    // }
 });
 
 (async function start() {
     try {
-        notes = await getNotes();
+
+        await fs.mkdir(DATA_DIR, { recursive: true });
+
+        notes = await getNotesFromFile();
+        users = await getUsersFromFile();
         server.listen(port, () => {
             console.log(`Server started at port ${port}`)
         })

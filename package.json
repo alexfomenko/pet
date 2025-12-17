@@ -1,7 +1,7 @@
 {
   "name": "pet",
   "version": "1.0.0",
-  "main": "script.js",
+  "main": "views/oldFirstScript.js",
   "scripts": {
     "start": "node gpt/server1_gpt.js"
   },

@@ -1,129 +1,188 @@
-import {removeAllButtons} from "../utils/utils.js";
-import {createButton} from "../components/button.js";
-import {sendDeleteRequest, sendUpdateRequest} from "../api/api.js";
+// import "./views/reviewsView.js";
+import "../api/api.js";
+import "../components/button.js";
+import "../components/form.js";
+import "../components/newReviewItem.js";
+import "../utils/utils.js";
+import "../components/reviewsTable.js";
 
-let reviewsContainer = document.querySelector('.table-form-container-wrap');
+import {getReviews} from '../api/api.js';
+import {createNewRow} from "../components/newReviewItem.js";
+// added as a try
+import {setPaginationData} from "../components/pagination.js";
 
-reviewsContainer.addEventListener('click', async (e) => {
-    if (e.target.classList.contains('delete-btn')) {
-        let closestReviewRow = e.target.closest('.review-item');
-        if (closestReviewRow) {
-            let closestReviewItemId = closestReviewRow.dataset.id;
-            let deleteResponse = await sendDeleteRequest(closestReviewItemId);
+let reviewsContainer = document.getElementById("reviewsContainer");
+let filterBar = document.getElementById('filterBar');
+let sortBar = document.getElementById('sortBar');
 
-            if(deleteResponse.ok) {
-                closestReviewRow.remove();
-            }
+let paginationEl = document.getElementById("paginationEl");
+let currentPage = 1;
 
-            // let sendRequest = await fetch(`/delete-review/${closestReviewItemId}`, {
-            //     method: 'DELETE',
-            //     headers: {'Content-type': 'application/json'}
-            // });
-            //
-            // if (sendRequest.ok) {
-            //     closestReviewRow.remove();
-            // }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    let response = await getReviews(1, 1);
+    let reviews = response.items;
+    let currentPage = response.page;
+    let totalPages = response.totalPages;
+
+    renderReviews(reviews);
+
+    populateFilterBar(reviews);
+
+// added as a try added one string
+
+    setPaginationData(response.page, response.totalPages, renderReviews);
+
+    // renderPagination(response.page, response.totalPages);
+
+//     // previous button
+//     let prevButton = document.createElement('button');
+//     prevButton.textContent = '←';
+//     prevButton.disabled = currentPage === 1;
+//     paginationEl.appendChild(prevButton);
+//
+//     // numbered buttons
+//     for (let i = 1; i <= totalPages; i++) {
+//         let button = document.createElement('button');
+//         button.textContent = i;
+//         button.classList.add('page-btn');
+//         paginationEl.appendChild(button);
+//         if (i === currentPage) button.classList.add('active');
+//
+//         button.addEventListener('click', async(e) => {
+//             let target = e.target;
+//             currentPage = i;
+//             let response = await getReviews(i, 1);
+//             renderReviews(response.items);
+//
+//             document.querySelectorAll('.pagination .page-btn').forEach((btn) => {
+//                 if (btn.classList.contains('active') && btn !== target) {
+//                     btn.classList.remove('active');
+//                 }
+//             })
+//
+//             target.classList.add('active');
+//             prevButton.disabled = currentPage === 1;
+//             nextButton.disabled = currentPage === totalPages;
+//         })
+//     }
+//
+//     // next button
+//     let nextButton = document.createElement('button');
+//     nextButton.textContent = '→';
+//     nextButton.disabled = currentPage >= totalPages;
+//     paginationEl.appendChild(nextButton);
+//
+//     prevButton.addEventListener('click', async(e) => {
+//         currentPage = currentPage - 1;
+//         let response = await getReviews(currentPage, 1);
+//         renderReviews(response.items);
+//         prevButton.disabled = currentPage === 1;
+//
+//         document.querySelectorAll('.pagination .page-btn').forEach((btn) => {
+//             btn.classList.remove('active');
+//         })
+//
+//         let activeButton = Array.from(document.querySelectorAll('.pagination .page-btn'))
+//             .find((btn) => btn.textContent === String(currentPage));
+//         if (activeButton) {
+//             activeButton.classList.add('active');
+//         }
+//
+//         prevButton.disabled = currentPage === 1;
+//         nextButton.disabled = currentPage === totalPages;
+//     })
+//
+//     nextButton.addEventListener('click', async(e) => {
+//         currentPage = currentPage + 1;
+//         let response = await getReviews(currentPage, 1);
+//         renderReviews(response.items);
+//
+//          document.querySelectorAll('.pagination .page-btn').forEach((btn) => {
+//              btn.classList.remove('active');
+//          })
+//
+//         let activeButton = Array.from(document.querySelectorAll('.pagination .page-btn'))
+//             .find((btn) => btn.textContent === String(currentPage));
+//
+//         if (activeButton) {
+//             activeButton.classList.add('active');
+//         }
+//         prevButton.disabled = currentPage === 1;
+//         nextButton.disabled = currentPage === totalPages;
+//
+//     })
+})
+
+filterBar.addEventListener("change", async (e) => {
+    let selected = e.target.value;
+    reviewsContainer.innerHTML = "";
+    let response = await getReviews();
+    let reviews = response.items;
+    let filteredReviews = reviews.filter((review1) => review1.company === selected);
+    // filteredReviews
+    //     .forEach((review) => {
+    //     let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
+    //     reviewsContainer.appendChild(newRow);
+    // })
+    renderReviews(filteredReviews);
+})
+
+sortBar.addEventListener('change', async (e) => {
+    let target = e.target.value;
+    reviewsContainer.innerHTML = "";
+
+    let response = await getReviews();
+    let reviews = response.items;
+
+    let sortedReviews = [];
+    if(target === "date_new_to_old") {
+        sortedReviews = reviews.sort((review1, review2) => new Date(review2.date) - new Date(review1.date));
+        // sortedNewToOld
+        //     .forEach((review) => {
+        //     let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
+        //     reviewsContainer.appendChild(newRow);
+        // })
+        // renderReviews(sortedArray);
+    }
+    else if(target === "date_old_to_new") {
+        sortedReviews = reviews.sort((review1, review2) => new Date(review1.date) - new Date(review2.date));
+    }
+    else if(target === "rating_low_to_high") {
+        sortedReviews = reviews.sort((review1, review2) => review1.rating - review2.rating);
+    }
+    else if(target === "rating_high_to_low") {
+        sortedReviews = reviews.sort((review1, review2) => review2.rating - review1.rating);
+    }
+    renderReviews(sortedReviews);
+})
+
+export function renderReviews(reviewsArray) {
+    reviewsContainer.innerHTML = "";
+    reviewsArray.forEach((review) => {
+        let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
+        reviewsContainer.appendChild(newRow);
+    })
+}
+
+export function populateFilterBar(reviews) {
+    filterBar.innerHTML = "";
+
+    //filling out the filterBar
+    // let options = Array.from(filterBar.options).map(option => option.value);
+    // const existing = new Set(Array.from(filterBar.options).map(opt => opt.value));
+    for (let review of reviews) {
+        let options = Array.from(filterBar.options).map(option => option.value);
+        if(!options.includes(review.company)) {
+            // if (!existing.has(review.company)) {
+            let option = document.createElement('option');
+            option.value = review.company;
+            option.textContent = review.company;
+            filterBar.append(option);
         }
     }
+}
 
-       else if (e.target.tagName === "BUTTON" && e.target.classList.contains('edit-btn')) {
-            let editButton = e.target;
-            // getting current row
-            let closestReviewRow = editButton.closest('.review-item');
-            if (closestReviewRow) {
-                let closestReviewRawId = closestReviewRow.dataset.id;
 
-                // getting current columns of the row
-                let columns = closestReviewRow.querySelectorAll(".column");
 
-                // saving current values of the fields
-                closestReviewRow.dataset.initialCompanyValue = columns[0].textContent;
-                closestReviewRow.dataset.initialRatingValue = columns[1].textContent;
-                closestReviewRow.dataset.initialReviewValue = columns[2].textContent;
 
-                //changing fields to editable text areas with current values ( divs to inputs)
-                columns[0].innerHTML = `<input type = 'text' value="${closestReviewRow.dataset.initialCompanyValue}">`
-                columns[1].innerHTML = `<input type = 'text' value = "${closestReviewRow.dataset.initialRatingValue}">`
-                columns[2].innerHTML = `<textarea id="review_updated">${closestReviewRow.dataset.initialReviewValue}</textarea>`
-
-                // creating save and cancel buttons
-                // editButton.outerHTML = `<button class="save-btn" title="Save changes"> 💾 </button>
-                //                         <button class="cancel-btn" title="Отмена">❌</button>`
-
-                // let buttons = closestReviewRow.querySelectorAll('button');
-                // buttons.forEach((button) => button.remove());
-
-                removeAllButtons(closestReviewRow);
-
-                closestReviewRow.appendChild(createButton('save-btn', "Save changes", '💾'));
-                closestReviewRow.appendChild(createButton('cancel-btn', "Cancel changes", '❌'));
-            }
-        }
-
-        else if (e.target.tagName === 'BUTTON' && e.target.classList.contains('save-btn')) {
-            let closestReviewRow = e.target.closest('.review-item');
-            let closestReviewRowId = closestReviewRow.dataset.id;
-            console.log(closestReviewRowId)
-            if (closestReviewRowId) {
-                let columns = closestReviewRow.querySelectorAll('.column');
-
-                // saving updated values of the fields
-                let updatedCompanyValue = columns[0].querySelector('input').value;
-                let updatedRatingValue = columns[1].querySelector('input').value;
-                let updatedReviewValue = columns[2].querySelector('textarea').value;
-
-                // preparing request data
-                let data = {
-                    company: updatedCompanyValue,
-                    rating: updatedRatingValue,
-                    review: updatedReviewValue
-                };
-
-                // try {
-                //     let sendPutRequest = await fetch(`/update-review/${closestReviewRowId}`, {
-                //         method: 'PUT',
-                //         headers: {'Content-type': 'application/json'},
-                //         body: JSON.stringify(data)
-                //     });
-                //
-                // }
-                // catch (error) {
-                //     throw new Error("An error occurred while updating data")
-                // }
-
-                let updateResponse = await sendUpdateRequest(closestReviewRowId, data);
-                // if(updateResponse.ok) {
-
-                //changing fields back to divs with current values (inputs tom divs)
-                columns[0].textContent = updatedCompanyValue;
-                columns[1].textContent = updatedRatingValue;
-                columns[2].textContent = updatedReviewValue;
-
-                // removing all old buttons and creating new ones
-                removeAllButtons(closestReviewRow);
-
-                closestReviewRow.appendChild(createButton('edit-btn', 'Update review', '✏️'));
-                closestReviewRow.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
-                // }
-            }
-        }
-        else if (e.target.tagName === 'BUTTON' && e.target.classList.contains('cancel-btn')) {
-            let cancelButton = e.target;
-            let closestReviewRow = cancelButton.closest('.review-item');
-            let columns = closestReviewRow.querySelectorAll('.column');
-            if (closestReviewRow) {
-                let closestReviewRowId = closestReviewRow.dataset.id;
-
-                // filling back divs with old values
-                columns[0].textContent = closestReviewRow.dataset.initialCompanyValue;
-                columns[1].textContent = closestReviewRow.dataset.initialRatingValue;
-                columns[2].textContent = closestReviewRow.dataset.initialReviewValue;
-
-                // removing all old buttons and creating new ones
-                removeAllButtons(closestReviewRow);
-
-                closestReviewRow.appendChild(createButton('edit-btn', 'Update review', '✏️'));
-                closestReviewRow.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
-            }
-        }
-})

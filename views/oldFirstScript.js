@@ -1,10 +1,10 @@
-import "./main.js";
-import "./api/api.js";
-import "./components/button.js";
-import "./components/form.js";
-import "./components/newReviewItem.js";
-import "./utils/utils.js";
-import "./views/reviewsView.js";
+// import "./views/reviewsView.js";
+// import "./api/api.js";
+// import "./components/button.js";
+// import "./components/form.js";
+// import "./components/newReviewItem.js";
+// import "./utils/utils.js";
+// import "./components/reviewsTable.js";
 
 // let showFormButton = document.getElementById('showFormButton');
 // let reviewForm = document.getElementById('reviewForm');
