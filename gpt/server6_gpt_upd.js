@@ -115,7 +115,7 @@ async function serveStatic(req, res) {
 
     const url = new URL(req.url, `http://localhost:${PORT}`);
     let filePath = url.pathname === '/'
-        ? path.join(__dirname, 'public', 'index.html')
+        ? path.join(__dirname, 'public', 'reviews.html')
         : path.join(__dirname, 'public', url.pathname);
 
     const publicDir = path.join(__dirname, 'public');

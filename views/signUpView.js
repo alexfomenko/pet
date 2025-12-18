@@ -1,4 +1,4 @@
-import {userSignUp} from "../api/auth.js";
+import {userSignUp} from "../api/authApi.js";
 
 let signupForm = document.getElementById('signUpForm');
 let button = document.querySelector('.btn-primary');

@@ -1,15 +1,18 @@
 // import "./views/reviewsView.js";
-import "../api/api.js";
-import "../components/button.js";
-import "../components/form.js";
-import "../components/newReviewItem.js";
+import "../api/reviewsApi.js";
+import "../components/reviewButton.js";
+import "../components/sendReviewForm.js";
+import "../components/newReviewRow.js";
 import "../utils/utils.js";
-import "../components/reviewsTable.js";
+import "../components/reviewRowActions.js";
+import "../components/reviewsFilterBar.js";
+import "../components/reviewsSortBar.js"
 
-import {getReviews} from '../api/api.js';
-import {createNewRow} from "../components/newReviewItem.js";
+import {getReviews} from '../api/reviewsApi.js';
+import {createNewRow} from "../components/newReviewRow.js";
 // added as a try
-import {setPaginationData} from "../components/pagination.js";
+import {setPaginationData} from "../components/reviewsPagination.js";
+import {renderReviews} from "../utils/utils.js";
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
@@ -20,14 +23,18 @@ let currentPage = 1;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    let response = await getReviews(1, 1);
+    let response = await getReviews(1, 10);
     let reviews = response.items;
+
+    let filterResponse = await getReviews(1, 100);
+    let filterReviews = filterResponse.items;
+
     let currentPage = response.page;
     let totalPages = response.totalPages;
 
     renderReviews(reviews);
 
-    populateFilterBar(reviews);
+    populateFilterBar(filterReviews);
 
 // added as a try added one string
 
@@ -114,56 +121,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 //     })
 })
 
-filterBar.addEventListener("change", async (e) => {
-    let selected = e.target.value;
-    reviewsContainer.innerHTML = "";
-    let response = await getReviews();
-    let reviews = response.items;
-    let filteredReviews = reviews.filter((review1) => review1.company === selected);
-    // filteredReviews
-    //     .forEach((review) => {
-    //     let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
-    //     reviewsContainer.appendChild(newRow);
-    // })
-    renderReviews(filteredReviews);
-})
 
-sortBar.addEventListener('change', async (e) => {
-    let target = e.target.value;
-    reviewsContainer.innerHTML = "";
-
-    let response = await getReviews();
-    let reviews = response.items;
-
-    let sortedReviews = [];
-    if(target === "date_new_to_old") {
-        sortedReviews = reviews.sort((review1, review2) => new Date(review2.date) - new Date(review1.date));
-        // sortedNewToOld
-        //     .forEach((review) => {
-        //     let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
-        //     reviewsContainer.appendChild(newRow);
-        // })
-        // renderReviews(sortedArray);
-    }
-    else if(target === "date_old_to_new") {
-        sortedReviews = reviews.sort((review1, review2) => new Date(review1.date) - new Date(review2.date));
-    }
-    else if(target === "rating_low_to_high") {
-        sortedReviews = reviews.sort((review1, review2) => review1.rating - review2.rating);
-    }
-    else if(target === "rating_high_to_low") {
-        sortedReviews = reviews.sort((review1, review2) => review2.rating - review1.rating);
-    }
-    renderReviews(sortedReviews);
-})
-
-export function renderReviews(reviewsArray) {
-    reviewsContainer.innerHTML = "";
-    reviewsArray.forEach((review) => {
-        let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
-        reviewsContainer.appendChild(newRow);
-    })
-}
+// export function renderReviews(reviewsArray) {
+//     reviewsContainer.innerHTML = "";
+//     reviewsArray.forEach((review) => {
+//         let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
+//         reviewsContainer.appendChild(newRow);
+//     })
+// }
 
 export function populateFilterBar(reviews) {
     filterBar.innerHTML = "";

@@ -93,11 +93,11 @@ const server = http.createServer(async(req, res) => {
     // }
 
     // GET STATICS
-    if(req.method === 'GET' && req.url === '/html/index') {
-        sendStaticFile(res, 'html/index.html', 'text/html')
+    if(req.method === 'GET' && req.url === '/html/reviews') {
+        sendStaticFile(res, 'html/reviews.html', 'text/html')
     }
     else if(req.method === 'GET' && req.url === '/html/login') {
-        // fs.readFile(path.join(__dirname,'index.html'))
+        // fs.readFile(path.join(__dirname,'reviews.html'))
         // .then((data) => {
         //     res.writeHead(200, {'Content-type': 'text/html'})
         //     res.end(data);
@@ -108,11 +108,11 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/html/signup') {
          sendStaticFile(res, 'html/signup.html', 'text/html')
     }
-    else if(req.method === 'GET' && req.url === '/css/styles.css') {
-         sendStaticFile(res, 'css/styles.css', 'text/css')
+    else if(req.method === 'GET' && req.url === '/css/reviews.css') {
+         sendStaticFile(res, 'css/reviews.css', 'text/css')
     }
-    else if(req.method === 'GET' && req.url === '/css/login.css') {
-         sendStaticFile(res, 'css/login.css', 'text/css')
+    else if(req.method === 'GET' && req.url === '/css/auth.css') {
+         sendStaticFile(res, 'css/auth.css', 'text/css')
     }
     else if(req.method === 'GET' && req.url === '/views/oldFirstScript.js') {
          sendStaticFile(res, 'views/oldFirstScript.js', 'application/javascript')
@@ -121,32 +121,38 @@ const server = http.createServer(async(req, res) => {
         console.log('hi')
          sendStaticFile(res, 'views/reviewsView.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/api/auth.js') {
-         sendStaticFile(res, 'api/auth.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/api/authApi.js') {
+         sendStaticFile(res, 'api/authApi.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/api/api.js') {
-         sendStaticFile(res, 'api/api.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/api/reviewsApi.js') {
+         sendStaticFile(res, 'api/reviewsApi.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/components/button.js') {
-         sendStaticFile(res, 'components/button.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/components/reviewButton.js') {
+         sendStaticFile(res, 'components/reviewButton.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/components/form.js') {
-         sendStaticFile(res, 'components/form.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/components/sendReviewForm.js') {
+         sendStaticFile(res, 'components/sendReviewForm.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/components/newReviewItem.js') {
-         sendStaticFile(res, 'components/newReviewItem.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/components/newReviewRow.js') {
+         sendStaticFile(res, 'components/newReviewRow.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/components/pagination.js') {
-         sendStaticFile(res, 'components/pagination.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/components/reviewsPagination.js') {
+         sendStaticFile(res, 'components/reviewsPagination.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/reviewsFilterBar.js') {
+        sendStaticFile(res, 'components/reviewsFilterBar.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/reviewsSortBar.js') {
+        sendStaticFile(res, 'components/reviewsSortBar.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/utils/utils.js') {
          sendStaticFile(res, 'utils/utils.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/components/reviewsTable.js') {
-         sendStaticFile(res, 'components/reviewsTable.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/components/reviewRowActions.js') {
+         sendStaticFile(res, 'components/reviewRowActions.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/views/loginView.js') {
-         sendStaticFile(res, 'views/loginView.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/views/logInView.js') {
+         sendStaticFile(res, 'views/logInView.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/views/signUpView.js') {
          sendStaticFile(res, 'views/signUpView.js', 'application/javascript')

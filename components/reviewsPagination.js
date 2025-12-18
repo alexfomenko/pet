@@ -1,4 +1,4 @@
-import {getReviews} from "../api/api.js";
+import {getReviews} from "../api/reviewsApi.js";
 // import {renderReviews} from "../main"
 
 let paginationEl = document.getElementById("paginationEl");

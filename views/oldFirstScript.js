@@ -1,10 +1,10 @@
 // import "./views/reviewsView.js";
-// import "./api/api.js";
-// import "./components/button.js";
-// import "./components/form.js";
-// import "./components/newReviewItem.js";
+// import "./api/reviewsApi.js";
+// import "./components/reviewButton.js";
+// import "./components/sendReviewForm.js";
+// import "./components/newReviewRow.js";
 // import "./utils/utils.js";
-// import "./components/reviewsTable.js";
+// import "./components/reviewRowActions.js";
 
 // let showFormButton = document.getElementById('showFormButton');
 // let reviewForm = document.getElementById('reviewForm');

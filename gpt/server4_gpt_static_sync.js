@@ -16,13 +16,13 @@ const MIME = {
     '.svg':  'image/svg+xml'
 };
 
-// Статика: GET /, /index.html, /styles.css, /test_gpt_app.js и т.п.
+// Статика: GET /, /reviews.html, /reviews.css, /test_gpt_app.js и т.п.
 if (req.method === 'GET') {
     const url = new URL(req.url, `http://localhost:${PORT}`);
 
-    // Корень → index.html
+    // Корень → reviews.html
     let filePath = url.pathname === '/'
-        ? path.join(__dirname, 'public', 'index.html')
+        ? path.join(__dirname, 'public', 'reviews.html')
         : path.join(__dirname, 'public', url.pathname);
 
     // Нормализация и защита от выхода за директорию

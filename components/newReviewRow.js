@@ -1,5 +1,5 @@
 import {createReviewColumn} from "../utils/utils.js";
-import {createButton} from "./button.js";
+import {createButton} from "./reviewButton.js";
 let reviewsContainer = document.getElementById("reviewsContainer");
 
 export function createNewRow(reviewId, companyValue, ratingValue, reviewValue, date) {

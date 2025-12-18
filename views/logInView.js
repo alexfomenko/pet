@@ -1,4 +1,4 @@
-import {userLogIn} from '../api/auth.js';
+import {userLogIn} from '../api/authApi.js';
 
 let button = document.getElementById('sign-in-button');
 

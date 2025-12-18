@@ -1,6 +1,6 @@
 import {removeAllButtons} from "../utils/utils.js";
-import {createButton} from "./button.js";
-import {sendDeleteRequest, sendUpdateRequest} from "../api/api.js";
+import {createButton} from "./reviewButton.js";
+import {sendDeleteRequest, sendUpdateRequest} from "../api/reviewsApi.js";
 
 let reviewsContainer = document.querySelector('.table-form-container-wrap');
 

@@ -21,9 +21,9 @@ async function serveStatic(req, res) {
     if (req.method !== 'GET') return false; // только GET-запросы
     const url = new URL(req.url, `http://localhost:${PORT}`);
 
-    // Корень → index.html
+    // Корень → reviews.html
     let filePath = url.pathname === '/'
-        ? path.join(__dirname, 'public', 'index.html')
+        ? path.join(__dirname, 'public', 'reviews.html')
         : path.join(__dirname, 'public', url.pathname);
 
     // Защита: доступ только к папке public

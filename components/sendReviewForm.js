@@ -1,7 +1,7 @@
-import {sendPostRequest} from '../api/api.js';
-import {createNewRow} from "./newReviewItem.js";
+import {sendPostRequest} from '../api/reviewsApi.js';
+import {createNewRow} from "./newReviewRow.js";
 import {createReviewColumn} from "../utils/utils.js";
-import {createButton} from "./button.js";
+import {createButton} from "./reviewButton.js";
 
 let showFormButton = document.getElementById('showFormButton');
 let reviewForm = document.getElementById('reviewForm');
