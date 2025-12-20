@@ -50,6 +50,7 @@ async function getNotesFromFile() {
 async function getUsersFromFile() {
     try{
         let users = await fs.readFile(USERS_FILE, 'utf-8');
+        console.log(users);
         return users.length > 0 ? JSON.parse(users) : [];
     }
     catch (error) {
@@ -63,6 +64,7 @@ async function saveNoteToFile(file, array) {
 }
 
 function sendResponse(res, responseCode, message) {
+    console.log("hit0");
     res.writeHead(responseCode, {'Content-Type' : 'application/json'})
     res.end(JSON.stringify(message));
 }
@@ -307,21 +309,43 @@ const server = http.createServer(async(req, res) => {
         req.on('data', (chunk) => body+= chunk);
         req.on('end', async() => {
             try{
-                // getting email and password from the frontend payload
-                let {email, password} = JSON.parse(body);
-                if(!email || !password) return sendResponse(res, 401, "Invalid email or password")
-                //finding matching user
+                // checking if json is valid
+                let parsedJsonBody;
+                try {
+                    parsedJsonBody = JSON.parse(body||"{}");
+                }
+                catch(error) {
+                    sendResponse(res, 400, {error: "Invalid json"})
+                }
+
+                // getting data from frontend
+                // let {email, password} = JSON.parse(body);
+                let {email, password} = parsedJsonBody;
+
+                // checking email and password aren't falsy
+                if(!email || !password) return sendResponse(res, 401, "Invalid email or password(falsy)")
+                console.log("hit");
+
+                //checking email and password data types are strings
+                if(typeof email !== "string" || typeof password !== "string") return sendResponse(res, 401, {error: "Invalid email or password(not strings"})
+
+                //checking if a user exists
                 let user = users.find(user => user.email === email);
-                if(!user) return sendResponse(res, 401, "Invalid email or password");
+                if(!user) return sendResponse(res, 401, "Invalid email or password(user doesn't exist)");
+                console.log("hit2");
 
                 //comparing password from payload and the one saved on the server
-                let isMatch = await bcrypt.compare(password, user.passwordHash);
-                if(!isMatch) return sendResponse(res, 401, "Invalid email or password");
+                let isMatch = await bcrypt.compare(password, user.password);
+                if(!isMatch) return sendResponse(res, 401, "Invalid email or password(password is wrong)");
+                console.log("hit3");
+
                 // generating token
                 let token = jwt.sign(
                     {userId: user.id, email: user.email},
                     SECRET,
                     {expiresIn: '1h'});
+                console.log("hit4");
+
                 //sending response to the server
                 return sendResponse(res, 200, {
                     message: "",
@@ -336,6 +360,7 @@ const server = http.createServer(async(req, res) => {
                 return sendResponse(res, 500, "Server error");
             }
         })
+        return ;
     }
 
     // SIGN UP ENDPOINT
@@ -348,16 +373,26 @@ const server = http.createServer(async(req, res) => {
                 let {name, email, password, confirmPassword} = JSON.parse(body);
 
                 //validation block
+
                 //checking the payload isn't empty
-                if(!name || !email || !password || !confirmPassword) return sendResponse(res, 400, "All fields required")
+                if(!name || !email || !password || !confirmPassword) return sendResponse(res, 400, "All fields required");
+
+                //checking if the user already exists
+                let normalizedEmail = String(email).trim().toLowerCase();
+                let userExists = users.find(user => user.email.toLowerCase() === normalizedEmail);
+                if(userExists) return sendResponse(res, 400, "User already exists")
+
                 // comparing password and confirmPassword values match
                 if(password !== confirmPassword) return sendResponse(res, 400, "Passwords don't match");
+
                 // checking password length
                 if(password.length < 3) return sendResponse(res, 400, "Password length should be more than 3 letters");
+
                 // //checking password strength
                 // let passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
                 // let isStrongPassword = passwordRegex.test(password);
                 // if(!isStrongPassword) return sendResponse(res, 400, "Password is too weak");
+
                 // //checking email is correct
                 // let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 // let isEmailCorrect = emailRegex.test(email);
@@ -391,6 +426,7 @@ const server = http.createServer(async(req, res) => {
                 return sendResponse(res, 500, "Server error");
             }
         })
+
     }
     // else {
     //     return sendResponse(res, 404, "Not found")
