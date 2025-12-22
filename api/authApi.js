@@ -11,7 +11,7 @@ export async function userLogIn(email, password) {
         // console.log(await sendGetRequest.json())
         return await sendSignInRequest.json();
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         throw error;
     }
 }

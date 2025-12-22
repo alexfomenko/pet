@@ -369,34 +369,53 @@ const server = http.createServer(async(req, res) => {
         req.on('data', (chunk) => body+= chunk);
         req.on('end', async() => {
             try{
+                // checking if json is valid
+                let parsedJsonBody;
+                try{
+                    parsedJsonBody = JSON.parse(body||"{}");
+                }
+                catch (error) {
+                    sendResponse(res, 400, {mesage: "Invalid json"})
+                }
+
                 // getting email and password from the frontend payload
-                let {name, email, password, confirmPassword} = JSON.parse(body);
+                // let {name, email, password, confirmPassword} = JSON.parse(body);
+                let {name, email, password, confirmPassword} = parsedJsonBody;
 
                 //validation block
 
-                //checking the payload isn't empty
-                if(!name || !email || !password || !confirmPassword) return sendResponse(res, 400, "All fields required");
+                //required fields - checking the payload isn't empty, values aren't falsy
+                if(!name || !email || !password || !confirmPassword) return sendResponse(res, 400, {message: "All fields required"});
 
-                //checking if the user already exists
-                let normalizedEmail = String(email).trim().toLowerCase();
-                let userExists = users.find(user => user.email.toLowerCase() === normalizedEmail);
-                if(userExists) return sendResponse(res, 400, "User already exists")
+                //checking the values are strings
+                if(typeof name!=="string" || typeof email!=='string' || typeof password!=='string' || typeof confirmPassword!=='string') {
+                    return sendResponse(res, 400, {message:"Invalid values(not strings"})
+                }
 
-                // comparing password and confirmPassword values match
-                if(password !== confirmPassword) return sendResponse(res, 400, "Passwords don't match");
+                //checking name is ok
+                name = name.trim();
+                if(name.length < 3 || name.length > 10) return sendResponse(res, 400, {message:"Name should be less than 5-10 characters"});
+
+                //checking if the user email already exists
+                email = String(email).trim().toLowerCase();
+                let userExists = users.find(user => user.email.toLowerCase() === email);
+                if(userExists) return sendResponse(res, 409, {message: "User already exists"});
+                // //checking email is correct
+                // let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                // let isEmailCorrect = emailRegex.test(email);
+                // if(!isEmailCorrect) return sendResponse(res,400, "Email is too weak");
+                // // checking email length
+                if(email.length === 0 || email.length > 50) return sendResponse(res, 400, {message: "Invalid email(should be 0-50 characters"});
 
                 // checking password length
-                if(password.length < 3) return sendResponse(res, 400, "Password length should be more than 3 letters");
-
+                if(password.length < 3 || password.length > 10) return sendResponse(res, 400, {message: "Password length should be more than 3 and less than 10 letters"});
                 // //checking password strength
                 // let passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
                 // let isStrongPassword = passwordRegex.test(password);
                 // if(!isStrongPassword) return sendResponse(res, 400, "Password is too weak");
 
-                // //checking email is correct
-                // let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                // let isEmailCorrect = emailRegex.test(email);
-                // if(!isEmailCorrect) return sendResponse(res,400, "Email is too weak");
+                // comparing password and confirmPassword values match
+                if(password !== confirmPassword) return sendResponse(res, 400, {message: "Passwords don't match"});
 
                 //creating new user
                 let passwordHash = await bcrypt.hash(password, 10);
@@ -423,7 +442,7 @@ const server = http.createServer(async(req, res) => {
                 })
             }
             catch (error) {
-                return sendResponse(res, 500, "Server error");
+                return sendResponse(res, 500, {message: "Server error"});
             }
         })
 
