@@ -1,6 +1,7 @@
 import {userLogIn} from '../api/authApi.js';
 
 let button = document.getElementById('sign-in-button');
+let error = document.getElementById("loginError");
 
 button.addEventListener('click', async(e) => {
     e.preventDefault();
@@ -9,5 +10,10 @@ button.addEventListener('click', async(e) => {
 
     let sendSignInRequest = await userLogIn(email, password);
 
+    if(!sendSignInRequest.success) {
+        error.textContent = sendSignInRequest.message;
+    }
 
+    //set token
+    localStorage.setItem("token", sendSignInRequest.token)
 })

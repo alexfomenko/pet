@@ -315,7 +315,7 @@ const server = http.createServer(async(req, res) => {
                     parsedJsonBody = JSON.parse(body||"{}");
                 }
                 catch(error) {
-                    sendResponse(res, 400, {error: "Invalid json"})
+                    return sendResponse(res, 400, {message: "Invalid json"})
                 }
 
                 // getting data from frontend
@@ -323,21 +323,21 @@ const server = http.createServer(async(req, res) => {
                 let {email, password} = parsedJsonBody;
 
                 // checking email and password aren't falsy
-                if(!email || !password) return sendResponse(res, 401, "Invalid email or password(falsy)")
-                console.log("hit");
+                if(!email || !password) return sendResponse(res, 401, {message: "Invalid email or password(falsy)"})
+                // console.log("hit");
 
                 //checking email and password data types are strings
-                if(typeof email !== "string" || typeof password !== "string") return sendResponse(res, 401, {error: "Invalid email or password(not strings"})
+                if(typeof email !== "string" || typeof password !== "string") return sendResponse(res, 401, {message: "Invalid email or password(not strings"})
 
                 //checking if a user exists
                 let user = users.find(user => user.email === email);
-                if(!user) return sendResponse(res, 401, "Invalid email or password(user doesn't exist)");
-                console.log("hit2");
+                if(!user) return sendResponse(res, 401, {message: "Invalid email or password(user doesn't exist)"});
+                // console.log("hit2");
 
                 //comparing password from payload and the one saved on the server
                 let isMatch = await bcrypt.compare(password, user.password);
-                if(!isMatch) return sendResponse(res, 401, "Invalid email or password(password is wrong)");
-                console.log("hit3");
+                if(!isMatch) return sendResponse(res, 401, {message: "Invalid email or password(password is wrong)"});
+                // console.log("hit3");
 
                 // generating token
                 let token = jwt.sign(
@@ -348,7 +348,7 @@ const server = http.createServer(async(req, res) => {
 
                 //sending response to the server
                 return sendResponse(res, 200, {
-                    message: "",
+                    message: "User signed in successfully",
                     token,
                     user: {
                         id: user.id,
@@ -357,7 +357,7 @@ const server = http.createServer(async(req, res) => {
                 })
             }
             catch (error) {
-                return sendResponse(res, 500, "Server error");
+                return sendResponse(res, 500, {message: "Server error"});
             }
         })
         return ;
@@ -375,7 +375,7 @@ const server = http.createServer(async(req, res) => {
                     parsedJsonBody = JSON.parse(body||"{}");
                 }
                 catch (error) {
-                    sendResponse(res, 400, {mesage: "Invalid json"})
+                   return sendResponse(res, 400, {mesage: "Invalid json"})
                 }
 
                 // getting email and password from the frontend payload
