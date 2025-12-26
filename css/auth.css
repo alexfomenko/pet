@@ -123,3 +123,27 @@ input.error {
     font-size: 12px;
     margin-top: 4px;
 }
+
+.toast {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    max-width: 360px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #111;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 150ms ease, transform 150ms ease;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
