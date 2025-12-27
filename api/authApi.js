@@ -35,16 +35,44 @@ export async function userLogIn(email, password) {
           return {
                 success: false,
                 status: sendSignInRequest.status,
-                responseCode: sendSignInRequest.response,
-                message: parsedJson.message,
+                statusText: sendSignInRequest.statusText,
+                message: parsedJson?.message || `Error ${sendSignInRequest.status}`,
+                token: null,
+                user: null,
             }
         }
-        return parsedJson;
+        // return parsedJson;
+        return {
+            success: true,
+            status: sendSignInRequest.status,
+            responseCode: sendSignInRequest.statusText,
+            message: parsedJson?.message || `Ok`,
+            token: parsedJson?.token,
+            user: parsedJson?.user,
+        }
     } catch (error) {
         // console.log(error);
         throw error;
     }
 }
+
+// export async function userSignUp(name,email, password, confirmPassword) {
+//     try {
+//         let sendSignUpRequest = await fetch(`/sign-up`, {
+//             method: 'POST',
+//             headers: {'Content-Type': 'application/json'},
+//             body: JSON.stringify({name, email, password, confirmPassword}),
+//         });
+//         if (!sendSignUpRequest.ok) {
+//             throw new Error('Failed to get data');
+//         }
+//         // console.log(await sendGetRequest.json())
+//         return await sendSignUpRequest.json();
+//     } catch (error) {
+//         console.log(error);
+//         throw error;
+//     }
+// }
 
 export async function userSignUp(name,email, password, confirmPassword) {
     try {
@@ -53,13 +81,33 @@ export async function userSignUp(name,email, password, confirmPassword) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({name, email, password, confirmPassword}),
         });
-        if (!sendSignUpRequest.ok) {
-            throw new Error('Failed to get data');
+        let parsedJsonBody;
+        try {
+            parsedJsonBody = await sendSignUpRequest.json();
         }
-        // console.log(await sendGetRequest.json())
-        return await sendSignUpRequest.json();
+        catch (error) {
+            parsedJsonBody = null;
+        }
+        if (!sendSignUpRequest.ok) {
+            return {
+                success: false,
+                status: sendSignUpRequest.status,
+                statusText: sendSignUpRequest.statusText,
+                message: parsedJsonBody?.message || `Error ${sendSignUpRequest.status}`,
+                token: null,
+                user: null,
+            }
+        }
+        return {
+            success: false,
+            status: sendSignUpRequest.status,
+            statusText: sendSignUpRequest.statusText,
+            message: parsedJsonBody?.message || `Ok`,
+            token: parsedJsonBody?.token,
+            user: parsedJsonBody?.user,
+        };
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         throw error;
     }
 }

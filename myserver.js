@@ -375,7 +375,7 @@ const server = http.createServer(async(req, res) => {
                     parsedJsonBody = JSON.parse(body||"{}");
                 }
                 catch (error) {
-                   return sendResponse(res, 400, {mesage: "Invalid json"})
+                   return sendResponse(res, 400, {message: "Invalid json"})
                 }
 
                 // getting email and password from the frontend payload
