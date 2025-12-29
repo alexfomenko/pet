@@ -1,9 +1,9 @@
 import {createNewRow} from "../components/newReviewRow.js";
 
-export function removeAllButtons(closestReviewRow) {
-    let buttons = closestReviewRow.querySelectorAll('button');
-    buttons.forEach((button) => button.remove());
-}
+// export function removeAllButtons(closestReviewRow) {
+//     let buttons = closestReviewRow.querySelectorAll('button');
+//     buttons.forEach((button) => button.remove());
+// }
 
 // export function createReviewColumn(textContent, ...classes) {
 //     let reviewColumn = document.createElement('div');
