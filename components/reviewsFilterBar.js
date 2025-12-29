@@ -1,5 +1,5 @@
 import {getReviews} from "../api/reviewsApi.js";
-import {renderReviews} from "../utils/utils.js";
+import {renderReviews} from "./newReviewRow.js";
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');

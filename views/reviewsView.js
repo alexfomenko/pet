@@ -12,7 +12,8 @@ import {getReviews} from '../api/reviewsApi.js';
 import {createNewRow} from "../components/newReviewRow.js";
 // added as a try
 import {setPaginationData} from "../components/reviewsPagination.js";
-import {renderReviews} from "../utils/utils.js";
+// import {renderReviews} from "../utils/utils.js";
+import {renderReviews} from "../components/newReviewRow.js";
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');

@@ -1,4 +1,4 @@
-import {removeAllButtons} from "../utils/utils.js";
+// import {removeAllButtons} from "../utils/utils.js";
 import {createButton} from "./reviewButton.js";
 import {sendDeleteRequest, sendUpdateRequest} from "../api/reviewsApi.js";
 
@@ -127,3 +127,8 @@ reviewsContainer.addEventListener('click', async (e) => {
             }
         }
 })
+
+export function removeAllButtons(closestReviewRow) {
+    let buttons = closestReviewRow.querySelectorAll('button');
+    buttons.forEach((button) => button.remove());
+}
