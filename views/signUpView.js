@@ -18,6 +18,7 @@ button.addEventListener('click', async(e) => {
 
     if(!checkFormIsValid()) return;
 
+    // 1st approach - showing errors when clicking on sign up button
     // // saving current values
     // let name = signupForm.elements.name.value;
     // let email = signupForm.elements.email.value;
@@ -36,7 +37,18 @@ button.addEventListener('click', async(e) => {
     // if(!passwordIsValid) return alert("Passwords do not match or length is less than 2");
 
     //sending the request
-    let sendSignInRequest = await userSignUp(name.value, email.value, password.value, confirmPassword.value);
+    let sendSignUpRequest = await userSignUp(name.value, email.value, password.value, confirmPassword.value);
+
+    if(sendSignUpRequest.success === false) {
+        showToast(sendSignUpRequest.message)
+        return;
+    }
+
+    showToast(sendSignUpRequest.message);
+
+    localStorage.setItem("token", sendSignUpRequest.token);
+
+    window.location.href ='/html/reviews';
 })
 
 // LIVE TESTING
@@ -44,41 +56,41 @@ signupForm.addEventListener('input', async(e) => {
     if(e.target.name === "name" && name.value.length < 3) {
         // name.classList.add('error');
         // nameError.textContent = "Name cannot be empty";
-        addErrorClass(name, nameError,"Name must be at least 3 characters");
+        addSignUpFieldError(name, nameError,"Name must be at least 3 characters");
     }
     else if(e.target.name === "name") {
         // name.classList.remove('error');
         // nameError.textContent = "";
-        removeErrorClass(name, nameError)
+        removeSignUpFieldError(name, nameError)
     }
     if (e.target.name === "email" && (email.value.length < 3 || !email.value.includes('@'))) {
-        addErrorClass(email, emailError, "Email should be more than 5 characters and contain @");
+        addSignUpFieldError(email, emailError, "Email should be more than 5 characters and contain @");
     }
     else if(e.target.name === "email") {
-        removeErrorClass(email, emailError);
+        removeSignUpFieldError(email, emailError);
     }
     if (e.target.name === "password" && password.value.length < 3) {
-        addErrorClass(password, passWordError,"Password should be more than 2 characters");
+        addSignUpFieldError(password, passWordError,"Password should be more than 2 characters");
     }
     else if(e.target.name === "password") {
-        removeErrorClass(password, passWordError);
+        removeSignUpFieldError(password, passWordError);
     }
     if (e.target.name === "confirmPassword" && password.value !== confirmPassword.value) {
-        addErrorClass(confirmPassword, confirmPassWordError,"Passwords don't match");
+        addSignUpFieldError(confirmPassword, confirmPassWordError,"Passwords don't match");
     }
     else if(e.target.name === "confirmPassword") {
-        removeErrorClass(confirmPassword, confirmPassWordError);
+        removeSignUpFieldError(confirmPassword, confirmPassWordError);
     }
 
     checkFormIsValid();
 })
 
-function addErrorClass(inputField, errorField, text) {
+function addSignUpFieldError(inputField, errorField, text) {
     inputField.classList.add('error');
     errorField.textContent = text;
 }
 
-function removeErrorClass(inputField, errorField) {
+function removeSignUpFieldError(inputField, errorField) {
     inputField.classList.remove('error');
     errorField.textContent = "";
 }
@@ -96,3 +108,12 @@ function checkFormIsValid() {
     return isFormValid;
 }
 
+function showToast(text, ms = 2500) {
+    let toast = document.getElementById("toast");
+    // toast.textContent = sendSignInRequest.message;
+    toast.textContent = text;
+    toast.classList.add("show");
+
+    clearTimeout(toast.timerId);
+    toast.timerId = setTimeout(()=> toast.classList.remove("show"), ms)
+}

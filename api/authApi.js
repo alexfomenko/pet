@@ -99,7 +99,7 @@ export async function userSignUp(name,email, password, confirmPassword) {
             }
         }
         return {
-            success: false,
+            success: true,
             status: sendSignUpRequest.status,
             statusText: sendSignUpRequest.statusText,
             message: parsedJsonBody?.message || `Ok`,

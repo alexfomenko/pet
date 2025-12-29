@@ -394,7 +394,7 @@ const server = http.createServer(async(req, res) => {
 
                 //checking name is ok
                 name = name.trim();
-                if(name.length < 3 || name.length > 10) return sendResponse(res, 400, {message:"Name should be less than 5-10 characters"});
+                // if(name.length < 3 || name.length > 10) return sendResponse(res, 400, {message:"Name should be less than 5-10 characters"});
 
                 //checking if the user email already exists
                 email = String(email).trim().toLowerCase();
