@@ -1,5 +1,6 @@
 import {getReviews} from "../api/reviewsApi.js";
-// import {renderReviews} from "../main"
+// import {renderReviews} from "../main";
+import {renderReviews} from "./newReviewRow.js";
 
 let paginationEl = document.getElementById("paginationEl");
 let prevButton;
@@ -7,7 +8,7 @@ let nextButton;
 
 let currentPage = 1;
 let totalPages = 1;
-let renderReviews = null;
+// let renderReviews = null;
 
 
 
@@ -75,17 +76,17 @@ function renderPagination1(currentPage, totalPages) {
 }
 
 // 2
-export function setPaginationData(page, pages, renderer) {
-    currentPage = page;
-    totalPages = pages;
-    renderReviews = renderer;
-    renderPagination();
-}
+// export function setPaginationData(page, pages) {
+//     currentPage = page;
+//     totalPages = pages;
+//     // renderReviews = renderer;
+//     renderPagination();
+// }
 
 // 1 create pagination ui
-export function renderPagination() {
-    // currentPage = page;
-    // totalPages = pages;
+export function renderPagination(page, pages) {
+    currentPage = page;
+    totalPages = pages;
     paginationEl.innerHTML = "";
 
     // creating previous button

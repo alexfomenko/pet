@@ -11,9 +11,10 @@ import "../components/reviewsSortBar.js"
 import {getReviews} from '../api/reviewsApi.js';
 import {createNewRow} from "../components/newReviewRow.js";
 // added as a try
-import {setPaginationData} from "../components/reviewsPagination.js";
+import {renderPagination} from "../components/reviewsPagination.js";
 // import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "../components/newReviewRow.js";
+
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
@@ -37,11 +38,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     populateFilterBar(reviewsByPage);
 
-// added as a try added one string
+    // setPaginationData(response.page, response.totalPages, renderReviews);
 
-    setPaginationData(response.page, response.totalPages, renderReviews);
-
-    // renderPagination(response.page, response.totalPages);
+    renderPagination(response.page, response.totalPages);
 
 //     // previous button
 //     let prevButton = document.createElement('button');
