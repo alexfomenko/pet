@@ -74,7 +74,7 @@ function renderPagination1(currentPage, totalPages) {
 
 }
 
-
+// 2
 export function setPaginationData(page, pages, renderer) {
     currentPage = page;
     totalPages = pages;
@@ -82,7 +82,7 @@ export function setPaginationData(page, pages, renderer) {
     renderPagination();
 }
 
-// create pagination ui
+// 1 create pagination ui
 export function renderPagination() {
     // currentPage = page;
     // totalPages = pages;
@@ -129,6 +129,7 @@ export function renderPagination() {
     // updatePaginationUi(prevButton, nextButton, currentPage, totalPages)
 }
 
+// 4 sending get request when clicking button
 async function loadPage(page) {
     currentPage = page;
     let response = await getReviews(currentPage, 1);
@@ -138,8 +139,7 @@ async function loadPage(page) {
     updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
 }
 
-
-// update pagination ui
+// 5 update pagination ui - remove color from disabled buttons and add it to the active button
 function updatePaginationUi(prevButton, nextButton, currentPage, totalPages) {
     document.querySelectorAll('.page-btn').forEach((btn) => {
         btn.classList.remove('active');
@@ -154,7 +154,7 @@ function updatePaginationUi(prevButton, nextButton, currentPage, totalPages) {
     nextButton.disabled = currentPage === totalPages;
 }
 
-// delegating events
+// 3 delegating events
 
 paginationEl.addEventListener('click', async(e) => {
     if(e.target.classList.contains("page-btn")) {

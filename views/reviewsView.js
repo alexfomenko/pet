@@ -27,15 +27,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     let response = await getReviews(1, 10);
     let reviews = response.items;
 
-    let filterResponse = await getReviews(1, 100);
-    let filterReviews = filterResponse.items;
+    let responseByPage = await getReviews(1, 100);
+    let reviewsByPage = responseByPage.items;
 
-    let currentPage = response.page;
-    let totalPages = response.totalPages;
+    // let currentPage = response.page;
+    // let totalPages = response.totalPages;
 
     renderReviews(reviews);
 
-    populateFilterBar(filterReviews);
+    populateFilterBar(reviewsByPage);
 
 // added as a try added one string
 

@@ -168,8 +168,8 @@ const server = http.createServer(async(req, res) => {
         let page = parseInt(query.page) || 1;
         let limit = parseInt(query.limit) || 10;
 
-        let start = (page -1) * limit;
-        let end = start + limit;
+        let start = (page -1) * limit; //(3- 1) *10 =20
+        let end = start + limit; // 20 + 10 = 30
 
         let paginatedItems = notes.slice(start, end);
 
