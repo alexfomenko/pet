@@ -57,6 +57,7 @@ function renderPagination1(currentPage, totalPages) {
 
     // prevButton.addEventListener('click', async(e) => {
     //     currentPage = currentPage - 1;
+
     //     let response = await getReviews(currentPage, 1);
     //     renderReviews(response.items);
     //
@@ -67,6 +68,7 @@ function renderPagination1(currentPage, totalPages) {
 
     // nextButton.addEventListener('click', async(e) => {
     //     currentPage = currentPage + 1;
+
     //     let response = await getReviews(currentPage, 1);
     //     renderReviews(response.items);
     //
@@ -130,6 +132,27 @@ export function renderPagination(page, pages) {
     // updatePaginationUi(prevButton, nextButton, currentPage, totalPages)
 }
 
+// 3 delegating events
+
+paginationEl.addEventListener('click', async(e) => {
+    if(e.target.classList.contains("page-btn")) {
+        let pageNum = Number(e.target.dataset.page)
+            await loadPage(pageNum);
+            // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
+        }
+
+    if(e.target.classList.contains("prev-btn")) {
+        if(currentPage > 1 ) await loadPage(currentPage - 1);
+        // prevButton.disabled = currentPage === 1;
+        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
+    }
+
+    if(e.target.classList.contains("next-btn")) {
+        if(currentPage < totalPages) await loadPage(currentPage + 1);
+        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
+    }
+})
+
 // 4 sending get request when clicking button
 async function loadPage(page) {
     currentPage = page;
@@ -154,25 +177,4 @@ function updatePaginationUi(prevButton, nextButton, currentPage, totalPages) {
     prevButton.disabled = currentPage === 1;
     nextButton.disabled = currentPage === totalPages;
 }
-
-// 3 delegating events
-
-paginationEl.addEventListener('click', async(e) => {
-    if(e.target.classList.contains("page-btn")) {
-        let pageNum = Number(e.target.dataset.page)
-            await loadPage(pageNum);
-            // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
-        }
-
-    if(e.target.classList.contains("prev-btn")) {
-        if(currentPage > 1 ) await loadPage(currentPage - 1);
-        // prevButton.disabled = currentPage === 1;
-        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
-    }
-
-    if(e.target.classList.contains("next-btn")) {
-        if(currentPage < totalPages) await loadPage(currentPage + 1);
-        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
-    }
-})
 
