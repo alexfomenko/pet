@@ -133,7 +133,7 @@ export function renderPagination(page, pages) {
 // 4 sending get request when clicking button
 async function loadPage(page) {
     currentPage = page;
-    let response = await getReviews(currentPage, 1);
+    let response = await getReviews(currentPage, 5);
     totalPages = response.totalPages;
     renderReviews(response.items);
 

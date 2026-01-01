@@ -25,7 +25,7 @@ let currentPage = 1;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    let response = await getReviews(1, 10);
+    let response = await getReviews(1, 5);
     let reviews = response.items;
 
     let responseByPage = await getReviews(1, 100);
