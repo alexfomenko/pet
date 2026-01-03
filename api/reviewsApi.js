@@ -1,6 +1,25 @@
-export async function getReviews(page, limit) {
+// export async function getReviews(page, limit, company = null) {
+//     try {
+//         let sendGetRequest = await fetch(`/get-review?page=${page}&limit=${limit}`);
+//         if (!sendGetRequest.ok) {
+//             throw new Error('Failed to get data');
+//         }
+//         // console.log(await sendGetRequest.json())
+//         return await sendGetRequest.json();
+//     } catch (error) {
+//         console.log(error);
+//         throw error;
+//     }
+// }
+
+export async function getReviews(page, limit, company = null) {
     try {
-        let sendGetRequest = await fetch(`/get-review?page=${page}&limit=${limit}`);
+        let url = `/get-review?page=${page}&limit=${limit}`;
+
+        // checking if company parameter was passed
+        if(company && company !=="all") url += `&company=${encodeURIComponent(company)}`;
+
+        let sendGetRequest = await fetch(url);
         if (!sendGetRequest.ok) {
             throw new Error('Failed to get data');
         }

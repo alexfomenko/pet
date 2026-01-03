@@ -168,12 +168,22 @@ const server = http.createServer(async(req, res) => {
         let page = parseInt(query.page) || 1;
         let limit = parseInt(query.limit) || 10;
 
+        //adding filtering by company
+        let company = query.company;
+        let notesFilteredByCompany = notes;
+        if(company && company !== "all") {
+            notesFilteredByCompany = notes.filter(note => note.company === company)
+        }
+
+        //determine pagination start and end
         let start = (page -1) * limit;
         let end = start + limit;
 
-        let paginatedItems = notes.slice(start, end);
+        // let paginatedItems = notes.slice(start, end);
+        let paginatedItems = notesFilteredByCompany.slice(start, end);
 
-        let totalItems = notes.length;
+        //determine totalItems and totalPages
+        let totalItems = notesFilteredByCompany.length;
         let totalPages = Math.ceil(totalItems / limit);
 
         // res.writeHead(200, {'Content-Type': 'application/json'});

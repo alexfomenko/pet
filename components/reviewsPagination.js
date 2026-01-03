@@ -1,12 +1,15 @@
 import {getReviews} from "../api/reviewsApi.js";
-// import {renderReviews} from "../main";
 import {renderReviews} from "./newReviewRow.js";
 
 let paginationEl = document.getElementById("paginationEl");
 let prevButton;
 let nextButton;
 
+// I need these global variables because I have:
+// 1 - condition if(currentPage > 1 );
+// 2 - all functions should save the same value of currentPage - loadPage and updatePaginationUi should both know what is current page
 let currentPage = 1;
+let currentLimit = 5;
 let totalPages = 1;
 // let renderReviews = null;
 
@@ -153,10 +156,11 @@ paginationEl.addEventListener('click', async(e) => {
     }
 })
 
-// 4 sending get request when clicking button
-async function loadPage(page) {
-    currentPage = page;
-    let response = await getReviews(currentPage, 5);
+// 4 sending get request when clicking pagination button
+async function loadPage(pageNumber) {
+    currentPage = pageNumber;
+    let response = await getReviews(currentPage, currentLimit);
+
     totalPages = response.totalPages;
     renderReviews(response.items);
 
@@ -165,15 +169,17 @@ async function loadPage(page) {
 
 // 5 update pagination ui - remove color from disabled buttons and add it to the active button
 function updatePaginationUi(prevButton, nextButton, currentPage, totalPages) {
+    // remove active class from all buttons
     document.querySelectorAll('.page-btn').forEach((btn) => {
         btn.classList.remove('active');
     });
 
+    //find currently active button
     let activeButton = Array.from(document.querySelectorAll('.page-btn'))
         .find((btn) => btn.textContent === String(currentPage));
-    if (activeButton) {
-        activeButton.classList.add('active');
-    }
+
+    if (activeButton) activeButton.classList.add('active');
+
     prevButton.disabled = currentPage === 1;
     nextButton.disabled = currentPage === totalPages;
 }

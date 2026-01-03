@@ -4,6 +4,7 @@ import {renderReviews} from "./newReviewRow.js";
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
 
+// populate filter bar on DOM content loaded
 export function populateFilterBar(reviews) {
     filterBar.innerHTML = "";
 
@@ -27,20 +28,32 @@ export function populateFilterBar(reviews) {
     }
 }
 
+// need to remove this handler as filtering from front end as it is time-consuming to do it there and should be on backend instead
+// filterBar.addEventListener("change", async (e) => {
+//     // console.log("hi");
+//     let selected = e.target.value;
+//     reviewsContainer.innerHTML = "";
+//
+//     let response = await getReviews(1, 100);
+//     let reviews = response.items;
+//
+//     let filteredReviews = reviews.filter((review) => review.company === selected);
+//     // filteredReviews
+//     //     .forEach((review) => {
+//     //     let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
+//     //     reviewsContainer.appendChild(newRow);
+//     // })
+//     renderReviews(filteredReviews);
+// })
 
 filterBar.addEventListener("change", async (e) => {
     // console.log("hi");
-    let selected = e.target.value;
+    let selectedCompany = e.target.value;
+
     reviewsContainer.innerHTML = "";
 
-    let response = await getReviews(1, 100);
+    let response = await getReviews(1, 5, selectedCompany);
     let reviews = response.items;
 
-    let filteredReviews = reviews.filter((review) => review.company === selected);
-    // filteredReviews
-    //     .forEach((review) => {
-    //     let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
-    //     reviewsContainer.appendChild(newRow);
-    // })
-    renderReviews(filteredReviews);
+    renderReviews(reviews);
 })
