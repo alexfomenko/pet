@@ -14,6 +14,7 @@ import {createNewRow} from "../components/newReviewRow.js";
 import {renderPagination} from "../components/reviewsPagination.js";
 // import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "../components/newReviewRow.js";
+import {populateFilterBar} from "../components/reviewsFilterBar.js";
 
 
 let reviewsContainer = document.getElementById("reviewsContainer");
@@ -148,27 +149,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 //     }
 // }
 
-export function populateFilterBar(reviews) {
-    filterBar.innerHTML = "";
-
-    let noFilter = document.createElement('option');
-    noFilter.value = "";
-    noFilter.textContent = "All companies";
-    filterBar.append(noFilter);
-
-    //filling out the filterBar
-    // let options = Array.from(filterBar.options).map(option => option.value);
-    // const existing = new Set(Array.from(filterBar.options).map(opt => opt.value));
-    for (let review of reviews) {
-        let options = Array.from(filterBar.options).map(option => option.value);
-        if(!options.includes(review.company)) {
-            // if (!existing.has(review.company)) {
-            let option = document.createElement('option');
-            option.value = review.company;
-            option.textContent = review.company;
-            filterBar.append(option);
-        }
-    }
-}
+// export function populateFilterBar(reviews) {
+//     filterBar.innerHTML = "";
+//
+//     let noFilter = document.createElement('option');
+//     noFilter.value = "";
+//     noFilter.textContent = "All companies";
+//     filterBar.append(noFilter);
+//
+//     //filling out the filterBar
+//     // let options = Array.from(filterBar.options).map(option => option.value);
+//     // const existing = new Set(Array.from(filterBar.options).map(opt => opt.value));
+//     for (let review of reviews) {
+//         let options = Array.from(filterBar.options).map(option => option.value);
+//         if(!options.includes(review.company)) {
+//             // if (!existing.has(review.company)) {
+//             let option = document.createElement('option');
+//             option.value = review.company;
+//             option.textContent = review.company;
+//             filterBar.append(option);
+//         }
+//     }
+// }
 
 
