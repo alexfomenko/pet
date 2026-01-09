@@ -194,7 +194,8 @@ const server = http.createServer(async(req, res) => {
             limit,
             items: paginatedItems,
             totalItems,
-            totalPages
+            totalPages,
+            filter: company || null,
         });
     }
 

@@ -1,21 +1,23 @@
 import {getReviews} from "../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
+import {appState} from "../views/reviewsView.js";
+
 
 let paginationEl = document.getElementById("paginationEl");
-let prevButton;
-let nextButton;
+// let prevButton;
+// let nextButton;
 
 // I need these global variables because I have:
 // 1 - condition if(currentPage > 1 );
 // 2 - all functions should save the same value of currentPage - loadPage and updatePaginationUi should both know what is current page
-let currentPage = 1;
+// let currentPage = 1;
 let currentLimit = 5;
 let totalPages = 1;
 // let renderReviews = null;
 
 
 
-function renderPagination1(currentPage, totalPages) {
+// function renderPagination1(currentPage, totalPages) {
     // let currentPage = response.page;
     // let totalPages = response.totalPages;
 
@@ -77,8 +79,7 @@ function renderPagination1(currentPage, totalPages) {
     //
     //     updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
     // })
-
-}
+// }
 
 // 2
 // export function setPaginationData(page, pages) {
@@ -90,15 +91,15 @@ function renderPagination1(currentPage, totalPages) {
 
 // 1 create pagination ui
 export function renderPagination(page, pages) {
-    currentPage = page;
+    // currentPage = page;
     totalPages = pages;
     paginationEl.innerHTML = "";
 
     // creating previous button
-    prevButton = document.createElement('button');
+    let prevButton = document.createElement('button');
     prevButton.textContent = '←';
     prevButton.classList.add('prev-btn');
-    prevButton.disabled = currentPage === 1;
+    prevButton.disabled = page === 1;
     paginationEl.appendChild(prevButton);
 
     // creating numbered buttons
@@ -108,7 +109,7 @@ export function renderPagination(page, pages) {
         button.classList.add('page-btn');
         button.dataset.page = String(i);
         paginationEl.appendChild(button);
-        if (i === currentPage) button.classList.add('active');
+        if (i === page) button.classList.add('active');
 
 //         button.addEventListener('click', async(e) => {
 //             let target = e.target;
@@ -126,49 +127,57 @@ export function renderPagination(page, pages) {
     }
 
     // creating next button
-    nextButton = document.createElement('button');
+    let nextButton = document.createElement('button');
     nextButton.textContent = '→';
     nextButton.classList.add('next-btn');
-    nextButton.disabled = currentPage >= totalPages;
+    nextButton.disabled = page >= totalPages;
     paginationEl.appendChild(nextButton);
 
     // updatePaginationUi(prevButton, nextButton, currentPage, totalPages)
 }
 
 // 3 delegating events
-
 paginationEl.addEventListener('click', async(e) => {
     if(e.target.classList.contains("page-btn")) {
-        let pageNum = Number(e.target.dataset.page)
-            await loadPage(pageNum);
-            // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
+        let pageNum = Number(e.target.dataset.page);
+        appState.currentPage = pageNum; // added
+        await loadPage();
+        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
         }
 
     if(e.target.classList.contains("prev-btn")) {
-        if(currentPage > 1 ) await loadPage(currentPage - 1);
+        // if(currentPage > 1 ) await loadPage(currentPage - 1);
+        if(appState.currentPage > 1 ) {
+            appState.currentPage -= 1;
+            await loadPage(); // added
+        }
         // prevButton.disabled = currentPage === 1;
         // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
     }
 
     if(e.target.classList.contains("next-btn")) {
-        if(currentPage < totalPages) await loadPage(currentPage + 1);
+        // if(currentPage < totalPages) await loadPage(currentPage + 1);
+        if(appState.currentPage < totalPages) {
+            appState.currentPage += 1;
+            await loadPage();
+        }
         // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
     }
 })
 
 // 4 sending get request when clicking pagination button
-async function loadPage(pageNumber) {
-    currentPage = pageNumber;
-    let response = await getReviews(currentPage, currentLimit);
-
+async function loadPage() {
+    // appState.currentPage = pageNumber;
+    let response = await getReviews(appState.currentPage, appState.currentPageLimit, appState.filterByCompany);
     totalPages = response.totalPages;
-    renderReviews(response.items);
 
-    updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
+    renderReviews(response.items);
+    updatePaginationUi(appState.currentPage, totalPages);
 }
 
 // 5 update pagination ui - remove color from disabled buttons and add it to the active button
-function updatePaginationUi(prevButton, nextButton, currentPage, totalPages) {
+export function updatePaginationUi(currentPage, totalPages) {
+
     // remove active class from all buttons
     document.querySelectorAll('.page-btn').forEach((btn) => {
         btn.classList.remove('active');
@@ -180,7 +189,9 @@ function updatePaginationUi(prevButton, nextButton, currentPage, totalPages) {
 
     if (activeButton) activeButton.classList.add('active');
 
+    //determine conditions when previous and next buttons are disabled
+    let prevButton = document.querySelector('.prev-btn');
+    let nextButton = document.querySelector('.next-btn');
     prevButton.disabled = currentPage === 1;
     nextButton.disabled = currentPage === totalPages;
 }
-

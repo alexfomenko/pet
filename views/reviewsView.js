@@ -16,6 +16,12 @@ import {renderPagination} from "../components/reviewsPagination.js";
 import {renderReviews} from "../components/newReviewRow.js";
 import {populateFilterBar} from "../components/reviewsFilterBar.js";
 
+export let appState = {
+    filterByCompany: null,
+    currentPage: 1,
+    currentPageLimit: 5,
+}
+
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
@@ -26,7 +32,7 @@ let currentPage = 1;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    let response = await getReviews(1, 5);
+    let response = await getReviews(appState.currentPage, appState.currentPageLimit);
     let reviews = response.items;
 
     let responseByPage = await getReviews(1, 100);
@@ -38,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // setPaginationData(response.page, response.totalPages, renderReviews);
 
-    renderPagination(response.page, response.totalPages);
+    renderPagination(appState.currentPage, response.totalPages);
 
 //     // previous button
 //     let prevButton = document.createElement('button');

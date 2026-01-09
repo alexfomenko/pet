@@ -1,8 +1,11 @@
 import {getReviews} from "../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
+import {appState} from "../views/reviewsView.js";
+import {renderPagination, updatePaginationUi} from "./reviewsPagination.js";
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
+
 
 // populate filter bar on DOM content loaded
 export function populateFilterBar(reviews) {
@@ -49,11 +52,30 @@ export function populateFilterBar(reviews) {
 filterBar.addEventListener("change", async (e) => {
     // console.log("hi");
     let selectedCompany = e.target.value;
-
     reviewsContainer.innerHTML = "";
 
-    let response = await getReviews(1, 5, selectedCompany);
+    //updating app state
+    appState.filterByCompany = selectedCompany;
+    appState.currentPage = 1;
+
+    let response = await getReviews(1, appState.currentPageLimit, selectedCompany); // updated
+    let totalPages = response.totalPages;
     let reviews = response.items;
 
     renderReviews(reviews);
+    renderPagination(appState.currentPage, totalPages);
+    updatePaginationUi(appState.currentPage, totalPages);
 })
+
+// мне нужно поставить страницу 1 и перевыделить кнопки
+
+// когда ставится фильтр должна перерисовываться пагинация:
+// 1 - ставится страница 1,
+// 2 - меняется количество страниц
+// 3 - меняется активность кнопок
+// а пагинация должна помнить про фильтр-компанию, когда отправляет запрос в котором есть компания
+
+// фильтербар сохраняет - фильтр-компанию и страницу текущую(1)
+// пагинация - использует фильр-компанию и меняет текущую страницу на актуальную
+
+// передавать компанию дальше в пагинацию
