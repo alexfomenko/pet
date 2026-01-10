@@ -102,7 +102,7 @@ sendReviewButton.addEventListener('click', async (e) => {
 //         newReviewItem.appendChild(createButton('edit-btn', 'Update review', '✏️'));
 //         newReviewItem.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
 
-        let newReviewItem = createNewRow(reviewId, companyValue, ratingValue, reviewValue, date);
+        let newReviewItem = createNewRow(reviewId, companyValue, ratingValue, reviewValue, currentDate);
 
         reviewsContainer.appendChild(newReviewItem);
 
