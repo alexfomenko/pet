@@ -12,12 +12,32 @@
 //     }
 // }
 
-export async function getReviews(page, limit, company = null) {
+// export async function getReviews(page, limit, company = null) {
+//     try {
+//         let url = `/get-review?page=${page}&limit=${limit}`;
+//
+//         // checking if company parameter was passed
+//         if(company && company !=="all") url += `&company=${encodeURIComponent(company)}`;
+//
+//         let sendGetRequest = await fetch(url);
+//         if (!sendGetRequest.ok) {
+//             throw new Error('Failed to get data');
+//         }
+//         // console.log(await sendGetRequest.json())
+//         return await sendGetRequest.json();
+//     } catch (error) {
+//         console.log(error);
+//         throw error;
+//     }
+// }
+
+export async function getReviews(page, limit, company = null, sort = null) {
     try {
         let url = `/get-review?page=${page}&limit=${limit}`;
 
         // checking if company parameter was passed
         if(company && company !=="all") url += `&company=${encodeURIComponent(company)}`;
+        if(sort && sort !=="no_sort") url+= `&sort=${sort}`; // added
 
         let sendGetRequest = await fetch(url);
         if (!sendGetRequest.ok) {

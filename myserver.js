@@ -168,22 +168,39 @@ const server = http.createServer(async(req, res) => {
         let page = parseInt(query.page) || 1;
         let limit = parseInt(query.limit) || 10;
 
+        let notesFilteredAndSorted = notes;
+
         //adding filtering by company
         let company = query.company;
-        let notesFilteredByCompany = notes;
         if(company && company !== "all") {
-            notesFilteredByCompany = notes.filter(note => note.company === company)
+            notesFilteredAndSorted = notes.filter(note => note.company === company)
         }
+
+        //adding sorting
+        let sorting = query.sort;
+        if(sorting === "date_new_to_old") {
+            notesFilteredAndSorted = [...notesFilteredAndSorted].sort((review1, review2) => new Date(review2.date) - new Date(review1.date));
+        }
+        else if(sorting === "date_old_to_new") {
+            notesFilteredAndSorted = [...notesFilteredAndSorted].sort((review1, review2) => new Date(review1.date) - new Date(review2.date));
+        }
+        else if(sorting === "rating_low_to_high") {
+            notesFilteredAndSorted = [...notesFilteredAndSorted].sort((review1, review2) => review1.rating - review2.rating);
+        }
+        else if(sorting === "rating_high_to_low") {
+            notesFilteredAndSorted = [...notesFilteredAndSorted].sort((review1, review2) => review2.rating - review1.rating);
+        }
+
 
         //determine pagination start and end
         let start = (page -1) * limit;
         let end = start + limit;
 
         // let paginatedItems = notes.slice(start, end);
-        let paginatedItems = notesFilteredByCompany.slice(start, end);
+        let paginatedItems = notesFilteredAndSorted.slice(start, end);
 
         //determine totalItems and totalPages
-        let totalItems = notesFilteredByCompany.length;
+        let totalItems = notesFilteredAndSorted.length;
         let totalPages = Math.ceil(totalItems / limit);
 
         // res.writeHead(200, {'Content-Type': 'application/json'});
