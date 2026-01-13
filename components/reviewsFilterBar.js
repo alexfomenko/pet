@@ -20,7 +20,7 @@ export function populateFilterBar(reviews) {
     // let options = Array.from(filterBar.options).map(option => option.value);
     // const existing = new Set(Array.from(filterBar.options).map(opt => opt.value));
     for (let review of reviews) {
-        let options = Array.from(filterBar.options).map(option => option.value);
+        let options = Array.from(filterBar.options).map(option => option.value); //html tags
         if(!options.includes(review.company)) {
             // if (!existing.has(review.company)) {
             let option = document.createElement('option');

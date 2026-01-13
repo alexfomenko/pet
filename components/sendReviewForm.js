@@ -1,8 +1,9 @@
-import {sendPostRequest} from '../api/reviewsApi.js';
+import {getReviews, sendPostRequest} from '../api/reviewsApi.js';
 import {createNewRow} from "./newReviewRow.js";
 import {createReviewColumn} from "./newReviewRow.js";
 // import {createReviewColumn} from "../utils/utils.js";
 import {createButton} from "./reviewButton.js";
+import {appState} from "../views/reviewsView.js";
 
 let showFormButton = document.getElementById('showFormButton');
 let reviewForm = document.getElementById('reviewForm');
@@ -103,7 +104,6 @@ sendReviewButton.addEventListener('click', async (e) => {
 //         newReviewItem.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
 
         let newReviewItem = createNewRow(reviewId, companyValue, ratingValue, reviewValue, currentDate);
-
         reviewsContainer.appendChild(newReviewItem);
 
         //clean the form
@@ -117,12 +117,19 @@ sendReviewButton.addEventListener('click', async (e) => {
 })
 
 
-let companies = ["Huytam", "Huyvam", "Huytebe", "Kedi"];
 let searchInput = document.getElementById("company");
-let results = document.getElementById("results");
+let results = document.getElementById("results"); //ul
+let allCompanies;
 
-searchInput.addEventListener('click', (event) => {
-    showCompanies(companies);
+// searchInput.addEventListener('click', (event) => {
+//     showCompanies(companies);
+// })
+
+searchInput.addEventListener('click', async(event) => {
+    let sendGetReviewRequest = await getReviews(1, 100);
+    let response = sendGetReviewRequest.items;
+    allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
+    showCompanies(allCompanies);
 })
 
 function showCompanies(list) {
@@ -147,7 +154,7 @@ searchInput.addEventListener('input', (e) => {
 
     let userCompanySearch = searchInput.value.toLowerCase();
     if(userCompanySearch) {
-        let matchingCountries = companies.filter((country) => {
+        let matchingCountries = allCompanies.filter((country) => {
             return country.toLowerCase().includes(userCompanySearch);
         })
 
