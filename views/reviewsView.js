@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     renderReviews(reviews);
 
-    populateFilterBar(reviewsByPage);
+    await populateFilterBar();
 
     // setPaginationData(response.page, response.totalPages, renderReviews);
 

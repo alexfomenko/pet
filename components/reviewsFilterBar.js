@@ -2,33 +2,55 @@ import {getReviews} from "../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
 import {appState} from "../views/reviewsView.js";
 import {renderPagination, updatePaginationUi} from "./reviewsPagination.js";
+import {getAllCompanies} from "../api/reviewsApi.js";
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
 
 
 // populate filter bar on DOM content loaded
-export function populateFilterBar(reviews) {
-    filterBar.innerHTML = "";
+// export function populateFilterBar(reviews) {
+//     filterBar.innerHTML = "";
+//
+//     let noFilter = document.createElement('option');
+//     noFilter.value = "";
+//     noFilter.textContent = "All companies";
+//     filterBar.append(noFilter);
+//
+//     //filling out the filterBar
+//     // let options = Array.from(filterBar.options).map(option => option.value);
+//     // const existing = new Set(Array.from(filterBar.options).map(opt => opt.value));
+//     for (let review of reviews) {
+//         let options = Array.from(filterBar.options).map(option => option.value); //html tags
+//         if(!options.includes(review.company)) {
+//             // if (!existing.has(review.company)) {
+//             let option = document.createElement('option');
+//             option.value = review.company;
+//             option.textContent = review.company;
+//             filterBar.append(option);
+//         }
+//     }
+// }
 
+export async function populateFilterBar() {
+    filterBar.innerHTML = "";
+    //create first allCompanies option
     let noFilter = document.createElement('option');
     noFilter.value = "";
     noFilter.textContent = "All companies";
     filterBar.append(noFilter);
 
-    //filling out the filterBar
-    // let options = Array.from(filterBar.options).map(option => option.value);
-    // const existing = new Set(Array.from(filterBar.options).map(opt => opt.value));
-    for (let review of reviews) {
-        let options = Array.from(filterBar.options).map(option => option.value); //html tags
-        if(!options.includes(review.company)) {
-            // if (!existing.has(review.company)) {
-            let option = document.createElement('option');
-            option.value = review.company;
-            option.textContent = review.company;
-            filterBar.append(option);
-        }
-    }
+    //send request to getAllCompanies
+    let getAllCompaniesRequest = await getAllCompanies();
+    let allCompanies = getAllCompaniesRequest.items;
+
+    //create options for allCompanies
+    allCompanies.forEach((company) => {
+        let option = document.createElement('option');
+        option.value = company;
+        option.textContent = company;
+        filterBar.append(option);
+    })
 }
 
 // need to remove this handler as filtering from front end as it is time-consuming to do it there and should be on backend instead
