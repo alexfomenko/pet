@@ -4,6 +4,7 @@ import {createReviewColumn} from "./newReviewRow.js";
 // import {createReviewColumn} from "../utils/utils.js";
 import {createButton} from "./reviewButton.js";
 import {appState} from "../views/reviewsView.js";
+import {getAllCompanies} from "../api/reviewsApi.js";
 
 let showFormButton = document.getElementById('showFormButton');
 let reviewForm = document.getElementById('reviewForm');
@@ -121,15 +122,27 @@ let searchInput = document.getElementById("company");
 let results = document.getElementById("results"); //ul
 let allCompanies;
 
+// 1st iteration
 // searchInput.addEventListener('click', (event) => {
 //     showCompanies(companies);
 // })
 
+//2nd iteration
+// searchInput.addEventListener('click', async(event) => {
+//     let sendGetReviewRequest = await getReviews(1, 100);
+//     let response = sendGetReviewRequest.items;
+//     // allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
+//     allCompanies = Array.from(new Set(response.map((item) => item.company))); //only unique
+//     showCompanies(allCompanies);
+// })
+
+//3rd iteration
 searchInput.addEventListener('click', async(event) => {
-    let sendGetReviewRequest = await getReviews(1, 100);
-    let response = sendGetReviewRequest.items;
-    allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
-    showCompanies(allCompanies);
+    let sendGetAllCompaniesRequest = await getAllCompanies();
+    let response = sendGetAllCompaniesRequest.items;
+    // allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
+    // allCompanies = Array.from(new Set(response.map((item) => item.company))); //only unique
+    showCompanies(response);
 })
 
 function showCompanies(list) {

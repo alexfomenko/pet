@@ -1,3 +1,41 @@
+
+
+export async function getAllCompanies() {
+    try {
+        let sendGetCompaniesRequest = await fetch(`/get-companies`);
+        let parsedJsonBody;
+        try{
+            parsedJsonBody = await sendGetCompaniesRequest.json();
+        }
+        catch (error) {
+            parsedJsonBody = null;
+        }
+        if (!sendGetCompaniesRequest.ok) {
+            // throw new Error('Failed to get data'); // instead of this
+           return  {
+               success: false,
+               status: sendGetCompaniesRequest.status,
+               statusText: sendGetCompaniesRequest.statusText,
+               items: null,
+            }
+        }
+        // console.log(await sendGetRequest.json())
+        // return await sendGetCompaniesRequest.json(); // instead of this
+        console.log(parsedJsonBody);
+        return {
+            success: true,
+            status: sendGetCompaniesRequest.status,
+            statusText: sendGetCompaniesRequest.statusText,
+            // items: parsedJsonBody?.allCompanies, // 1st option - object
+            items: parsedJsonBody, // 2nd option - array
+
+        }
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 // export async function getReviews(page, limit, company = null) {
 //     try {
 //         let sendGetRequest = await fetch(`/get-review?page=${page}&limit=${limit}`);

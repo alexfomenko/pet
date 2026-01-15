@@ -160,9 +160,17 @@ const server = http.createServer(async(req, res) => {
          sendStaticFile(res, 'views/signUpView.js', 'application/javascript')
     }
 
+    //getting companies for send form
+    if(req.method === "GET" && req.url.startsWith("/get-companies")) {
+        let allCompanies = Array.from(new Set(notes.map((item) => item.company))); //only unique
+        console.log(allCompanies);
+        // return sendResponse(res, 200, {allCompanies}); // {allCompanies: allCompanies} 1st option - object
+        return sendResponse(res, 200, allCompanies); // 2nd option - array
+
+
+    }
 
     // getting data
-
     if(req.method === 'GET' && req.url.startsWith('/get-review')) {
 
         let page = parseInt(query.page) || 1;
