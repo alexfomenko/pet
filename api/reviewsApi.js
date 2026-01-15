@@ -28,7 +28,6 @@ export async function getAllCompanies() {
             statusText: sendGetCompaniesRequest.statusText,
             // items: parsedJsonBody?.allCompanies, // 1st option - object
             items: parsedJsonBody, // 2nd option - array
-
         }
     } catch (error) {
         console.log(error);

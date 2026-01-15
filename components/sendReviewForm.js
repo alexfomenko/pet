@@ -122,12 +122,12 @@ let searchInput = document.getElementById("company");
 let results = document.getElementById("results"); //ul
 let allCompanies;
 
-// 1st iteration
+// 1st iteration - static array of companies
 // searchInput.addEventListener('click', (event) => {
 //     showCompanies(companies);
 // })
 
-//2nd iteration
+//2nd iteration - sending the request to get the array of companies
 // searchInput.addEventListener('click', async(event) => {
 //     let sendGetReviewRequest = await getReviews(1, 100);
 //     let response = sendGetReviewRequest.items;
@@ -136,13 +136,13 @@ let allCompanies;
 //     showCompanies(allCompanies);
 // })
 
-//3rd iteration
+//3rd iteration - the work of filtering was moved to backend
 searchInput.addEventListener('click', async(event) => {
     let sendGetAllCompaniesRequest = await getAllCompanies();
-    let response = sendGetAllCompaniesRequest.items;
+    allCompanies = sendGetAllCompaniesRequest.items;
     // allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
     // allCompanies = Array.from(new Set(response.map((item) => item.company))); //only unique
-    showCompanies(response);
+    showCompanies(allCompanies);
 })
 
 function showCompanies(list) {
