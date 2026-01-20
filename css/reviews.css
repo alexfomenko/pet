@@ -22,6 +22,7 @@
 .layout {
     display: flex;
     gap: 20px;
+    min-height: 95vh;
 }
 
 .wrap {
@@ -29,9 +30,8 @@
     flex-direction: column; /* кнопка справа */
     align-items: stretch;
     width: 100%;
-
+    flex: 1;
 }
-
 
 .show-form-btn {
     padding: 10px 20px;
@@ -42,7 +42,7 @@
     border-radius: 5px;
     cursor: pointer;
     align-self: flex-end;
-    margin-right: 20px;
+    margin-right: 200px;
 }
 
 .show-form-btn:hover {
@@ -53,8 +53,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;
+    width: 80%;
     gap: 20px;
+    flex: 1;
+    /*margin: 0 auto;*/
+    align-self: center; /* same as margin: 0 auto */
+    padding-top: 10px;
 }
 
 .reviews-container {
@@ -79,7 +83,7 @@
 .review-item {
     /*display: flex;*/
     /*padding: 10px;*/
-    /*border-bottom: 1px solid #ddd;*/
+    border-bottom: 1px solid #ddd;
     /*background-color: #fff;*/
     display: flex;
     justify-content: space-between;
@@ -193,3 +197,16 @@
 /*.hidden {*/
 /*  display: none;*/
 /*}*/
+
+
+#filterBar, #sortBar {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 10px;
+    border: none;
+    background: #f2f2f2;
+    cursor: pointer;
+    border-left: 1px solid #ccc;
+    outline: none;
+}
