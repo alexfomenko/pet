@@ -105,6 +105,11 @@
     margin-left: 10px;
 }
 
+.edit-btn {
+    background: none;
+    border: none;
+}
+
 .company { flex: 2; }  /* 20% ширины */
 .rating  { flex: 1; }  /* 10% */
 .review  { flex: 5; }  /* 50% */
