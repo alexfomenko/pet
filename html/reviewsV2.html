@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/reviewsV2.css">
+
+</head>
+<body>
+
+<div class="wrap">
+    <section class="section">
+        <div class="container">
+
+<!--            Header-->
+            <div class="company-header">
+                <div class="company-title">
+                    <div class="company-logo">Kedi</div>
+                    <div class="company-title-text">
+                        <h1>Kedi Company</h1>
+                        <div class="meta">
+                            <span>📍</span>
+                            <span class="location"> Turkey, Istanbul </span>
+                            <span class="dot"> </span>
+                            <span class="employee-number">🏢 501–1000</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="title-button" type="button">Add review</button>
+            </div>
+
+<!--            Navigation-->
+            <nav class="tabs">
+                <a class="tab">About</a>
+                <a class="tab">Reviews
+                <span class="reviews-number">5</span>
+                </a>
+            </nav>
+
+
+            <!--            Main body-->
+            <div class="main">
+<!--               Aside-->
+                <div class="aside">
+
+                    <div class="card">
+                        <div class="total">Total</div>
+                        <div class="grade-avg"> 4 </div>
+
+<!--                        Progress bar-->
+                        <div class="grades">
+
+                       <div class="grade-row">
+                           <div class="grade-num">5</div>
+                           <div class="progress-bar">
+                            <div class="progress-back"></div>
+                            <div class="progress-front grade-five"></div>
+                           </div>
+                           <div class="grade-pct">100%</div>
+                       </div>
+
+                            <div class="grade-row">
+                                <div class="grade-num">4</div>
+                                <div class="progress-bar">
+                                    <div class="progress-back"></div>
+                                    <div class="progress-front grade-four"></div>
+                                </div>
+                                <div class="grade-pct">70%</div>
+                            </div>
+
+                            <div class="grade-row">
+                                <div class="grade-num">3</div>
+                                <div class="progress-bar">
+                                    <div class="progress-back"></div>
+                                    <div class="progress-front grade-three"></div>
+                                </div>
+                                <div class="grade-pct">40%</div>
+                            </div>
+
+                            <div class="grade-row">
+                                <div class="grade-num">2</div>
+                                <div class="progress-bar">
+                                    <div class="progress-back"></div>
+                                    <div class="progress-front grade-two"></div>
+                                </div>
+                                <div class="grade-pct">20%</div>
+                            </div>
+
+                            <div class="grade-row">
+                                <div class="grade-num">1</div>
+                                <div class="progress-bar">
+                                    <div class="progress-back"></div>
+                                    <div class="progress-front grade-one"></div>
+                                </div>
+                                <div class="grade-pct">5%</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+<!--                Content-->
+                <div class="content">
+<!--                    Content Head-->
+                    <div class="card">
+                    <div class="content-head">
+                        <select name="gradeFilter" class="filterByGrade">
+                            <option> 5 </option>
+                            <option> 4 </option>
+                            <option> 3 </option>
+                            <option> 2 </option>
+                            <option> 1 </option>
+                        </select>
+                        <select name="timeFilter" class="filterByTime">
+                            <option> Newest </option>
+                            <option> Oldest </option>
+                        </select>
+                    </div>
+                    </div>
+<!--                    Content Body-->
+                    <div class="content-reviews" >
+<!--                        Content-article-->
+                        <article class="review card">
+
+<!--                            Review head-->
+                            <div class="review-head">
+                                <div class="person">
+
+                                    <div class="person-logo">OS</div>
+
+                                    <div class="person-data">
+                                    <p class="person-name">Oleh Shevtsov</p>
+                                    <div class="person-about">FullStack Developer · Kyiv · 2020–2026</div>
+                                    </div>
+
+                                </div>
+
+                                <div class="stars">
+                                    <div class="stars-back">
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                    </div>
+                                    <div class="stars-front" style="width: 70%;">
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                        <div class="star"></div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+<!--                            Review body-->
+                            <p class="review-text">Сильная команда и спокойная коммуникация. Процессы понятные, есть пространство для роста.
+                                Нагрузку иногда нужно балансировать, но в целом впечатления очень хорошие.</p>
+
+<!--                            Review footer-->
+
+                            <div class="review-footer">
+                                <div class="date">January 15</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+<script type="module" src="../views/reviewsViewV2.js">
+
+    // Пример: установка рейтинга через JS
+    // function setRating(rating) {
+    //     const percentage = (rating / 5) * 100;
+    //     document.querySelector('.stars-front').style.width = percentage + '%';
+    // }
+
+    // Раскомментируй чтобы протестировать:
+    // setRating(4.5); // 90%
+    // setRating(2.3); // 46%
+</script>
+</body>
+</html>

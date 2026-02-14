@@ -14,11 +14,17 @@ console.log('FORM:', document.getElementById('reviewForm'));
 
 // SHOW FORM
 
-showFormButton.addEventListener('click', () => {
-    // reviewForm.classList.toggle('.hidden');
-    // console.log("Hello")
-    reviewForm.style.display = reviewForm.style.display === 'block' ? 'none' : 'block';
-})
+if(showFormButton) {
+    showFormButton.addEventListener('click', () => {
+        // reviewForm.classList.toggle('.hidden');
+        // console.log("Hello")
+        reviewForm.style.display = reviewForm.style.display === 'block' ? 'none' : 'block';
+    })
+}
+else {
+    console.log("error")
+}
+
 
 // POST REQUEST - SUBMIT REVIEW
 

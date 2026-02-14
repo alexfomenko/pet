@@ -1,0 +1,710 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            background-color: lightblue;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            color: white;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        p {-->
+<!--            font-family: verdana;-->
+<!--            font-size: 20px;-->
+<!--        }-->
+
+<!--        .parent{-->
+<!--            width: 90%;-->
+<!--            height: 70vh;-->
+<!--            border: 1px solid black;-->
+<!--            background-color: cyan;-->
+<!--            margin: 0 auto;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            gap: 20px;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+<!--        .child1, .child2, .child3 {-->
+<!--            /*width: 40%;*/-->
+<!--            /*height: 40%;*/-->
+<!--            flex: 1 1 100px;-->
+<!--            border: 1px solid black;-->
+<!--            background-color: bisque;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<h1>My First CSS Example</h1>-->
+<!--<p>This is a paragraph.</p>-->
+
+<!--<div class="parent">-->
+<!--    <div class="child1"></div>-->
+<!--    <div class="child2"></div>-->
+<!--    <div class="child3"></div>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Страница компании — TechSolutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --bg:#F5F8FF;
+            --card:#FFFFFF;
+            --text:#0F172A;
+            --muted:#64748B;
+            --line:#E6EEF7;
+            --shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+            --shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.06);
+            --primary:#2F6FED;
+            --primary-600:#2458C7;
+            --primary-100:#E8F0FF;
+            --radius:16px;
+            --container: 1180px;
+            --chip:#F3F7FF;
+            --star:#F59E0B;
+        }
+        *{ box-sizing:border-box; }
+        body{
+            margin:0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color:var(--text);
+            background: radial-gradient(1200px 500px at 10% 0%, #EAF2FF 0%, rgba(234,242,255,0) 60%),
+            radial-gradient(900px 450px at 100% 10%, #EEF6FF 0%, rgba(238,246,255,0) 60%),
+            var(--bg);
+        }
+        .wrap{ max-width: var(--container); margin: 26px auto 60px; padding: 0 18px; }
+
+        .panel{
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            overflow:hidden;
+        }
+        .panel-inner{ padding: 18px; }
+
+        /* Header */
+        .company-head{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap: 14px;
+            padding: 8px 8px 14px;
+        }
+        .brand{
+            display:flex;
+            align-items:flex-start;
+            gap: 12px;
+        }
+        .logo{
+            width: 44px; height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #EAF2FF 0%, #DDEBFF 100%);
+            border: 1px solid rgba(47,111,237,.18);
+            display:grid; place-items:center;
+            font-weight: 800; color: rgba(15,23,42,.70);
+        }
+        .brand h1{
+            margin: 2px 0 6px;
+            font-size: 22px;
+            letter-spacing: -0.02em;
+        }
+        .meta{
+            display:flex;
+            flex-wrap:wrap;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 12.5px;
+            align-items:center;
+        }
+        .meta span{ display:inline-flex; align-items:center; gap: 6px; }
+        .meta .dot{ width:4px; height:4px; border-radius:999px; background: rgba(100,116,139,.55); }
+
+        .btn{
+            border: 1px solid rgba(47,111,237,.18);
+            background: #fff;
+            color: var(--primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: .15s ease;
+            box-shadow: 0 6px 14px rgba(15,23,42,0.06);
+            white-space: nowrap;
+        }
+        .btn.primary{
+            background: var(--primary);
+            color: #fff;
+            border-color: rgba(47,111,237,.35);
+            box-shadow: 0 10px 18px rgba(47,111,237,0.22);
+        }
+        .btn.primary:hover{ background: var(--primary-600); }
+
+        /* Tabs */
+        .tabs{
+            display:flex;
+            gap: 18px;
+            align-items:center;
+            padding: 10px 10px 0;
+            border-top: 1px solid var(--line);
+        }
+        .tab{
+            padding: 12px 10px;
+            color: var(--muted);
+            font-weight: 700;
+            font-size: 13px;
+            position: relative;
+            display:inline-flex;
+            align-items:center;
+            gap: 8px;
+        }
+        .tab .badge{
+            font-size: 12px;
+            background: var(--primary-100);
+            color: var(--primary);
+            border: 1px solid rgba(47,111,237,.18);
+            padding: 2px 7px;
+            border-radius: 999px;
+            font-weight: 800;
+        }
+        .tab.active{ color: var(--primary); }
+        .tab.active::after{
+            content:"";
+            position:absolute;
+            left: 10px;
+            right: 10px;
+            bottom: -1px;
+            height: 3px;
+            border-radius: 999px;
+            background: var(--primary);
+        }
+
+        /* Content grid */
+        .content{
+            display:grid;
+            grid-template-columns: 280px 1fr;
+            gap: 14px;
+            padding: 14px 8px 8px;
+        }
+
+        .card{
+            background:#fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-soft);
+            padding: 14px;
+        }
+        .card h3{
+            margin: 0 0 10px;
+            font-size: 14px;
+            letter-spacing: -0.01em;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap: 10px;
+        }
+        .subtle{
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.35;
+        }
+
+        /* Summary */
+        .rating-big{
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin: 6px 0 4px;
+        }
+        .stars{ display:flex; gap: 2px; align-items:center; }
+        .star{
+            width: 14px; height: 14px;
+            display:inline-block;
+            background: conic-gradient(from 0deg, var(--star) 0 100%);
+            -webkit-mask: radial-gradient(circle at 50% 38%, transparent 9px, #000 9px) no-repeat;
+            mask: radial-gradient(circle at 50% 38%, transparent 9px, #000 9px) no-repeat;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+        .bar{
+            height: 8px;
+            width: 100%;
+            background: #EEF4FF;
+            border-radius: 999px;
+            overflow:hidden;
+            border: 1px solid rgba(47,111,237,.10);
+            margin: 10px 0 6px;
+        }
+        .bar > i{
+            display:block;
+            height: 100%;
+            width: 75%;
+            background: linear-gradient(90deg, var(--primary) 0%, #6CA1FF 100%);
+            border-radius: 999px;
+        }
+
+        /* Rating distribution */
+        .dist{
+            margin-top: 10px;
+            display:flex;
+            flex-direction:column;
+            gap: 8px;
+        }
+        .dist-row{
+            display:grid;
+            grid-template-columns: 18px 1fr 30px;
+            gap: 8px;
+            align-items:center;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .mini{
+            height: 7px;
+            background: #F2F6FF;
+            border: 1px solid rgba(47,111,237,.08);
+            border-radius: 999px;
+            overflow:hidden;
+        }
+        .mini > i{ display:block; height:100%; background: rgba(47,111,237,.55); width: 60%; border-radius:999px; }
+        .mini.s4 > i{ width: 28%; }
+        .mini.s3 > i{ width: 18%; }
+        .mini.s2 > i{ width: 10%; }
+        .mini.s1 > i{ width: 6%; }
+
+        /* Filters + search */
+        .toolbar{
+            display:flex;
+            gap: 10px;
+            align-items:center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .search{
+            flex: 1 1 280px;
+            position: relative;
+        }
+        .search input{
+            width: 100%;
+            padding: 11px 12px 11px 38px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            outline:none;
+            font-size: 13px;
+        }
+        .search .ico{
+            position:absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-weight: 900;
+            font-size: 14px;
+        }
+        .select{
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: var(--text);
+            background: #fff;
+            min-width: 120px;
+        }
+
+        /* Chips */
+        .chips{
+            display:flex;
+            gap: 8px;
+            flex-wrap:wrap;
+            margin-bottom: 10px;
+        }
+        .chip{
+            display:inline-flex;
+            align-items:center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: var(--chip);
+            border: 1px solid rgba(47,111,237,.10);
+            color: rgba(15,23,42,.85);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .chip .mini-ico{
+            width: 18px; height: 18px;
+            border-radius: 8px;
+            background: var(--primary-100);
+            border: 1px solid rgba(47,111,237,.15);
+            display:grid; place-items:center;
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        /* About company block */
+        .about{
+            padding: 12px 12px 12px;
+        }
+        .about p{ margin:0; font-size: 13px; color: rgba(15,23,42,.85); line-height: 1.45; }
+
+        /* Reviews */
+        .content-reviews{
+            display:grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 12px;
+        }
+        .review{
+            padding: 14px;
+            display:flex;
+            flex-direction:column;
+            gap: 10px;
+        }
+        .review-head{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap: 10px;
+        }
+        .person{
+            display:flex;
+            gap: 10px;
+            align-items:center;
+        }
+        .p-ava{
+            width: 42px; height: 42px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #EAF2FF 0%, #DDEBFF 100%);
+            border: 1px solid rgba(47,111,237,.16);
+            display:grid; place-items:center;
+            font-weight: 800; color: rgba(15,23,42,.70);
+            flex: 0 0 auto;
+        }
+        .person .nm{ font-weight: 800; font-size: 13px; margin:0; }
+        .person .rw{ font-size: 12px; color: var(--muted); margin-top:2px; }
+
+        .review-title{
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            margin: 0;
+            font-size: 14px;
+        }
+        .review-text{
+            margin: 0;
+            color: rgba(15,23,42,.82);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+        .bullets{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display:flex;
+            flex-direction:column;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(15,23,42,.82);
+        }
+        .bullets li{
+            display:flex;
+            gap: 8px;
+            align-items:flex-start;
+        }
+        .ok{
+            width: 18px; height: 18px;
+            border-radius: 8px;
+            background: rgba(34,197,94,.12);
+            border: 1px solid rgba(34,197,94,.18);
+            color: #16A34A;
+            display:grid; place-items:center;
+            font-weight: 900;
+            font-size: 12px;
+            flex: 0 0 auto;
+        }
+        .review-foot{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(230,238,247,.9);
+            color: var(--muted);
+            font-size: 12px;
+        }
+        .review-foot .stats{
+            display:flex;
+            gap: 14px;
+            align-items:center;
+        }
+        .pill{
+            display:inline-flex;
+            align-items:center;
+            gap: 6px;
+        }
+        .pill b{ color: rgba(15,23,42,.8); }
+
+        /* Responsive */
+        @media (max-width: 1040px){
+            .content{ grid-template-columns: 1fr; }
+            .content-reviews{ grid-template-columns: 1fr; }
+        }
+        @media (max-width: 520px){
+            .company-head{ flex-direction:column; }
+            .tabs{ gap: 8px; flex-wrap: wrap; }
+            .tab{ padding: 10px 8px; }
+            .toolbar{ flex-direction:column; align-items:stretch; }
+            .btn{ width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <section class="panel">
+        <div class="panel-inner">
+
+            <!-- Company header -->
+            <header class="company-head">
+                <div class="brand">
+                    <div class="logo">TS</div>
+                    <div>
+                        <h1>TechSolutions</h1>
+                        <div class="meta">
+                            <span>📍 Hyderabad, India</span>
+                            <span class="dot"></span>
+                            <span>🏢 501–1000</span>
+                            <span class="dot"></span>
+                            <span>💼 Информационные технологии</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn primary" type="button">Добавить отзыв</button>
+            </header>
+
+            <!-- Tabs -->
+            <nav class="tabs" aria-label="Разделы компании">
+                <a class="tab" href="#">Обзор</a>
+                <a class="tab active" href="#">Отзывы <span class="badge">58</span></a>
+                <a class="tab" href="#">Вакансии</a>
+                <a class="tab" href="#">Зарплаты</a>
+            </nav>
+
+            <!-- Content -->
+            <section class="content">
+                <!-- Left side -->
+                <aside>
+                    <div class="card">
+                        <div class="subtle">Всего</div>
+                        <div class="rating-big">4.6</div>
+                        <div class="stars" aria-label="Рейтинг 4.6 из 5">
+                            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star" style="opacity:.25"></span>
+                        </div>
+                        <div class="bar" aria-hidden="true"><i></i></div>
+                        <div class="subtle"><b style="color:rgba(15,23,42,.85)">95%</b> рекомендуют для работы</div>
+
+                        <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+                            <div style="font-weight:800; font-size:13px;">В отзывах</div>
+                            <div class="subtle">по оценкам</div>
+                        </div>
+
+                        <div class="dist">
+                            <div class="dist-row">
+                                <div style="font-weight:800; color:rgba(15,23,42,.75)">5</div>
+                                <div class="mini"><i></i></div>
+                                <div style="text-align:right;">60%</div>
+                            </div>
+                            <div class="dist-row">
+                                <div style="font-weight:800; color:rgba(15,23,42,.75)">4</div>
+                                <div class="mini s4"><i></i></div>
+                                <div style="text-align:right;">28%</div>
+                            </div>
+                            <div class="dist-row">
+                                <div style="font-weight:800; color:rgba(15,23,42,.75)">3</div>
+                                <div class="mini s3"><i></i></div>
+                                <div style="text-align:right;">18%</div>
+                            </div>
+                            <div class="dist-row">
+                                <div style="font-weight:800; color:rgba(15,23,42,.75)">2</div>
+                                <div class="mini s2"><i></i></div>
+                                <div style="text-align:right;">10%</div>
+                            </div>
+                            <div class="dist-row">
+                                <div style="font-weight:800; color:rgba(15,23,42,.75)">1</div>
+                                <div class="mini s1"><i></i></div>
+                                <div style="text-align:right;">6%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top:12px;">
+                        <h3>Сортировать <span class="subtle">по умолчанию</span></h3>
+                        <select class="select" aria-label="Сортировка">
+                            <option selected>Новые</option>
+                            <option>Сначала полезные</option>
+                            <option>Сначала высокие оценки</option>
+                            <option>Сначала низкие оценки</option>
+                        </select>
+                        <div class="subtle" style="margin-top:10px;">Фильтры можно синхронизировать с URL-параметрами (удобно для шаринга).</div>
+                    </div>
+                </aside>
+
+                <!-- Right main -->
+                <div>
+                    <!-- Search + filters -->
+                    <div class="card">
+                        <div class="toolbar">
+                            <div class="search">
+                                <span class="ico">⌕</span>
+                                <input type="search" placeholder="Поиск отзывов..." />
+                            </div>
+                            <select class="select" aria-label="Фильтр по типу">
+                                <option selected>Все</option>
+                                <option>Только удалёнка</option>
+                                <option>Только офис</option>
+                            </select>
+                            <select class="select" aria-label="Фильтр по оценке">
+                                <option selected>★★★★★ и выше</option>
+                                <option>★★★★ и выше</option>
+                                <option>★★★ и выше</option>
+                                <option>★★ и выше</option>
+                                <option>★ и выше</option>
+                            </select>
+                            <select class="select" aria-label="Сортировка">
+                                <option selected>Новые</option>
+                                <option>Полезные</option>
+                            </select>
+                        </div>
+
+                        <div class="chips" aria-label="Теги">
+                            <span class="chip"><span class="mini-ico">⌂</span>Удалённая работа</span>
+                            <span class="chip"><span class="mini-ico">⏱</span>Гибкий график</span>
+                            <span class="chip"><span class="mini-ico">⚡</span>Инновации</span>
+                            <span class="chip"><span class="mini-ico">👥</span>Открытое руководство</span>
+                        </div>
+
+                        <div class="card about" style="box-shadow:none;">
+                            <p>
+                                <b>TechSolutions</b> — динамичная IT-компания, специализирующаяся на разработке веб-приложений,
+                                мобильных приложений и программного обеспечения. Мы создаём решения для клиентов по всему миру.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Reviews list -->
+                    <div class="content-reviews" style="margin-top:12px;">
+                        <article class="card review">
+                            <div class="review-head">
+                                <div class="person">
+                                    <div class="p-ava">АИ</div>
+                                    <div>
+                                        <p class="nm">Алексей Иванов</p>
+                                        <div class="rw">Frontend Developer · Москва · 2020–2023</div>
+                                    </div>
+                                </div>
+                                <div class="stars" aria-label="Оценка 5 из 5">
+                                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                                </div>
+                            </div>
+
+                            <p class="review-title">Отличная компания с гибким графиком!</p>
+                            <p class="review-text">
+                                Сильная команда и спокойная коммуникация. Процессы понятные, есть пространство для роста.
+                                Нагрузку иногда нужно балансировать, но в целом впечатления очень хорошие.
+                            </p>
+
+                            <ul class="bullets">
+                                <li><span class="ok">✓</span>Плюсы: прозрачные процессы, поддержка, гибкость</li>
+                                <li><span class="ok">✓</span>Минусы: местами высокая нагрузка в релизные периоды</li>
+                            </ul>
+
+                            <div class="review-foot">
+                                <div class="subtle">16 января</div>
+                                <div class="stats">
+                                    <span class="pill">♥ <b>150</b></span>
+                                    <span class="pill">💬 <b>27</b></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card review">
+                            <div class="review-head">
+                                <div class="person">
+                                    <div class="p-ava">НС</div>
+                                    <div>
+                                        <p class="nm">Наталья Смирнова</p>
+                                        <div class="rw">Product Manager · Санкт-Петербург · 2019–2022</div>
+                                    </div>
+                                </div>
+                                <div class="stars" aria-label="Оценка 4 из 5">
+                                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star" style="opacity:.25"></span>
+                                </div>
+                            </div>
+
+                            <p class="review-title">Хорошие условия для профессионального роста</p>
+                            <p class="review-text">
+                                Команда сильная, много возможностей учиться. Иногда хочется больше ясности по приоритетам,
+                                но руководители открыты к диалогу.
+                            </p>
+
+                            <ul class="bullets">
+                                <li><span class="ok">✓</span>Плюсы: обучение, культура, адекватная коммуникация</li>
+                                <li><span class="ok">✓</span>Минусы: приоритеты могут меняться быстро</li>
+                            </ul>
+
+                            <div class="review-foot">
+                                <div class="subtle">10 января</div>
+                                <div class="stats">
+                                    <span class="pill">♥ <b>112</b></span>
+                                    <span class="pill">💬 <b>99</b></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card review" style="grid-column: 1 / -1;">
+                            <div class="review-head">
+                                <div class="person">
+                                    <div class="p-ava">ИП</div>
+                                    <div>
+                                        <p class="nm">Иван Петров</p>
+                                        <div class="rw">QA Engineer · Харьков · 2018–2021</div>
+                                    </div>
+                                </div>
+                                <div class="stars" aria-label="Оценка 5 из 5">
+                                    <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                                </div>
+                            </div>
+
+                            <p class="review-title">Сильные процессы и внимательное отношение</p>
+                            <p class="review-text">
+                                Хорошо настроены код-ревью и QA-процессы, легко договариваться. Команда вовлечённая.
+                                За всё время было минимум «политики», больше фокуса на продукт.
+                            </p>
+
+                            <div class="review-foot">
+                                <div class="subtle">2 января</div>
+                                <div class="stats">
+                                    <span class="pill">♥ <b>64</b></span>
+                                    <span class="pill">💬 <b>12</b></span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </section>
+</div>
+</body>
+</html>

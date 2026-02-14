@@ -14,8 +14,8 @@ import {createNewRow} from "../components/newReviewRow.js";
 import {renderPagination} from "../components/reviewsPagination.js";
 // import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "../components/newReviewRow.js";
-import {populateFilterBar} from "../components/reviewsFilterBar.js";
 
+// TODO SUBSTITUTE THIS VARIABLE WITH IMPORT FILE
 export let appState = {
     filterByCompany: null,
     currentPage: 1,
