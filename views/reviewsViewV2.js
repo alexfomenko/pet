@@ -3,6 +3,7 @@ import {appState} from "../appState.js";
 import "../components/reviewsFilterBarV2.js";
 // import "../api/reviewsApiV2.js";
 import {renderReviewsV2} from "../components/newReviewArticleV2.js";
+import "../components/reviewsSortBarV2.js";
 
 document.addEventListener("DOMContentLoaded", async ()=> {
     console.log('hi');
