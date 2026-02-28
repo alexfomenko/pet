@@ -174,6 +174,16 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/appState.js') {
         sendStaticFile(res, 'appState.js', 'application/javascript')
     }
+    else if(req.method === 'GET' && req.url === '/components/reviewsFilterBarV2.js') {
+        sendStaticFile(res, '/components/reviewsFilterBarV2.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/api/reviewsApiV2.js') {
+        sendStaticFile(res, 'api/reviewsApiV2.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/newReviewArticleV2.js') {
+        sendStaticFile(res, 'components/newReviewArticleV2.js', 'application/javascript')
+    }
+
 
     //getting companies for send form
     if(req.method === "GET" && req.url.startsWith("/get-companies")) {
@@ -185,7 +195,7 @@ const server = http.createServer(async(req, res) => {
 
     }
 
-    // getting data
+    // getting reviews
     if(req.method === 'GET' && req.url.startsWith('/get-review')) {
 
         let page = parseInt(query.page) || 1;
@@ -237,6 +247,63 @@ const server = http.createServer(async(req, res) => {
             totalPages,
             filter: company || null,
         });
+    }
+
+    // let parsedUrl = url.parse(req.url, true);
+    // let { pathname, query} = parsedUrl;
+
+    // if(req.method==="GET" && req.url=== `/companies/${company}/reviews`) {
+    console.log(req.url);
+    console.log(pathname);
+    console.log(/^\/companies\/[\w\s]+\/reviews/.test(pathname))
+    if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews/.test(pathname)) {
+        let company= pathname.split('/')[2];
+        let page = parseInt(query.page) || 1;
+        let limit = parseInt(query.limit) || 5;
+        console.log(typeof query.filter);
+        let filter = parseInt(query.filter);
+        console.log(typeof filter);
+
+        let sort = query.sort;
+
+        let reviewsByCompany = notes.filter((companyName) => {
+            return companyName.company === company
+        });
+
+        // console.log(reviewsByCompany);
+
+        if(filter && isNaN(filter) ) {
+            reviewsByCompany=reviewsByCompany.filter((review) => {
+                return Number(review.rating) === filter;
+            })
+        }
+        // console.log(reviewsByCompany);
+
+        if(sort && sort!== "no_sort") {
+            if(sort === "newest") {
+                reviewsByCompany = [...reviewsByCompany].sort((review1, review2) => {
+                    return new Date(review1.date) - new Date(review2.date);
+                })
+            }
+            else if(sort === "oldest") {
+                reviewsByCompany = [...reviewsByCompany].sort((review1, review2) => {
+                    return new Date(review2.date) - new Date(review1.date);
+                })
+            }
+        }
+
+        // console.log(reviewsByCompany);
+
+
+        //TODO add pagination logic
+
+        return sendResponse(res, 200, {
+            page,
+            limit,
+            filter: filter || null,
+            sort: sort || null,
+            items: reviewsByCompany,
+        })
     }
 
     // posting data

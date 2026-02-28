@@ -17,7 +17,7 @@
                 <div class="company-title">
                     <div class="company-logo">Kedi</div>
                     <div class="company-title-text">
-                        <h1>Kedi Company</h1>
+                        <h1 class="company-name">kedi</h1>
                         <div class="meta">
                             <span>📍</span>
                             <span class="location"> Turkey, Istanbul </span>
@@ -105,15 +105,17 @@
                     <div class="card">
                     <div class="content-head">
                         <select name="gradeFilter" class="filterByGrade">
-                            <option> 5 </option>
-                            <option> 4 </option>
-                            <option> 3 </option>
-                            <option> 2 </option>
-                            <option> 1 </option>
+                            <option value="no_filter"> No filter </option>
+                            <option value="5"> 5 </option>
+                            <option value="4"> 4 </option>
+                            <option value="3"> 3 </option>
+                            <option value="2"> 2 </option>
+                            <option value="1"> 1 </option>
                         </select>
                         <select name="timeFilter" class="filterByTime">
-                            <option> Newest </option>
-                            <option> Oldest </option>
+                            <option value="no_sort"> No sort </option>
+                            <option value="newest"> Newest </option>
+                            <option value="oldest"> Oldest </option>
                         </select>
                     </div>
                     </div>
