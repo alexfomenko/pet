@@ -266,6 +266,7 @@ const server = http.createServer(async(req, res) => {
         console.log(typeof query.filter);
         let filter = parseInt(query.filter);
         console.log(typeof filter);
+        console.log(filter)
 
         let sort = query.sort;
 
@@ -273,29 +274,31 @@ const server = http.createServer(async(req, res) => {
             return companyName.company === company
         });
 
-        // console.log(reviewsByCompany);
+        // console.log("array1:", reviewsByCompany);
 
-        if(filter && isNaN(filter) ) {
+        if(filter && !isNaN(filter) ) {
             reviewsByCompany=reviewsByCompany.filter((review) => {
+                // console.log(review.rating);
+                // console.log(Number(review.rating));
                 return Number(review.rating) === filter;
             })
         }
-        // console.log(reviewsByCompany);
+        // console.log("array2:", reviewsByCompany);
 
         if(sort && sort!== "no_sort") {
             if(sort === "newest") {
                 reviewsByCompany = [...reviewsByCompany].sort((review1, review2) => {
-                    return new Date(review1.date) - new Date(review2.date);
+                    return new Date(review2.date) - new Date(review1.date);
                 })
             }
             else if(sort === "oldest") {
                 reviewsByCompany = [...reviewsByCompany].sort((review1, review2) => {
-                    return new Date(review2.date) - new Date(review1.date);
+                    return new Date(review1.date) - new Date(review2.date);
                 })
             }
         }
 
-        // console.log(reviewsByCompany);
+        console.log("array3:", reviewsByCompany);
 
 
         //TODO add pagination logic

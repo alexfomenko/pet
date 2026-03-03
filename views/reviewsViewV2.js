@@ -4,14 +4,16 @@ import "../components/reviewsFilterBarV2.js";
 // import "../api/reviewsApiV2.js";
 import {renderReviewsV2} from "../components/newReviewArticleV2.js";
 import "../components/reviewsSortBarV2.js";
+import {getCompanyReviews} from "../api/reviewsApiV2.js";
 
 document.addEventListener("DOMContentLoaded", async ()=> {
-    console.log('hi');
-    let response = await getReviews(appState.currentPage, appState.currentPageLimit);
-    console.log(response)
-    let reviews = response.items;
-    console.log(reviews)
-    renderReviewsV2(reviews);
+    // console.log('hi');
+    let company = document.querySelector('.company-name').textContent;
+    // let response = await getReviews(appState.currentPage, appState.currentPageLimit);
+    let results = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
+    console.log(results)
+
+    renderReviewsV2(results.items);
 })
 //
 // export function renderReviewsV2(reviews) {

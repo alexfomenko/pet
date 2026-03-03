@@ -78,6 +78,13 @@ export function renderReviewsV2(reviews) {
         reviewFooter.classList.add('review-footer');
         article.appendChild(reviewFooter);
 
+        //footer - date
+
+        let reviewFooterDate = document.createElement('div');
+        reviewFooterDate.classList.add('date');
+        reviewFooterDate.textContent = review.date;
+        reviewFooter.appendChild(reviewFooterDate);
+
         //
         reviewsContainer.appendChild(article);
     })
