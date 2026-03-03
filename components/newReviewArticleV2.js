@@ -82,7 +82,12 @@ export function renderReviewsV2(reviews) {
 
         let reviewFooterDate = document.createElement('div');
         reviewFooterDate.classList.add('date');
-        reviewFooterDate.textContent = review.date;
+
+        reviewFooterDate.textContent =  new Date(review.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
         reviewFooter.appendChild(reviewFooterDate);
 
         //
