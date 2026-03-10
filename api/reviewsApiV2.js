@@ -5,12 +5,12 @@ export async function getCompanyReviews(company, page, limit, filter, sort) {
 
         if(filter && filter!== "no_filter") url += `&filter=${filter}`;
         if(sort && sort!=="no_sort") url+= `&sort=${sort}`;
-        console.log(url);
+        // console.log(url);
         let sendRequest = await fetch(url);
 
         if(!sendRequest.ok) {
             return {
-                success: true,
+                success: false,
                 status:sendRequest.status,
                 text: sendRequest.statusText,
                 items: null,
@@ -32,5 +32,31 @@ export async function getCompanyReviews(company, page, limit, filter, sort) {
     }
     catch (error) {
         throw error;
+    }
+}
+
+// GET /api/companies/:id/reviews/stats
+export async function calculateGrades(company) {
+    let url = `/companies/${company}/reviews/stats`
+    let sendRequest = await fetch(url);
+
+    if(!sendRequest) {
+        return {
+            avgRating: null,
+            ratings: null,
+        }
+    }
+
+    let parsedJson;
+    try {
+        parsedJson = await sendRequest.json();
+    }
+    catch (error) {
+        console.log(`Failed to parse response body: ${error}`)
+    }
+
+    return {
+        avgRating: parsedJson.avgRating,
+        ratings: parsedJson.ratings, // []
     }
 }

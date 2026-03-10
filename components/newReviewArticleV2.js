@@ -1,6 +1,6 @@
 export function renderReviewsV2(reviews) {
     let reviewsContainer = document.querySelector('.content-reviews');
-    console.log(reviewsContainer);
+    // console.log(reviewsContainer);
     reviews.forEach((review) => {
         let article = document.createElement('article');
         article.classList.add('review', 'card');

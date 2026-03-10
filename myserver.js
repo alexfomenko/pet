@@ -50,7 +50,7 @@ async function getNotesFromFile() {
 async function getUsersFromFile() {
     try{
         let users = await fs.readFile(USERS_FILE, 'utf-8');
-        console.log(users);
+        // console.log(users);
         return users.length > 0 ? JSON.parse(users) : [];
     }
     catch (error) {
@@ -64,7 +64,7 @@ async function saveNoteToFile(file, array) {
 }
 
 function sendResponse(res, responseCode, message) {
-    console.log("hit0");
+    // console.log("hit0");
     res.writeHead(responseCode, {'Content-Type' : 'application/json'})
     res.end(JSON.stringify(message));
 }
@@ -129,7 +129,7 @@ const server = http.createServer(async(req, res) => {
          sendStaticFile(res, 'views/oldFirstScript.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/views/reviewsView.js') {
-        console.log('hi')
+        // console.log('hi')
          sendStaticFile(res, 'views/reviewsView.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/api/authApi.js') {
@@ -186,12 +186,14 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/components/reviewsSortBarV2.js') {
         sendStaticFile(res, 'components/reviewsSortBarV2.js', 'application/javascript')
     }
-
+    else if(req.method === 'GET' && req.url === '/components/gradeCardV2.js') {
+        sendStaticFile(res, 'components/gradeCardV2.js', 'application/javascript')
+    }
 
     //getting companies for send form
     if(req.method === "GET" && req.url.startsWith("/get-companies")) {
         let allCompanies = Array.from(new Set(notes.map((item) => item.company))); //only unique
-        console.log(allCompanies);
+        // console.log(allCompanies);
         // return sendResponse(res, 200, {allCompanies}); // {allCompanies: allCompanies} 1st option - object
         return sendResponse(res, 200, allCompanies); // 2nd option - array
 
@@ -252,26 +254,26 @@ const server = http.createServer(async(req, res) => {
         });
     }
 
-    // let parsedUrl = url.parse(req.url, true);
-    // let { pathname, query} = parsedUrl;
+    // GET COMPANY REVIEWS
 
     // if(req.method==="GET" && req.url=== `/companies/${company}/reviews`) {
-    console.log(req.url);
+    // console.log(req.url);
     console.log(pathname);
-    console.log(/^\/companies\/[\w\s]+\/reviews/.test(pathname))
-    if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews/.test(pathname)) {
+    console.log("path 1", /^\/companies\/[\w\s]+\/reviews$/.test(pathname))
+
+    if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews$/.test(pathname)) {
         let company= pathname.split('/')[2];
         let page = parseInt(query.page) || 1;
         let limit = parseInt(query.limit) || 5;
-        console.log(typeof query.filter);
+        // console.log(typeof query.filter);
         let filter = parseInt(query.filter);
-        console.log(typeof filter);
-        console.log(filter)
+        // console.log(typeof filter);
+        // console.log(filter)
 
         let sort = query.sort;
 
         let reviewsByCompany = notes.filter((companyName) => {
-            return companyName.company === company
+            return companyName.company.toLowerCase() === company.toLowerCase();
         });
 
         // console.log("array1:", reviewsByCompany);
@@ -298,7 +300,7 @@ const server = http.createServer(async(req, res) => {
             }
         }
 
-        console.log("array3:", reviewsByCompany);
+        // console.log("array3:", reviewsByCompany);
 
 
         //TODO add pagination logic
@@ -309,6 +311,78 @@ const server = http.createServer(async(req, res) => {
             filter: filter || null,
             sort: sort || null,
             items: reviewsByCompany,
+        })
+    }
+
+
+    console.log("Log 1")
+    console.log(pathname);
+    console.log("path2", /^\/companies\/[\w\s]+\/reviews\/stats/.test(pathname))
+
+    if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews\/stats/.test(pathname)) {
+        console.log("Log 2")
+
+        let company = pathname.split('/')[2];
+        console.log("companyName:", company);
+
+        let reviewsByCompany = notes.filter((item) => {
+            return item.company.toLowerCase() === company.toLowerCase();
+        })
+        console.log(reviewsByCompany);
+
+        let avgRating = reviewsByCompany.reduce((total, item) => {
+            return total + Number(item.rating) ;
+        }, 0)/ reviewsByCompany.length;
+        console.log("avgRating:", avgRating);
+
+        // PART 1 find rating and quantity
+        let ratings = []; // [{}, {}, {}]
+        // [
+        //     { rating: '4', number: 4 },
+        //     { rating: '2', number: 4 },
+        //     { rating: '3', number: 14 },
+        //     { rating: '1', number: 2 },
+        //     { rating: '5', number: 1 },
+        //     { rating: '333', number: 1 }
+        // ]
+
+        let ratingStars = []; // 5, 4, 3 ...
+        for (let item1 of [...reviewsByCompany]) {
+            if(!ratingStars.includes(item1.rating)) {
+                ratingStars.push(item1.rating)
+                ratings.push({
+                    rating: item1.rating,
+                    quantity: 1,
+                })
+            }
+            //otherwise
+            else {
+                for(let item2 of ratings) {
+                    if(item2.rating === item1.rating) {
+                        item2.quantity += 1;
+                    }
+                }
+            }
+        }
+
+        console.log(ratings);
+
+        //PART 2 find percentage
+        for(let item of ratings) {
+            let percent = item.quantity / reviewsByCompany.length * 100;
+            item.percentage = percent;
+        }
+
+        //PART 3 sort by rating
+        ratings.sort((item1, item2) => {
+            return item1.rating - item2.rating; // 5 > 1
+        })
+
+        console.log(ratings);
+
+        return sendResponse(res, 200, {
+            avgRating,
+            ratings,
         })
     }
 
@@ -468,7 +542,7 @@ const server = http.createServer(async(req, res) => {
                     {userId: user.id, email: user.email},
                     SECRET,
                     {expiresIn: '1h'});
-                console.log("hit4");
+                // console.log("hit4");
 
                 //sending response to the server
                 return sendResponse(res, 200, {
