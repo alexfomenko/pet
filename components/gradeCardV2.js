@@ -68,13 +68,14 @@ export async function showGradeRows(company) {
 
     let gradeAvg = document.querySelector(".grade-avg");
     gradeAvg.textContent = avgGrade;
-//
+
+    //
     let progressFrontAll = document.querySelectorAll(".progress-front");
 
     let gradePctAll = document.querySelectorAll(".grade-pct");
 
     for (let i= 0; i < grades.length; i++) {
-        progressFrontAll[i].style.width = `${grades[i].percentage} + %`;
-        gradePctAll[i].textContent = `${grades[i].percentage} + %`;
+        progressFrontAll[i].style.width = `${grades[i].percentage}%`;
+        gradePctAll[i].textContent = `${grades[i].percentage}%`;
     }
 }

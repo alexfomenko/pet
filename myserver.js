@@ -322,6 +322,7 @@ const server = http.createServer(async(req, res) => {
     if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews\/stats/.test(pathname)) {
         console.log("Log 2")
 
+        //finding company
         let company = pathname.split('/')[2];
         console.log("companyName:", company);
 
@@ -330,42 +331,60 @@ const server = http.createServer(async(req, res) => {
         })
         console.log(reviewsByCompany);
 
+        //finding avg rating
         let avgRating = reviewsByCompany.reduce((total, item) => {
             return total + Number(item.rating) ;
         }, 0)/ reviewsByCompany.length;
         console.log("avgRating:", avgRating);
 
         // PART 1 find rating and quantity
-        let ratings = []; // [{}, {}, {}]
+        // let ratings = []; // [{}, {}, {}]
         // [
         //     { rating: '4', number: 4 },
         //     { rating: '2', number: 4 },
-        //     { rating: '3', number: 14 },
-        //     { rating: '1', number: 2 },
-        //     { rating: '5', number: 1 },
-        //     { rating: '333', number: 1 }
         // ]
 
-        let ratingStars = []; // 5, 4, 3 ...
-        for (let item1 of [...reviewsByCompany]) {
-            if(!ratingStars.includes(item1.rating)) {
-                ratingStars.push(item1.rating)
-                ratings.push({
-                    rating: item1.rating,
-                    quantity: 1,
-                })
-            }
-            //otherwise
-            else {
-                for(let item2 of ratings) {
-                    if(item2.rating === item1.rating) {
-                        item2.quantity += 1;
-                    }
-                }
+        // APPROACH TWO
+
+        let ratings = [
+            {rating: 5, quantity: 0 },
+            {rating: 4, quantity: 0 },
+            {rating: 3, quantity: 0 },
+            {rating: 2, quantity: 0 },
+            {rating: 1, quantity: 0 },
+        ]
+
+        for(let item1 of [...reviewsByCompany]) {
+            for(let item2 of ratings)
+                if(Number(item1.rating) === Number(item2.rating)) {
+                item2.quantity += 1;
             }
         }
-
         console.log(ratings);
+
+
+        // APPROACH ONE
+
+        // let ratingStars = []; // 5, 4, 3 ...
+        // for (let item1 of [...reviewsByCompany]) {
+        //     if(!ratingStars.includes(item1.rating)) {
+        //         ratingStars.push(item1.rating)
+        //         ratings.push({
+        //             rating: item1.rating,
+        //             quantity: 1,
+        //         })
+        //     }
+        //     //otherwise
+        //     else {
+        //         for(let item2 of ratings) {
+        //             if(item2.rating === item1.rating) {
+        //                 item2.quantity += 1;
+        //             }
+        //         }
+        //     }
+        // }
+        //
+        // console.log(ratings);
 
         //PART 2 find percentage
         for(let item of ratings) {
@@ -375,9 +394,8 @@ const server = http.createServer(async(req, res) => {
 
         //PART 3 sort by rating
         ratings.sort((item1, item2) => {
-            return item1.rating - item2.rating; // 5 > 1
+            return item2.rating - item1.rating; // 5 > 1
         })
-
         console.log(ratings);
 
         return sendResponse(res, 200, {
