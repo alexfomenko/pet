@@ -189,6 +189,9 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/components/gradeCardV2.js') {
         sendStaticFile(res, 'components/gradeCardV2.js', 'application/javascript')
     }
+    else if(req.method === 'GET' && req.url === '/components/reviewsPaginationV2.js') {
+        sendStaticFile(res, 'components/reviewsPaginationV2.js', 'application/javascript')
+    }
 
     //getting companies for send form
     if(req.method === "GET" && req.url.startsWith("/get-companies")) {
@@ -229,12 +232,10 @@ const server = http.createServer(async(req, res) => {
             notesFilteredAndSorted = [...notesFilteredAndSorted].sort((review1, review2) => review2.rating - review1.rating);
         }
 
-
         //determine pagination start and end
         let start = (page -1) * limit;
         let end = start + limit;
 
-        // let paginatedItems = notes.slice(start, end);
         let paginatedItems = notesFilteredAndSorted.slice(start, end);
 
         //determine totalItems and totalPages
@@ -264,12 +265,10 @@ const server = http.createServer(async(req, res) => {
     if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews$/.test(pathname)) {
         let company= pathname.split('/')[2];
         let page = parseInt(query.page) || 1;
-        let limit = parseInt(query.limit) || 5;
-        // console.log(typeof query.filter);
+        let limit = parseInt(query.limit) || 3;
         let filter = parseInt(query.filter);
         // console.log(typeof filter);
         // console.log(filter)
-
         let sort = query.sort;
 
         let reviewsByCompany = notes.filter((companyName) => {
@@ -302,15 +301,27 @@ const server = http.createServer(async(req, res) => {
 
         // console.log("array3:", reviewsByCompany);
 
-
         //TODO add pagination logic
+        // 1- determine pagination range
+        let paginationRangeStart = (page - 1) * limit;
+        let paginationRangeEnd = paginationRangeStart + limit;
+
+        // 2 -get reviews data according to pagination range
+        let reviewsByCompanyPerPage = reviewsByCompany.slice(paginationRangeStart, paginationRangeEnd);
+
+        // 3 - optional: determine total amount of reviews and, accordingly, number of pages
+        let reviewsTotalNumber = reviewsByCompany.length;
+        let pagesTotalNumber = Math.ceil(reviewsTotalNumber / limit);
 
         return sendResponse(res, 200, {
+            company,
             page,
             limit,
             filter: filter || null,
             sort: sort || null,
-            items: reviewsByCompany,
+            items: reviewsByCompanyPerPage,
+            reviewsTotalNumber,
+            pagesTotalNumber
         })
     }
 

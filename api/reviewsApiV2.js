@@ -27,8 +27,15 @@ export async function getCompanyReviews(company, page, limit, filter, sort) {
             success: true,
             status:sendRequest.status,
             text: sendRequest.statusText,
-            items: parsedJsonResponse.items,
+            ...parsedJsonResponse,
         }
+        // без spread — вручную
+        // return {
+        //     success: true,
+        //     items: parsedJsonResponse.items,
+        //     pagesTotalNumber: parsedJsonResponse.pagesTotalNumber,
+        //     reviewsTotalNumber: parsedJsonResponse.reviewsTotalNumber,
+        // }
     }
     catch (error) {
         throw error;
