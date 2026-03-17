@@ -58,12 +58,12 @@ import {calculateGrades} from "../api/reviewsApiV2.js";
 export async function showGradeRows(company) {
     // let company = document.querySelector('.company-name').textContent;
     let request = await calculateGrades(company);
-    console.log(request);
+    // console.log(request);
     let avgGrade = request.avgRating;
-    console.log(avgGrade)
+    // console.log(avgGrade)
     let grades = request.ratings;
-    console.log(grades)
-    console.log(grades.length)
+    // console.log(grades)
+    // console.log(grades.length)
 
 
     let gradeAvg = document.querySelector(".grade-avg");

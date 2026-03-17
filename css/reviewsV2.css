@@ -342,4 +342,9 @@ body {
     margin-top: 30px;
 }
 
+.pagination .btn-active {
+    background: #6CA1FF;
+}
+
+
 

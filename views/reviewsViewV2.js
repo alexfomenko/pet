@@ -8,7 +8,7 @@ import {getCompanyReviews} from "../api/reviewsApiV2.js";
 // import "../components/gradeCardV2.js"
 import {showGradeRows} from "../components/gradeCardV2.js";
 import "../components/reviewsPaginationV2.js";
-import {renderPagination} from "../components/reviewsPaginationV2.js";
+import {renderPaginationV2} from "../components/reviewsPaginationV2.js";
 
 
 
@@ -18,13 +18,12 @@ document.addEventListener("DOMContentLoaded", async ()=> {
 
     //showing all articles
     let results = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
-    // console.log(results)
     renderReviewsV2(results.items);
 
     //showing all grades
     await showGradeRows(company);
 
     //show pagination
-    await renderPagination(company);
+    await renderPaginationV2(company);
 })
 

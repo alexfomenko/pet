@@ -1,5 +1,6 @@
 export function renderReviewsV2(reviews) {
     let reviewsContainer = document.querySelector('.content-reviews');
+    reviewsContainer.innerHTML = "";
     // console.log(reviewsContainer);
     reviews.forEach((review) => {
         let article = document.createElement('article');
