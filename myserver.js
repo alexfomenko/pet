@@ -192,6 +192,10 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/components/reviewsPaginationV2.js') {
         sendStaticFile(res, 'components/reviewsPaginationV2.js', 'application/javascript')
     }
+    else if(req.method === 'GET' && req.url === '/components/reviewFormV2.js') {
+        sendStaticFile(res, 'components/reviewFormV2.js', 'application/javascript')
+    }
+
 
     //getting companies for send form
     if(req.method === "GET" && req.url.startsWith("/get-companies")) {

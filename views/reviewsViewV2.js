@@ -9,8 +9,7 @@ import {getCompanyReviews} from "../api/reviewsApiV2.js";
 import {showGradeRows} from "../components/gradeCardV2.js";
 import "../components/reviewsPaginationV2.js";
 import {renderPaginationV2} from "../components/reviewsPaginationV2.js";
-
-
+import "../components/reviewFormV2.js"
 
 document.addEventListener("DOMContentLoaded", async ()=> {
     // console.log('hi');
