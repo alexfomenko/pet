@@ -13,4 +13,4 @@ overlay.addEventListener('click',(e) => {
     }
 })
 
-//TODO 1 - gpt 2 - form normalise 3 - send review onclick 4 - decide on name and email in the form
+//TODO 1 - form normalise 2 - send review onclick 3 - decide on name and email in the form

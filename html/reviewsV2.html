@@ -184,17 +184,51 @@
 <!--Modal-->
 <div class="modal-overlay" id="overlay">
 <div class="modal">
-    <h3> Write your review</h3>
 
-    <label for="company_rating">Select Rating</label>
-    <input type="number" id="company_rating" placeholder="1-5" min="1" max="5">
+    <div class="modal-header">
+        <h3> Write your review</h3>
+        <button class="close-btn">×</button>
+    </div>
 
-    <label for="company_review">Write your review</label>
-    <textarea id="company_review" placeholder="Share your experience..."></textarea>
+    <div class="modal-body">
+        <div class="modal-rating">
+            <label for="company_rating" class="form-label">Select Rating</label>
+            <input type="number" id="company_rating" placeholder="1-5" min="1" max="5">
+        </div>
 
-    <button class="send">Send review</button>
+        <div class="modal-review">
+            <label for="company_review" class="form-label">Write your review</label>
+            <textarea id="company_review" placeholder="Share your experience..."></textarea>
+        </div>
+
+<!--        Char count-->
+        <div class="char-count">0/500 </div>
+<!--Personal data-->
+        <div class="personal-data">
+
+            <div class="person-data">
+            <label for="person_name">Your name</label>
+            <input type="text" id="person_name" placeholder="Your name">
+            </div>
+
+            <div class="person-data">
+                <label for="person_email">Your email</label>
+                <input type="email" id="person_email" placeholder="Your email">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="submit-btn">Send review</button>
+        <button class="cancel-btn ">Cancel</button>
+    </div>
+
 </div>
 </div>
+<!--Modal-->
+
 <script type="module" src="../views/reviewsViewV2.js">
 
     // Пример: установка рейтинга через JS
@@ -209,3 +243,5 @@
 </script>
 </body>
 </html>
+
+<!--TODO  modal-footer -->
