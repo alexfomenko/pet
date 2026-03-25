@@ -428,7 +428,7 @@ const server = http.createServer(async(req, res) => {
             try {
                 let parsedJson = JSON.parse(body);
                 // let date = new Date();
-                let note = {id: uuidv4(), company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, date: parsedJson.date};
+                let note = {id: uuidv4(), company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, name:parsedJson.name, email:parsedJson.email, date: parsedJson.date};
 
                 //update notes array - temporary storage
                 notes.push(note);
