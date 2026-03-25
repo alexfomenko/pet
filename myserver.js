@@ -278,7 +278,6 @@ const server = http.createServer(async(req, res) => {
         let reviewsByCompany = notes.filter((companyName) => {
             return companyName.company.toLowerCase() === company.toLowerCase();
         });
-
         // console.log("array1:", reviewsByCompany);
 
         if(filter && !isNaN(filter) ) {
@@ -303,9 +302,6 @@ const server = http.createServer(async(req, res) => {
             }
         }
 
-        // console.log("array3:", reviewsByCompany);
-
-        //TODO add pagination logic
         // 1- determine pagination range
         let paginationRangeStart = (page - 1) * limit;
         let paginationRangeEnd = paginationRangeStart + limit;

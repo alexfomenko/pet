@@ -30,7 +30,7 @@ export function renderReviewsV2(reviews) {
         //head-1-data-personDataName
         let personDataName = document.createElement('p');
         personDataName.classList.add('person-name');
-        personDataName.textContent = ""; // TO BE ADDED
+        personDataName.textContent = `${review.name}`;
         personData.appendChild(personDataName);
 
         //head-1-data-personDataAbout
