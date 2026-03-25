@@ -58,4 +58,4 @@ overlay.addEventListener('click',(e) => {
     }
 })
 
-//TODO 2 - change server for sendReview making name and email optional 3 - send post update
+//TODO 1 - show name of the reviewer 3 - add errors about compulsory fields in modal
