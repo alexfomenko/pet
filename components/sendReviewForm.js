@@ -25,26 +25,6 @@ else {
     console.log("error")
 }
 
-
-// POST REQUEST - SUBMIT REVIEW
-
-//sending data to the server
-// async function sendPostRequest(data) {
-//     try {
-//         let sendRequest = await fetch('/submit-review', {
-//             method: 'POST',
-//             headers: {'Content-Type': 'application/json'},
-//             body: JSON.stringify(data),
-//         });
-//         let json = await sendRequest.json();
-//         return {ok: sendRequest.ok, status: sendRequest.status, json};
-//     }
-//     catch (error) {
-//         throw new Error('Failed to send the data');
-//     }
-// }
-
-//
 sendReviewButton.addEventListener('click', async (e) => {
     // e.preventDefault(); is required only for submit
 
@@ -80,7 +60,6 @@ sendReviewButton.addEventListener('click', async (e) => {
     };
 
     //adding review to the page if the request was successful
-
     let requestResult = await sendPostRequest(data);
     let reviewId = requestResult.json.id;
     console.log(reviewId)

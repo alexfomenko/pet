@@ -203,11 +203,9 @@ const server = http.createServer(async(req, res) => {
         // console.log(allCompanies);
         // return sendResponse(res, 200, {allCompanies}); // {allCompanies: allCompanies} 1st option - object
         return sendResponse(res, 200, allCompanies); // 2nd option - array
-
-
     }
 
-    // getting reviews
+    // GET ALL REVIEWS
     if(req.method === 'GET' && req.url.startsWith('/get-review')) {
 
         let page = parseInt(query.page) || 1;
@@ -330,6 +328,8 @@ const server = http.createServer(async(req, res) => {
     console.log(pathname);
     console.log("path2", /^\/companies\/[\w\s]+\/reviews\/stats/.test(pathname))
 
+    //GET COMPANY GRADES
+
     if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews\/stats/.test(pathname)) {
         console.log("Log 2")
 
@@ -373,7 +373,6 @@ const server = http.createServer(async(req, res) => {
         }
         console.log(ratings);
 
-
         // APPROACH ONE
 
         // let ratingStars = []; // 5, 4, 3 ...
@@ -410,7 +409,7 @@ const server = http.createServer(async(req, res) => {
         console.log(ratings);
 
         return sendResponse(res, 200, {
-            avgRating,
+            avgRating: Math.round(avgRating),
             ratings,
         })
     }

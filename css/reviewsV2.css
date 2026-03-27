@@ -436,6 +436,12 @@ textarea#company_review{
     color: #333;
 }
 
+.error{
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
 /*personal data*/
 .personal-data{
     display: grid;
