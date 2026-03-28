@@ -442,6 +442,17 @@ textarea#company_review{
     margin-top: 4px;
 }
 
+/*rating stars*/
+.star-rating span {
+    cursor: pointer;
+    font-size: 24px;
+    color: grey;
+}
+
+.star-rating span.active {
+    color: gold;
+}
+
 /*personal data*/
 .personal-data{
     display: grid;

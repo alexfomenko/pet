@@ -5,15 +5,34 @@ import {appState} from "../appState.js";
 
 
 let addReviewButton =  document.querySelector('.title-button');
-let closeButton = document.querySelector('.close-btn');
 let overlay = document.getElementById('overlay');
+let modal = document.querySelector('.modal');
+let closeButton = document.querySelector('.close-btn');
 let sendReviewButton = document.querySelector('.submit-btn');
 let cancelButton = document.querySelector('.cancel-btn');
-let modal = document.querySelector('.modal');
+
+let rating = document.querySelector('#company_rating_2');
+let review = document.querySelector('#company_review');
+
+let ratingErrorField = document.querySelector('.rating-error');
+let reviewErrorField = document.querySelector('.review-error');
 
 addReviewButton.addEventListener('click', async (e) => {
+    //show modal
     // modal.style.display = 'flex';
     overlay.classList.add('active');
+
+    //clear form
+    document.querySelectorAll('.star-rating span').forEach((star) => {
+        star.classList.remove('active');
+    })
+    document.querySelector('#company_rating_2').value = "";
+    ratingErrorField.classList.remove('error');
+    ratingErrorField.textContent = '';
+
+    review.value = "";
+    reviewErrorField.classList.remove('error');
+    reviewErrorField.textContent = '';
 });
 [closeButton, cancelButton].forEach(btn => {
     btn.addEventListener('click', () => {
@@ -30,7 +49,7 @@ overlay.addEventListener('click',(e) => {
 
 //LIVE TESTING ON INPUT
 modal.addEventListener('input', (e) => {
-    if(e.target.id === "company_rating" || e.target.id === "company_review") {
+    if(e.target.id === "company_rating_2" || e.target.id === "company_review") {
         validateForm();
         //!validateForm() — если форма ок (true), то !true = false = кнопка не disabled.
         // Если не ок (false), то !false = true = кнопка disabled.
@@ -40,7 +59,7 @@ modal.addEventListener('input', (e) => {
 
 //SHOWING ERRORS WHEN LEAVING THE FIELD
 modal.addEventListener('blur', (e) => {
-    if(e.target.id === "company_rating" || e.target.id === "company_review") {
+    if(e.target.id === "company_rating_2" || e.target.id === "company_review") {
         validateForm();
         // sendReviewButton.disabled =!validateForm();
     }
@@ -48,8 +67,10 @@ modal.addEventListener('blur', (e) => {
 
 //SEND FORM
 sendReviewButton.addEventListener('click', async (e) => {
+    if(!validateForm()) return;
     let company = document.querySelector('.company-name').textContent;
-    let rating = Number(document.getElementById('company_rating').value);
+    // let rating = Number(document.getElementById('company_rating').value);
+    let rating = Number(document.getElementById('company_rating_2').value);
     let review = document.getElementById('company_review').value;
     let name = document.getElementById('person_name').value; //TODO
     let email = document.getElementById('person_email').value; //TODO
@@ -74,7 +95,7 @@ sendReviewButton.addEventListener('click', async (e) => {
         date,
     };
 
-    if(validateForm()) {
+    // if(validateForm()) {
         // sendReviewButton.disabled = false;
         let request = await sendPostRequest(data);
         // let reviewId = requestResult.json.id; //TODO do I need ?
@@ -87,15 +108,16 @@ sendReviewButton.addEventListener('click', async (e) => {
             //TODO add clear form
             overlay.classList.remove('active'); //hide form
         }
-    }
+    // }
 })
 
 function validateForm() {
     let isValid = true;
-    let rating = document.querySelector('#company_rating');
-    let review = document.querySelector('#company_review');
-    const ratingErrorField = document.querySelector('.rating-error');
-    const reviewErrorField = document.querySelector('.review-error');
+    // let rating = document.querySelector('#company_rating');
+    // let rating = document.querySelector('#company_rating_2');
+    // let review = document.querySelector('#company_review');
+    // let ratingErrorField = document.querySelector('.rating-error');
+    // let reviewErrorField = document.querySelector('.review-error');
 
     // if(e.target.id === "company_rating") {
     let ratingValue = Number(rating.value);
@@ -127,3 +149,16 @@ function validateForm() {
     return isValid;
 }
 
+//rating stars
+document.querySelectorAll('.star-rating span').forEach((star) => {
+    star.addEventListener('click', (e) => {
+        let starValue = star.dataset.value;
+        document.querySelector('#company_rating_2').value = starValue;
+
+        document.querySelectorAll('.star-rating span').forEach((star, index) => {
+            star.classList.toggle('active', index < starValue);
+        })
+        ratingErrorField.classList.remove('error');
+        ratingErrorField.textContent = '';
+    })
+})

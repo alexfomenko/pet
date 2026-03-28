@@ -191,11 +191,21 @@
     </div>
 
     <div class="modal-body">
-        <div class="modal-rating">
-            <label for="company_rating" class="form-label">Select Rating</label>
-            <input type="number" id="company_rating" placeholder="1-5" min="1" max="5">
-        </div>
+<!--        <div class="modal-rating">-->
+<!--            <label for="company_rating" class="form-label">Select Rating</label>-->
+<!--            <input type="number" id="company_rating" placeholder="1-5" min="1" max="5">-->
+<!--        </div>-->
 
+<!--        stars added-->
+        <div class="star-rating">
+            <span data-value="1">★</span>
+            <span data-value="2">★</span>
+            <span data-value="3">★</span>
+            <span data-value="4">★</span>
+            <span data-value="5">★</span>
+        </div>
+        <input type="hidden" id="company_rating_2" value="">
+<!--stars added end-->
         <div class="rating-error"></div>
 
         <div class="modal-review">
