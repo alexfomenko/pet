@@ -116,6 +116,9 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/html/reviewsV2') {
         sendStaticFile(res, 'html/reviewsV2.html', 'text/html')
     }
+    else if(req.method === 'GET' && req.url === '/html/companyAbout') {
+        sendStaticFile(res, 'html/companyAbout.html', 'text/html')
+    }
     else if(req.method === 'GET' && req.url === '/css/reviews.css') {
          sendStaticFile(res, 'css/reviews.css', 'text/css')
     }
@@ -124,6 +127,9 @@ const server = http.createServer(async(req, res) => {
     }
     else if(req.method === 'GET' && req.url === '/css/reviewsV2.css') {
         sendStaticFile(res, 'css/reviewsV2.css', 'text/css')
+    }
+    else if(req.method === 'GET' && req.url === '/css/companyAbout.css') {
+        sendStaticFile(res, 'css/companyAbout.css', 'text/css')
     }
     else if(req.method === 'GET' && req.url === '/views/oldFirstScript.js') {
          sendStaticFile(res, 'views/oldFirstScript.js', 'application/javascript')
@@ -170,6 +176,9 @@ const server = http.createServer(async(req, res) => {
     }
     else if(req.method === 'GET' && req.url === '/views/reviewsViewV2.js') {
         sendStaticFile(res, 'views/reviewsViewV2.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/views/companyAboutView.js') {
+        sendStaticFile(res, 'views/companyAboutView.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/appState.js') {
         sendStaticFile(res, 'appState.js', 'application/javascript')
