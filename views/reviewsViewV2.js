@@ -1,11 +1,8 @@
-import {getReviews} from "../api/reviewsApi.js";
 import {appState} from "../appState.js";
 import "../components/reviewsFilterBarV2.js";
-// import "../api/reviewsApiV2.js";
 import {renderReviewsV2} from "../components/newReviewArticleV2.js";
 import "../components/reviewsSortBarV2.js";
 import {getCompanyReviews} from "../api/reviewsApiV2.js";
-// import "../components/gradeCardV2.js"
 import {showGradeRows} from "../components/gradeCardV2.js";
 import "../components/reviewsPaginationV2.js";
 import {renderPaginationV2} from "../components/reviewsPaginationV2.js";

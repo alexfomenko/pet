@@ -211,6 +211,11 @@ body {
 .content-head {
     display: flex;
     gap: 10px;
+    justify-content: space-between;
+}
+
+.content-head h3{
+    font-size: 16px;
 }
 
 .content-head select {
