@@ -1,0 +1,140 @@
+body {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: Arial, sans-serif;
+}
+
+.wrap {
+    max-width: 1180px;
+    margin: 26px auto 60px;
+    /*temp*/
+    height: 90vh;
+}
+
+.section{
+    background:#fff;
+    border: 1px solid lightgrey;
+    border-radius: 22px;
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);;
+    overflow: hidden;
+    /*temp*/
+    /*height: 90%;*/
+}
+
+.container{
+    padding: 15px;
+
+}
+.container{
+    display: grid;
+    grid-template-columns: 1fr;
+    /*gap: 50px;*/
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #E6EEF7;
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    padding: 14px;
+}
+
+/*Header*/
+.personalAccount-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.person-about{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.account-data{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-btn{
+    align-self: center;
+}
+
+.person-name{
+    margin: 0 0 6px;
+    font-size: 36px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: #2c3553;
+}
+
+.person-title{
+    margin: 0 0 14px;
+    font-size: 20px;
+    color: #7c86a2;
+}
+
+.person-email{
+    color: #5f6b88;
+    font-size: 16px;
+}
+
+/*Tabs*/
+.person-about-tabs{
+    background: linear-gradient(180deg, #EAF2FF 0%, #DDEBFF 100%);;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 10px 10px 10px;
+    /*border-top: 1px solid rgba(230, 238, 247, .9);*/
+    border-radius: 12px;
+}
+
+.tab{
+    padding: 12px 10px;
+    color: #051d4d;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.tab.active{
+    border-bottom: 2px solid #000;
+}
+/*Body*/
+.personalAccount-body{
+    margin-top: 50px;
+    padding: 34px 32px 28px;
+}
+
+.empty-state{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 430px;
+    border: 2px dashed #e6ebf5;
+    border-radius: 12px;
+    background: radial-gradient(circle at center, rgba(80, 130, 255, 0.05), transparent 45%);
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.empty-icon {
+    font-size: 40px;
+}
+
+/*Buttons*/
+
+.edit-btn, .fill-btn{
+    background: linear-gradient(180deg, #4f95ff 0%, #3178f4 100%);
+    color: #fff;
+    padding: 14px 34px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    box-shadow: 0 8px 18px rgba(49, 120, 244, 0.22);
+    border: none;
+    cursor: pointer;
+}
