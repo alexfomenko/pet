@@ -56,9 +56,9 @@ body {
     flex-direction: column;
 }
 
-.edit-btn{
-    align-self: center;
-}
+/*.edit-btn{*/
+/*    align-self: center;*/
+/*}*/
 
 .person-name{
     margin: 0 0 6px;
@@ -127,7 +127,8 @@ body {
 
 /*Buttons*/
 
-.edit-btn, .fill-btn{
+.btn{
+    align-self: center;
     background: linear-gradient(180deg, #4f95ff 0%, #3178f4 100%);
     color: #fff;
     padding: 14px 34px;
