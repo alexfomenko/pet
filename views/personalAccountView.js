@@ -1,3 +1,6 @@
+import {renderProfilePage} from "../components/profile/profileRouter.js";
+
+
 let tabs = document.querySelectorAll(".tab");
 tabs.forEach((tab) => {
     tab.addEventListener('click', (e) => {
@@ -14,7 +17,7 @@ let nameEl = document.querySelector('.person-name');
 let titleEl = document.querySelector('.person-title');
 let emailEl = document.querySelector('.person-email');
 let saveBtn;
-let header = document.querySelector('.personalAccount-header');
+let header = document.querySelector('.profile-header');
 // editBtn.addEventListener('click', (e) => {
 //     // let nameValue = nameEl.textContent;
 //     // let titleValue = titleEl.textContent;

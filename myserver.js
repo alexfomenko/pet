@@ -144,9 +144,9 @@ const server = http.createServer(async(req, res) => {
         // console.log('hi')
          sendStaticFile(res, 'views/reviewsView.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/views/personalAccount.js') {
+    else if(req.method === 'GET' && req.url === '/views/personalAccountView.js') {
         // console.log('hi')
-        sendStaticFile(res, 'views/personalAccount.js', 'application/javascript')
+        sendStaticFile(res, 'views/personalAccountView.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/api/authApi.js') {
          sendStaticFile(res, 'api/authApi.js', 'application/javascript')
@@ -213,6 +213,25 @@ const server = http.createServer(async(req, res) => {
     }
     else if(req.method === 'GET' && req.url === '/components/reviewFormV2.js') {
         sendStaticFile(res, 'components/reviewFormV2.js', 'application/javascript')
+    }
+    // profile
+    else if(req.method === 'GET' && req.url === '/components/profile/profileHeader.js') {
+        sendStaticFile(res, 'components/profile/profileHeader.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/profile/profileTabs.js') {
+        sendStaticFile(res, 'components/profile/profileTabs.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/profile/emptyProfile.js') {
+        sendStaticFile(res, 'components/profile/emptyProfile.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/profile/fillProfile.js') {
+        sendStaticFile(res, 'components/profile/fillProfile.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/profile/completedProfile.js') {
+        sendStaticFile(res, 'components/profile/completedProfile.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/components/profile/profileRouter.js') {
+        sendStaticFile(res, 'components/profile/profileRouter.js', 'application/javascript')
     }
     // else if(req.method === 'GET' && req.url === '/layout/layout.js') {
     //     sendStaticFile(res, 'layout/layout.js', 'application/javascript')
