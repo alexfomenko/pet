@@ -1,15 +1,18 @@
 import {renderProfilePage} from "../components/profile/profileRouter.js";
 
-
-let tabs = document.querySelectorAll(".tab");
-tabs.forEach((tab) => {
-    tab.addEventListener('click', (e) => {
-        tabs.forEach((tab) => {
-            tab.classList.remove("active");
-        })
-        tab.classList.add("active");
-    })
-})
+//Claude
+// import { renderPage } from './router.js';
+//
+// // при смене #hash в URL — перерисовываем страницу
+window.addEventListener('hashchange', () => {
+    const pageName = location.hash.replace('#', '') || 'empty';
+    renderProfilePage(pageName);
+});
+//
+// // первый рендер при загрузке
+const pageName = location.hash.replace('#', '') || 'empty';
+renderProfilePage(pageName);
+// Claude
 
 let editBtn = document.querySelector('.edit-btn');
 let fillInBtn = document.querySelector('.fill-btn');
@@ -34,7 +37,6 @@ let header = document.querySelector('.profile-header');
 //     saveBtn.textContent = "Save";
 //     header.appendChild(saveBtn);
 // })
-
 header.addEventListener('click', (e) => {
     if(e.target.classList.contains('edit-btn')) {
         nameEl.innerHTML = `<input type="text" value="${nameEl.textContent}">`;
@@ -61,3 +63,17 @@ header.addEventListener('click', (e) => {
         saveBtn.style.display = 'none';
     }
 })
+
+
+let tabs = document.querySelectorAll(".tab");
+tabs.forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+        tabs.forEach((tab) => {
+            tab.classList.remove("active");
+        })
+        tab.classList.add("active");
+    })
+})
+
+
+

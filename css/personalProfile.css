@@ -80,7 +80,7 @@ body {
 }
 
 /*Tabs*/
-.person-about-tabs{
+.profile-tabs{
     background: linear-gradient(180deg, #EAF2FF 0%, #DDEBFF 100%);;
     display: flex;
     gap: 15px;
