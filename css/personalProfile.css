@@ -139,3 +139,83 @@ body {
     border: none;
     cursor: pointer;
 }
+
+/*FILL STATE*/
+.fill-state{
+    display: grid;
+   grid-template-columns: 1fr;
+    gap: 10px;
+}
+.fill-state-body{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+.fill-state-label{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.fill-state-label-full{
+    grid-column: 1 / -1;
+}
+.fill-state-label input, .fill-state-label textarea{
+    width: 100%;
+    border: 1px solid #d9e2f0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: #fcfdff;
+    outline: none;
+    box-sizing: border-box;
+}
+.fill-state-label textarea{
+    min-height: 150px;
+}
+.fill-state-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+.ghost-btn{
+    background: #eff3f9;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 17px;
+    border-radius: 12px;
+    padding: 14px 22px;
+    cursor: pointer;
+    border: none;
+}
+
+/*COMPLETED PROFILE*/
+.success-banner{
+    background: #e9f8f1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid #bfe8d3;
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+    color: #176f49;
+    box-shadow: var(--shadow);
+}
+.done-layout{
+    display: grid;
+    grid-template-columns: 1.5fr 0.5fr;
+    gap: 150px;
+    align-items: center;
+}
+
+.side-stack{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mini-card{
+    display: flex;
+    flex-direction: column;
+}

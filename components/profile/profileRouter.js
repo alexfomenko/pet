@@ -9,7 +9,7 @@ export function renderProfilePage(pageName) {
     let content = '';
     if (pageName === 'empty')     content = renderEmptyProfile();
     if (pageName === 'fill')      content = renderFillProfile();
-//     if (pageName === 'completed') content = renderCompletedProfile(user);
+    if (pageName === 'completed') content = renderCompletedProfile();
 
     console.log('pageName:', pageName)
     console.log('content:', content)
