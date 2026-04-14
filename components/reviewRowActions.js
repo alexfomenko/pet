@@ -36,7 +36,7 @@ reviewsContainer.addEventListener('click', async (e) => {
                 // getting current columns of the row
                 let columns = closestReviewRow.querySelectorAll(".column");
 
-                // saving current values of the fields
+                // saving current values of the fields for Cancel button ! so that I can extract them later from dataset in case the user wants to cancel her actions
                 closestReviewRow.dataset.initialCompanyValue = columns[0].textContent;
                 closestReviewRow.dataset.initialRatingValue = columns[1].textContent;
                 closestReviewRow.dataset.initialReviewValue = columns[2].textContent;

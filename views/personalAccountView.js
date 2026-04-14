@@ -51,10 +51,6 @@ header.addEventListener('click', (e) => {
         header.appendChild(saveBtn);
     }
     else if(e.target.classList.contains('save-btn')) {
-        // nameEl.textContent = nameEl.querySelector('input').value;
-        // titleEl.textContent = titleEl.querySelector('input').value;
-        // emailEl.textContent = emailEl.querySelector('input').value;
-
         nameEl.textContent = nameEl.querySelector('input').value;
         titleEl.textContent = titleEl.querySelector('input').value;
         emailEl.textContent = emailEl.querySelector('input').value;

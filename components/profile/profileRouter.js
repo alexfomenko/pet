@@ -6,27 +6,28 @@ import {renderCompletedProfile} from "./completedProfile.js";
 
 export function renderProfilePage(pageName) {
     //     // определяем какой контент показать
-    let content = '';
-    if (pageName === 'empty')     content = renderEmptyProfile();
-    if (pageName === 'fill')      content = renderFillProfile();
-    if (pageName === 'completed') content = renderCompletedProfile();
-
-    console.log('pageName:', pageName)
-    console.log('content:', content)
-
-    document.querySelector('.wrap').innerHTML = `
-    <section class="section"> 
-<div class="container">
-    ${renderProfileHeader()}
-    ${renderProfileTabs()}
-    
-    <div class="profile-body card">
-    ${content}
-    </div>
-    
-</div>
-    </section>
-    `
+//     let content = '';
+//     if (pageName === 'empty')     content = renderEmptyProfile();
+//     if (pageName === 'fill')      content = renderFillProfile();
+//     if (pageName === 'completed') content = renderCompletedProfile();
+//
+//     console.log('pageName:', pageName)
+//     console.log('content:', content)
+//
+//     document.querySelector('.wrap').innerHTML = `
+//     <section class="section">
+// <div class="container">
+//     ${renderProfileHeader()}
+//     ${renderProfileTabs()}
+//
+//     <div class="profile-body card">
+//     ${content}
+//     </div>
+//
+// </div>
+//     </section>
+//     `
+    return `<div></div>`
 }
 
 // ${renderEmptyProfile()}
