@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -113,8 +113,70 @@
 <!--                            </div>-->
 <!--                        profile body completed state-->
             <div class="reviews-body">
-                <div class="reviews-toolbar"></div>
-                <div class="reviews-list"></div>
+                <div class="reviews-toolbar card">
+                    <label for="sorting"> Sort by
+                    <select id="sorting">
+                        <option>Newest</option>
+                        <option>Oldest</option>
+                    </select>
+                    </label>
+                </div>
+                <div class="reviews-list">
+
+<!--                    ARTICLE-->
+                    <article class="review card">
+
+                        <!--                            Review head-->
+                        <div class="review-head">
+                            <div class="person">
+
+                                <div class="person-logo">OS</div>
+
+                                <div class="person-data">
+                                    <p class="person-name">Oleh Shevtsov</p>
+                                    <div class="person-about">FullStack Developer · Kyiv · 2020–2026</div>
+                                </div>
+
+                            </div>
+
+                            <div class="stars">
+                                <div class="stars-back">
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                </div>
+                                <div class="stars-front" style="width: 70%;">
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <!--                            Review body-->
+                        <p class="review-text">Сильная команда и спокойная коммуникация. Процессы понятные, есть пространство для роста.
+                            Нагрузку иногда нужно балансировать, но в целом впечатления очень хорошие.</p>
+
+                        <!--                            Review footer-->
+
+                        <div class="review-footer">
+                            <div class="date">January 15</div>
+                            <div class="review-footer-buttons">
+                                <button class="edit-review btn">Edit</button>
+                                <button class="delete-review btn">Delete</button>
+                            </div>
+                        </div>
+                    </article>
+<!--                    ARTICLE END-->
+
+                </div>
                 <div class="reviews-pagination"></div>
             </div>
 

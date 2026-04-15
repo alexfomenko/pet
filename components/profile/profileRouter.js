@@ -3,6 +3,7 @@ import {renderProfileTabs} from "./profileTabs.js";
 import {renderEmptyProfile} from "./emptyProfile.js";
 import {renderFillProfile} from "./fillProfile.js";
 import {renderCompletedProfile} from "./completedProfile.js";
+import {renderReviewsProfile} from "./reviewsProfile.js";
 
 export function renderProfilePage(pageName) {
     //     // определяем какой контент показать

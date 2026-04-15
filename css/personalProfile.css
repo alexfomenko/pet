@@ -100,7 +100,7 @@ body {
 .tab.active{
     border-bottom: 2px solid #000;
 }
-/*Body*/
+/*EMPTY STATE PROFILE BODY*/
 .profile-body{
     margin-top: 50px;
     padding: 34px 32px 28px;
@@ -140,7 +140,7 @@ body {
     cursor: pointer;
 }
 
-/*FILL STATE*/
+/*FILL STATE PROFILE BODY*/
 .fill-state{
     display: grid;
    grid-template-columns: 1fr;
@@ -189,7 +189,7 @@ body {
     border: none;
 }
 
-/*COMPLETED PROFILE*/
+/*COMPLETED STATE PROFILE BODY*/
 .success-banner{
     background: #e9f8f1;
     display: flex;
@@ -219,3 +219,111 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+/*REVIEWS LIST*/
+.reviews-list{
+    display: grid;
+    row-gap: 10px;
+    margin-top: 12px;
+}
+
+/*Review Head*/
+.review-head {
+    display: flex;
+    gap: 100px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.review-head .person {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.review-head .person .person-logo {
+    border-radius: 999px;
+    background: linear-gradient(180deg, #EAF2FF 0%, #DDEBFF 100%);
+    border: 1px solid rgba(47, 111, 237, .18);
+    width: 42px;
+    /* padding: 10px; */
+    height: 42px;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    color: rgba(15, 23, 42, .70);
+}
+
+.review-head .person .person-data .person-name {
+    color: #64748B;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.review-head .person .person-data .person-about {
+    font-weight: 800;
+    font-size: 13px;
+    margin: 0;
+}
+
+.review-head .stars{
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/*Stars*/
+.stars {
+    position: relative;
+    /*display: inline-block;*/
+}
+
+.stars-back,
+.stars-front {
+    display: flex;
+    gap: 5px;
+}
+
+.stars-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.star {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background: #ddd;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.stars-front .star {
+    background: #ffd700;
+}
+/*------*/
+
+/*Review Body*/
+.review-text {
+    color: rgba(15, 23, 42, .82);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+/*Review Footer*/
+.review-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: 1px solid rgba(230, 238, 247, .9);
+    padding-top: 10px;
+    color: #64748B;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.review-footer-buttons{
+
+}
+
