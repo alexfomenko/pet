@@ -1,5 +1,6 @@
 export function renderFillProfile(){
     return `
+<div class="profile-body card">
                     <div class="fill-state">
                     <div class="fill-state-header">
                         <h1>Fill out your profile</h1>
@@ -27,6 +28,7 @@ export function renderFillProfile(){
                         <button class="btn" onclick="location.hash='completed'">Save and continue</button>
                     </div>
 
+                </div>
                 </div>
 `
 }

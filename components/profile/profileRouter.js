@@ -5,67 +5,47 @@ import {renderFillProfile} from "./fillProfile.js";
 import {renderCompletedProfile} from "./completedProfile.js";
 import {renderReviewsProfile} from "./reviewsProfile.js";
 
-export function renderProfilePage(pageName) {
-    //     // определяем какой контент показать
-//     let content = '';
-//     if (pageName === 'empty')     content = renderEmptyProfile();
-//     if (pageName === 'fill')      content = renderFillProfile();
-//     if (pageName === 'completed') content = renderCompletedProfile();
-//
-//     console.log('pageName:', pageName)
-//     console.log('content:', content)
-//
-//     document.querySelector('.wrap').innerHTML = `
-//     <section class="section">
-// <div class="container">
-//     ${renderProfileHeader()}
-//     ${renderProfileTabs()}
-//
-//     <div class="profile-body card">
-//     ${content}
-//     </div>
-//
-// </div>
-//     </section>
-//     `
-    return `<div></div>`
+export const user = {
+    company: '',
+    city: 'hhhhhhh',
+    about: ''
+};
+export function getProfileState() {
+    const filled = [user.company, user.city, user.about].filter(Boolean);
+    if (filled.length === 0) return 'empty';
+    if (filled.length === 3) return 'completed';
+    return 'fill';
 }
-
-// ${renderEmptyProfile()}
+// export function getProfileState() {
+//     let companyValue = document.querySelectorAll('.fill-state-label')[0].querySelector('input').value;
+//     let cityValue = document.querySelectorAll('.fill-state-label')[1].querySelector('input').value;
+//     let aboutUserValue = document.querySelectorAll('.fill-state-label')[2].querySelector('textarea').value;
 //
-// import { renderProfileHeader } from './components/profileHeader.js';
-// import { renderProfileTabs }   from './components/profileTabs.js';
-// import { renderEmptyProfile }     from './pages/emptyProfile.js';
-// import { renderFillProfile }      from './pages/fillProfile.js';
-// import { renderCompletedProfile } from './pages/completedProfile.js';
-//
-// const user = {
-//     name:      'Алексей Иванов',
-//     role:      'Frontend Developer',
-//     email:     'alex.ivanov@email.com',
-//     avatar:    'avatar.jpg',
-//     about:     'Frontend Developer с 5-летним опытом. Специализируюсь на React, TypeScript.',
-//     skills:    ['React', 'TypeScript', 'Next.js', 'JavaScript', 'HTML', 'CSS'],
-//     rating:    4.9,
-//     reviews:   127,
-//     favorites: 54,
-// };
-//
-// export function renderPage(pageName) {
-//     // определяем какой контент показать
-//     let content = '';
-//     if (pageName === 'empty')     content = renderEmptyProfile();
-//     if (pageName === 'fill')      content = renderFillProfile();
-//     if (pageName === 'completed') content = renderCompletedProfile(user);
-//
-//     // вставляем header + табы + контент в #app
-//     document.getElementById('app').innerHTML = `
-//     <div class="profile-card">
-//       ${renderProfileHeader(user)}
-//       ${renderProfileTabs()}
-//       <div class="profile-content">
-//         ${content}
-//       </div>
-//     </div>
-//   `;
+//     let filledData = [companyValue, cityValue, aboutUserValue].filter(Boolean);
+//     if(filledData.length === 0) return 'empty';
+//     if(filledData.length === 3) return 'completed';
+//     return 'fill';
 // }
+
+export function renderProfilePage(pageName) {
+        // определяем какой контент показать
+    let content = '';
+    if (pageName === 'empty')     content = renderEmptyProfile();
+    if (pageName === 'fill')      content = renderFillProfile();
+    if (pageName === 'completed') content = renderCompletedProfile();
+    if (pageName ==='reviews') content = renderReviewsProfile();
+
+    console.log('pageName:', pageName)
+    console.log('content:', content)
+
+    document.querySelector('.wrap').innerHTML = `
+    <section class="section">
+    <div class="container">
+    ${renderProfileHeader()}
+    ${renderProfileTabs()}
+    ${content}
+    </div>
+    </section>
+    `
+    // return `<div></div>`
+}

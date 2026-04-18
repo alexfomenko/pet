@@ -1,5 +1,6 @@
 export function renderEmptyProfile(){
     return `
+<div class="profile-body card">
                     <div class="empty-state">
                     <div class="empty-icon-box">
                         <div class="empty-icon">📝</div>
@@ -11,6 +12,7 @@ export function renderEmptyProfile(){
                     </h2>
 
                     <button class="fill-btn btn" onclick="location.hash='fill'">Fill in your profile</button>
+                </div>
                 </div>
 `
 }

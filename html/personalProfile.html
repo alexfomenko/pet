@@ -1,197 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="../css/personalProfile.css">
-
-</head>
-<body>
-
-<div class="wrap">
-    <section class="section">
-        <div class="container">
-
-<!--            Profile header-->
-            <div class="profile-header card">
-                <div class="person-about">
-                    <img src="https://www.osh.by/wp-content/uploads/2023/12/1041436899_0_206_2905_1840_1920x0_80_0_0_c7022893b761781d76fe592010d14bd2.jpg" alt="photo" width="200" height="100">
-                    <div class="account-data">
-                        <h1 class="person-name">Oleh Shevtsov</h1>
-                        <p class="person-title">Software Developer</p>
-                        <span class="person-email">olehshevtsov@gmail.com</span>
-                    </div>
-                </div>
-                        <button class="edit-btn btn">Edit</button>
-            </div>
-<!--            profile header-->
-
-<!--            tabs-->
-            <nav class="profile-tabs">
-                <a class="tab">Profile</a>
-                <a class="tab">My reviews</a>
-            </nav>
-<!--            tabs-->
-
-<!--            profile body empty state-->
-<!--            <div class="profile-body card">-->
-<!--                <div class="empty-state">-->
-<!--                    <div class="empty-icon-box">-->
-<!--                        <div class="empty-icon">📝</div>-->
-<!--                    </div>-->
-
-<!--                    <h2 class="empty-title">-->
-<!--                        Add more data<br />-->
-<!--                        about yourself-->
-<!--                    </h2>-->
-
-<!--                    <button class="fill-btn btn">Fill in your profile</button>-->
-<!--                </div>-->
-<!--                </div>-->
-<!--            profile body empty state-->
-
-<!--profile body fill state-->
-<!--            <div class="profile-body card">-->
-<!--                <div class="fill-state">-->
-<!--                    <div class="fill-state-header">-->
-<!--                        <h1>Fill out your profile</h1>-->
-<!--                    </div>-->
-
-<!--                    <div class="fill-state-body">-->
-<!--                        <label class="fill-state-label">-->
-<!--                            <span>Company</span>-->
-<!--                            <input type="text" placeholder="For example, Kedi Company">-->
-<!--                        </label>-->
-
-<!--                        <label class="fill-state-label">-->
-<!--                            <span>City</span>-->
-<!--                            <input type="text" placeholder="For example, Istanbul">-->
-<!--                        </label>-->
-
-<!--                        <label class="fill-state-label fill-state-label-full">-->
-<!--                            <span>About yourself</span>-->
-<!--                            <textarea placeholder="Tell about your experience, specialization, interests"></textarea>-->
-<!--                        </label>-->
-<!--                    </div>-->
-
-<!--                    <div class="fill-state-footer">-->
-<!--                        <button class="ghost-btn" onclick="location.hash='empty'">Cancel</button>-->
-<!--                        <button class="btn" onclick="local.hash='completed'">Save and continue</button>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--            profile body fill state-->
-
-<!--                        profile body completed state-->
-<!--                        <div class="profile-body card">-->
-<!--                            <div class="completed-state">-->
-<!--                                <div class="success-banner">-->
-<!--                                    <strong>The profile has been filled out</strong>-->
-<!--                                </div>-->
-<!--                                <div class="done-layout">-->
-<!--                                    <div class="about-card card">-->
-<!--                                        <h3>About yourself</h3>-->
-<!--                                        <p>About me-->
-<!--                                            I'm a Frontend Developer with 5 years of experience developing web interfaces. I specialize in React, TypeScript, and modern UI solutions. I love creating fast and user-friendly interfaces.</p>-->
-<!--                                    </div>-->
-
-<!--                                    <div class="side-stack">-->
-<!--                                        <div class="mini-card card">-->
-<!--                                            <span>Company</span>-->
-<!--                                            <strong>Kedi</strong>-->
-<!--                                        </div>-->
-<!--                                        <div class="mini-card card">-->
-<!--                                            <span>City</span>-->
-<!--                                            <strong>Istanbul</strong>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-
-<!--                                </div>-->
-
-<!--                            </div>-->
-<!--                            </div>-->
-<!--                        profile body completed state-->
-            <div class="reviews-body">
-                <div class="reviews-toolbar card">
-                    <label for="sorting"> Sort by
-                    <select id="sorting">
-                        <option>Newest</option>
-                        <option>Oldest</option>
-                    </select>
-                    </label>
-                </div>
-                <div class="reviews-list">
-
-<!--                    ARTICLE-->
-                    <article class="review card">
-
-                        <!--                            Review head-->
-                        <div class="review-head">
-                            <div class="person">
-
-                                <div class="person-logo">OS</div>
-
-                                <div class="person-data">
-                                    <p class="person-name">Oleh Shevtsov</p>
-                                    <div class="person-about">FullStack Developer · Kyiv · 2020–2026</div>
-                                </div>
-
-                            </div>
-
-                            <div class="stars">
-                                <div class="stars-back">
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                </div>
-                                <div class="stars-front" style="width: 70%;">
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-                        <!--                            Review body-->
-                        <p class="review-text">Сильная команда и спокойная коммуникация. Процессы понятные, есть пространство для роста.
-                            Нагрузку иногда нужно балансировать, но в целом впечатления очень хорошие.</p>
-
-                        <!--                            Review footer-->
-
-                        <div class="review-footer">
-                            <div class="date">January 15</div>
-                            <div class="review-footer-buttons">
-                                <button class="edit-review btn">Edit</button>
-                                <button class="delete-review btn">Delete</button>
-                            </div>
-                        </div>
-                    </article>
-<!--                    ARTICLE END-->
-
-                </div>
-                <div class="reviews-pagination"></div>
-            </div>
-
-            </div>
-    </section>
-</div>
-
-<script type="module" src="../views/personalAccountView.js">
-
-</script>
-</body>
-</html>
-
 <!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/html">-->
 <!--<head>-->
 <!--    <meta charset="UTF-8">-->
 <!--    <title>Title</title>-->
@@ -202,6 +10,176 @@
 
 <!--<div class="wrap">-->
 
+<!--&lt;!&ndash;    <section class="section">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="container">&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;            Profile header&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="profile-header card">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="company-about">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <img src="https://www.osh.by/wp-content/uploads/2023/12/1041436899_0_206_2905_1840_1920x0_80_0_0_c7022893b761781d76fe592010d14bd2.jpg" alt="photo" width="200" height="100">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="account-data">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <h1 class="person-name">Oleh Shevtsov</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p class="person-title">Software Developer</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span class="person-email">olehshevtsov@gmail.com</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button class="edit-btn btn">Edit</button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            profile header&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;            tabs&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            <nav class="profile-tabs">&ndash;&gt;-->
+<!--&lt;!&ndash;                <a class="tab">Profile</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                <a class="tab">My reviews</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </nav>&ndash;&gt;-->
+<!--&lt;!&ndash;            tabs&ndash;&gt;-->
+
+<!--&lt;!&ndash;            profile body empty state&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="profile-body card">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="empty-state">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="empty-icon-box">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="empty-icon">📝</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <h2 class="empty-title">&ndash;&gt;-->
+<!--&lt;!&ndash;                        Add more data<br />&ndash;&gt;-->
+<!--&lt;!&ndash;                        about yourself&ndash;&gt;-->
+<!--&lt;!&ndash;                    </h2>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <button class="fill-btn btn">Fill in your profile</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            profile body empty state&ndash;&gt;-->
+
+<!--&lt;!&ndash;profile body fill state&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="profile-body card">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="fill-state">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="fill-state-header">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <h1>Fill out your profile</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <div class="fill-state-body">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <label class="fill-state-label">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span>Company</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="text" placeholder="For example, Kedi Company">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </label>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <label class="fill-state-label">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span>City</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="text" placeholder="For example, Istanbul">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </label>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <label class="fill-state-label fill-state-label-full">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span>About yourself</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <textarea placeholder="Tell about your experience, specialization, interests"></textarea>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <div class="fill-state-footer">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button class="ghost-btn" onclick="location.hash='empty'">Cancel</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button class="btn" onclick="local.hash='completed'">Save and continue</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            profile body fill state&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        profile body completed state&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="profile-body card">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="completed-state">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="success-banner">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <strong>The profile has been filled out</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="done-layout">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="about-card card">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <h3>About yourself</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <p>About me&ndash;&gt;-->
+<!--&lt;!&ndash;                                            I'm a Frontend Developer with 5 years of experience developing web interfaces. I specialize in React, TypeScript, and modern UI solutions. I love creating fast and user-friendly interfaces.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                    <div class="side-stack">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="mini-card card">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span>Company</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <strong>Kedi</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="mini-card card">&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <span>City</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <strong>Istanbul</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        profile body completed state&ndash;&gt;-->
+
+<!--&lt;!&ndash;            REVIEWS PROFILE START&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="reviews-body">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="reviews-toolbar card">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <label for="sorting">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <select id="sorting">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <option>Sort by</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <option>Newest</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <option>Oldest</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </label>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="reviews-list">&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;                    ARTICLE&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                    <article class="review card">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        &lt;!&ndash;                            Review head&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="review-head">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="company">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="company-about">Kedi Company</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                            <div class="stars">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="stars-back">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="stars-front" style="width: 70%;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div class="star"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        &lt;!&ndash;                            Review body&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p class="review-text" contenteditable="true">Сильная команда и спокойная коммуникация. Процессы понятные, есть пространство для роста.&ndash;&gt;-->
+<!--&lt;!&ndash;                            Нагрузку иногда нужно балансировать, но в целом впечатления очень хорошие.</p>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        &lt;!&ndash;                            Review footer&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <div class="review-footer">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="date">January 15</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="review-footer-buttons">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <button class="edit-review-btn ghost-btn">Edit</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <button class="delete-review-btn ghost-btn">Delete</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </article>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    ARTICLE END&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="reviews-pagination"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            REVIEWS PROFILE END&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </section>&ndash;&gt;-->
 <!--</div>-->
 
 <!--<script type="module" src="../views/personalAccountView.js">-->
@@ -209,4 +187,24 @@
 <!--</script>-->
 <!--</body>-->
 <!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/personalProfile.css">
+
+</head>
+<body>
+
+<div class="wrap">
+
+</div>
+
+<script type="module" src="../views/personalAccountView.js">
+
+</script>
+</body>
+</html>
 

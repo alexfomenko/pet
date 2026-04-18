@@ -1,5 +1,6 @@
 export function renderCompletedProfile(){
     return `
+<div class="profile-body card">
        <div class="completed-state">
                                 <div class="success-banner">
                                     <strong>The profile has been filled out</strong>
@@ -24,6 +25,7 @@ export function renderCompletedProfile(){
 
                                 </div>
 
+                            </div>
                             </div>
     `
 }

@@ -1,19 +1,39 @@
 import {renderProfilePage} from "../components/profile/profileRouter.js";
+import {getProfileState} from "../components/profile/profileRouter.js";
 
 //Claude
 // import { renderPage } from './router.js';
 //
-// // при смене #hash в URL — перерисовываем страницу
-window.addEventListener('hashchange', () => {
-    const pageName = location.hash.replace('#', '') || 'empty';
-    renderProfilePage(pageName);
-});
+// // // при смене #hash в URL — перерисовываем страницу
+// window.addEventListener('hashchange', () => {
+//     const pageName = location.hash.replace('#', '') || 'empty';
+//     renderProfilePage(pageName);
+// });
+// //
+// // // первый рендер при загрузке
+// const pageName = location.hash.replace('#', '') || 'empty';
+// renderProfilePage(pageName);
+// // Claude
 //
-// // первый рендер при загрузке
-const pageName = location.hash.replace('#', '') || 'empty';
-renderProfilePage(pageName);
-// Claude
 
+// ATTEMPT 2
+window.addEventListener('hashchange', () => {
+    const hash = location.hash.replace('#', '') || 'profile';
+    if(hash === 'profile') {
+        renderProfilePage(getProfileState())
+    }
+    else {
+        renderProfilePage(hash)
+    }
+});
+
+const hash = location.hash.replace('#', '') || 'profile';
+if(hash === 'profile') {
+    renderProfilePage(getProfileState())
+}
+else {
+    renderProfilePage(hash)
+}
 let editBtn = document.querySelector('.edit-btn');
 let fillInBtn = document.querySelector('.fill-btn');
 let nameEl = document.querySelector('.person-name');
@@ -21,22 +41,7 @@ let titleEl = document.querySelector('.person-title');
 let emailEl = document.querySelector('.person-email');
 let saveBtn;
 let header = document.querySelector('.profile-header');
-// editBtn.addEventListener('click', (e) => {
-//     // let nameValue = nameEl.textContent;
-//     // let titleValue = titleEl.textContent;
-//     // let emailValue = emailEl.textContent;
-//     //
-//     nameEl.innerHTML = `<input type="text" value="${nameEl.textContent}">`;
-//     titleEl.innerHTML = `<input type="text" value="${titleEl.textContent}">`;
-//     emailEl.innerHTML = `<input type="text" value="${emailEl.textContent}">`;
-//
-//     editBtn.style.display = "none";
-//
-//     saveBtn = document.createElement('button');
-//     saveBtn.classList.add('btn');
-//     saveBtn.textContent = "Save";
-//     header.appendChild(saveBtn);
-// })
+
 header.addEventListener('click', (e) => {
     if(e.target.classList.contains('edit-btn')) {
         nameEl.innerHTML = `<input type="text" value="${nameEl.textContent}">`;

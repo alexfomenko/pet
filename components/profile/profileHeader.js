@@ -1,7 +1,7 @@
 export function renderProfileHeader(){
     return `           
             <div class="profile-header card">
-                <div class="person-about">
+                <div class="company-about">
                     <img src="https://www.osh.by/wp-content/uploads/2023/12/1041436899_0_206_2905_1840_1920x0_80_0_0_c7022893b761781d76fe592010d14bd2.jpg" alt="photo" width="200" height="100">
                     <div class="account-data">
                         <h1 class="person-name">Oleh Shevtsov</h1>

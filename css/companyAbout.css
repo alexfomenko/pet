@@ -284,13 +284,13 @@ body {
     justify-content: space-between;
 }
 
-.content-reviews .review-head .person {
+.content-reviews .review-head .company {
     display: flex;
     gap: 15px;
     align-items: center;
 }
 
-.content-reviews .review-head .person .person-logo {
+.content-reviews .review-head .company .person-logo {
     border-radius: 999px;
     background: linear-gradient(180deg, #EAF2FF 0%, #DDEBFF 100%);
     border: 1px solid rgba(47, 111, 237, .18);
@@ -303,13 +303,13 @@ body {
     color: rgba(15, 23, 42, .70);
 }
 
-.content-reviews .review-head .person .person-data .person-name {
+.content-reviews .review-head .company .person-data .person-name {
     color: #64748B;
     font-size: 12px;
     margin-top: 2px;
 }
 
-.content-reviews .review-head .person .person-data .person-about {
+.content-reviews .review-head .company .person-data .company-about {
     font-weight: 800;
     font-size: 13px;
     margin: 0;
