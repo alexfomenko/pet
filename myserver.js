@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const {v4: uuidv4} = require('uuid');
 
 let url =  require("url");
+// const {user} = require("./components/profile/profileRouter");
 
 let port = 3000;
 const SECRET = 'super_secret_key';
@@ -235,6 +236,9 @@ const server = http.createServer(async(req, res) => {
     }
     else if(req.method === 'GET' && req.url === '/components/profile/profileRouter.js') {
         sendStaticFile(res, 'components/profile/profileRouter.js', 'application/javascript')
+    }
+    else if(req.method === 'GET' && req.url === '/api/personalProfileApi.js') {
+        sendStaticFile(res, 'api/personalProfileApi.js', 'application/javascript')
     }
     // else if(req.method === 'GET' && req.url === '/layout/layout.js') {
     //     sendStaticFile(res, 'layout/layout.js', 'application/javascript')
@@ -716,6 +720,81 @@ const server = http.createServer(async(req, res) => {
             }
         })
 
+    }
+
+    // 1. Sign-up → создаёт юзера с id: "abc-123"
+    // 2. Sign-up → кладёт "abc-123" в токен → отдаёт токен фронтенду
+    // 3. Фронтенд → сохраняет токен (localStorage / cookie)
+    // 4. PATCH /profile → фронтенд отправляет токен в заголовке
+    // 5. Сервер → расшифровывает токен → достаёт userId: "abc-123"
+    // 6. Ищет юзера по этому id
+
+
+    // Регистрация:
+    //     сервер создаёт юзера → кладёт userId в токен → отдаёт токен фронтенду
+    //
+    // Следующий запрос:
+    //     фронтенд → отправляет токен в заголовке
+    // сервер   → достаёт токен из заголовка
+    // сервер   → расшифровывает → получает userId
+    // сервер   → находит юзера по userId → делает что нужно
+
+    //PERSONAL PROFILE ENDPOINT
+    if(req.method === "PATCH" && req.url === '/profile') {
+        //TODO token check add
+        // check if we were sent a token
+        let token = req.headers['authorization'].split(" ")[1];
+        if(!token) sendResponse(res,401, {message: "Unauthorized"});
+
+        //getting data from token
+        let decodedData;
+        try{
+            decodedData = jwt.verify(token, SECRET);
+        }
+        catch (error) {
+            sendResponse(res, 401, {message: "Invalid token"})
+        }
+
+        //processing body
+        let body = "";
+        req.on('data', (chunk) => body+= chunk);
+        req.on('end', async () => {
+            try {
+                let parsedJson;
+                try{
+                    parsedJson = JSON.parse(body || "{}");
+                }
+                catch (error){
+                    return sendResponse(res, 400, {message: "Invalid json"});
+                }
+                let {company, city, bio} = parsedJson;
+
+                //finding the user
+                let userIndex = users.findIndex((user) => user.id === decodedData.userId);
+                if(!userIndex) sendResponse(res, 400, {message: "User not found"});
+
+                //TODO validation if wanted
+
+                //updating data if passed
+                if(company !== undefined) users[userIndex].company = company.trim();
+                if(city !== undefined) users[userIndex].city = city.trim();
+                if(bio !== undefined) users[userIndex].bio = bio.trim();
+
+                return sendResponse(res, 200, {
+                    message: "Profile updated",
+                    user: {
+                        id: users[userIndex].id,
+                        name:  users[userIndex].name,
+                        city:  users[userIndex].city,
+                        company:  users[userIndex].id,
+                        bio:  users[userIndex].bio,
+                    }
+                })
+            }
+            catch (error) {
+                return sendResponse(res, 500, {message: "Server error"})
+            }
+        })
     }
     // else {
     //     return sendResponse(res, 404, "Not found")

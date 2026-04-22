@@ -1,6 +1,6 @@
 import {renderProfilePage} from "../components/profile/profileRouter.js";
 import {getProfileState} from "../components/profile/profileRouter.js";
-
+import {updateProfileData} from "../api/personalProfileApi.js";
 //Claude
 // import { renderPage } from './router.js';
 //
