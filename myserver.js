@@ -741,11 +741,8 @@ const server = http.createServer(async(req, res) => {
 
     //PERSONAL PROFILE ENDPOINT
     if(req.method === "PATCH" && req.url === '/profile') {
-        // check if we were sent authorization at all
-        let authorization = req.headers['authorization'];
-        if(!authorization) return sendResponse(res, 401, {message: "Unauthorized"});
-        // check if we were sent a token
-        let token = authorization.split(" ")[1];
+        // check if we were sent authorization at all and then check if we were sent a token
+        let token = req.headers['authorization']?.split(" ")[1];
         if(!token) return sendResponse(res,401, {message: "Unauthorized"});
 
         //getting data from token
@@ -778,9 +775,9 @@ const server = http.createServer(async(req, res) => {
                 //TODO validation if wanted
 
                 //updating data if passed
-                if(company !== undefined) users[userIndex].company = company.trim();
-                if(city !== undefined) users[userIndex].city = city.trim();
-                if(bio !== undefined) users[userIndex].bio = bio.trim();
+                if(company !== undefined) users[userIndex].company = String(company.trim());
+                if(city !== undefined) users[userIndex].city = String(city.trim());
+                if(bio !== undefined) users[userIndex].bio = String(bio.trim());
 
                 return sendResponse(res, 200, {
                     message: "Profile updated",
