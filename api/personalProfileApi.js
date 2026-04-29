@@ -1,6 +1,7 @@
 export async function updateProfileData(data) {
     //1 - check if the server answered with 200, 400, 500
     try{
+        console.log('token:', localStorage.getItem('token'));
         let sendUpdateRequest = await fetch('/profile', {
             method: "PATCH",
             headers: {
@@ -46,7 +47,7 @@ export async function updateProfileData(data) {
 //
 // ## Структура эндпоинта
 //
-// **1. Сам запрос** — fetch с методом, заголовками, телом:
+// **1. TRY 1 - Сам запрос** — fetch с методом, заголовками, телом:
 // ```js
 // let response = await fetch('/url', {
 //     method: "POST",
@@ -62,7 +63,7 @@ export async function updateProfileData(data) {
 // }
 // ```
 //
-//     **3. Парсинг тела** — сервер ответил ок, но тело может быть сломано:
+//     **3.TRY 2 - Парсинг тела** — сервер ответил ок, но тело может быть сломано:
 //     ```js
 // try {
 //     parsedBody = await response.json();

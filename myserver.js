@@ -22,7 +22,7 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 // let USERS_FILE = path.join(__dirname, 'users.json');
 
 let notes = [];
-let users = [{ id: '1', email: 'test@mail.com', passwordHash: bcrypt.hashSync('123456', 10)}];
+let users = [{ id: '1', email: 'test@mail.com', password: bcrypt.hashSync('123456', 10)}];
 
 
 function getIdFromUrl(req) {
@@ -741,10 +741,12 @@ const server = http.createServer(async(req, res) => {
 
     //PERSONAL PROFILE ENDPOINT
     if(req.method === "PATCH" && req.url === '/profile') {
-        //TODO token check add
+        // check if we were sent authorization at all
+        let authorization = req.headers['authorization'];
+        if(!authorization) return sendResponse(res, 401, {message: "Unauthorized"});
         // check if we were sent a token
-        let token = req.headers['authorization'].split(" ")[1];
-        if(!token) sendResponse(res,401, {message: "Unauthorized"});
+        let token = authorization.split(" ")[1];
+        if(!token) return sendResponse(res,401, {message: "Unauthorized"});
 
         //getting data from token
         let decodedData;
@@ -752,7 +754,7 @@ const server = http.createServer(async(req, res) => {
             decodedData = jwt.verify(token, SECRET);
         }
         catch (error) {
-            sendResponse(res, 401, {message: "Invalid token"})
+            return sendResponse(res, 401, {message: "Invalid token"})
         }
 
         //processing body
@@ -771,7 +773,7 @@ const server = http.createServer(async(req, res) => {
 
                 //finding the user
                 let userIndex = users.findIndex((user) => user.id === decodedData.userId);
-                if(!userIndex) sendResponse(res, 400, {message: "User not found"});
+                if(userIndex === -1) return sendResponse(res, 400, {message: "User not found"});
 
                 //TODO validation if wanted
 
@@ -786,7 +788,7 @@ const server = http.createServer(async(req, res) => {
                         id: users[userIndex].id,
                         name:  users[userIndex].name,
                         city:  users[userIndex].city,
-                        company:  users[userIndex].id,
+                        company:  users[userIndex].company,
                         bio:  users[userIndex].bio,
                     }
                 })
