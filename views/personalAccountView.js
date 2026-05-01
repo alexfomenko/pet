@@ -1,39 +1,34 @@
 import {renderProfilePage} from "../components/profile/profileRouter.js";
 import {getProfileState} from "../components/profile/profileRouter.js";
 import {updateProfileData} from "../api/personalProfileApi.js";
-//Claude
-// import { renderPage } from './router.js';
-//
-// // // при смене #hash в URL — перерисовываем страницу
-// window.addEventListener('hashchange', () => {
-//     const pageName = location.hash.replace('#', '') || 'empty';
-//     renderProfilePage(pageName);
-// });
-// //
-// // // первый рендер при загрузке
-// const pageName = location.hash.replace('#', '') || 'empty';
-// renderProfilePage(pageName);
-// // Claude
-//
 
-// ATTEMPT 2
-window.addEventListener('hashchange', () => {
+// window.addEventListener('DOMContentLoaded', async () => {
+//     const hash = location.hash.replace('#', '') || 'profile';
+//     if (hash === 'profile') {
+//         await renderProfilePage(getProfileState());
+//     } else {
+//         await renderProfilePage(hash);
+//     }
+// });
+
+window.addEventListener('hashchange', async() => {
     const hash = location.hash.replace('#', '') || 'profile';
     if(hash === 'profile') {
-        renderProfilePage(getProfileState())
+       await renderProfilePage(getProfileState())
     }
     else {
-        renderProfilePage(hash)
+        await renderProfilePage(hash)
     }
 });
 
 const hash = location.hash.replace('#', '') || 'profile';
 if(hash === 'profile') {
-    renderProfilePage(getProfileState())
+    await renderProfilePage(getProfileState())
 }
 else {
-    renderProfilePage(hash)
+    await renderProfilePage(hash)
 }
+
 let editBtn = document.querySelector('.edit-btn');
 let fillInBtn = document.querySelector('.fill-btn');
 let nameEl = document.querySelector('.person-name');

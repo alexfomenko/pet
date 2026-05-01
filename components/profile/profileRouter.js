@@ -86,7 +86,7 @@ const pageConfig = {
     reviews:   { render: renderReviewsProfile,   init: null },
 };
 
-export function renderProfilePage(pageName) {
+export async function renderProfilePage(pageName) {
     const { render, init } = pageConfig[pageName];
 
     document.querySelector('.wrap').innerHTML = `
@@ -100,4 +100,27 @@ export function renderProfilePage(pageName) {
     `;
 
     if (init) init();
+
+    if(pageName === 'fill') {
+        let companyInput = document.getElementById('fill-profile-company');
+        let cityInput= document.getElementById('fill-profile-city');
+        let bioInput = document.getElementById('fill-profile-about');
+        let profileDraft = JSON.parse(localStorage.getItem('profileDraft') || '{}');
+        // Есть черновик — восстанавливаем.Сценарий: нажал "назад" / перезагрузил / закрыл вкладку и открыл снова
+        if(Object.keys(profileDraft).length > 0) {
+            companyInput.value = profileDraft.company;
+            cityInput.value = profileDraft.city;
+            bioInput.value = profileDraft.bio;
+        }
+        else {
+            console.log("Need to send getProfileDataRequest")
+            // Черновика нет — тянем с сервера
+            // Сценарий: первый раз зашёл (сервер вернёт пустые поля)
+            // Сценарий: уже сохранял раньше / нажал Cancel (сервер вернёт сохранённые данные)
+            // let getProfileData = await getProfileData();
+            // companyInput.value = getProfileData.company;
+            // cityInput.value = getProfileData.city;
+            // bioInput.value = getProfileData.bio;
+        }
+    }
 }

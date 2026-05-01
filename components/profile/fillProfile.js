@@ -44,13 +44,35 @@ export function renderFillProfile(){
 
 //2ND APPROACH - SEPARATE FUNCTION
 export function initFillProfile() {
-    document.getElementById('fill-profile-save').addEventListener('click', async (e) => {
-        let companyValue = document.getElementById('fill-profile-company').value;
-        let cityValue = document.getElementById('fill-profile-city').value;
-        let bioValue = document.getElementById('fill-profile-about').value;
+    let fillProfileContainer = document.querySelector('.fill-state-body');
+    let companyInput = document.getElementById('fill-profile-company');
+    let cityInput= document.getElementById('fill-profile-city');
+    let bioInput = document.getElementById('fill-profile-about');
+    let cancelButton = document.querySelector('.ghost-btn');
+    let fillProfileSaveButton = document.getElementById('fill-profile-save');
+    let saveTimeOut;
 
-        let data = {company: companyValue, city: cityValue, bio: bioValue};
+    fillProfileContainer.addEventListener('input', (e) => {
+        clearTimeout(saveTimeOut);
+        saveTimeOut = setTimeout(() => {
+            localStorage.setItem('profileDraft', JSON.stringify({
+                company: companyInput.value,
+                city: cityInput.value,
+                bio: bioInput.value,
+            }))
+        }, 400);
+    });
 
+    cancelButton.addEventListener('click', (e) => {
+        localStorage.removeItem('profileDraft');
+        location.hash = 'empty';
+    })
+
+    fillProfileSaveButton.addEventListener('click', async (e) => {
+        let data = {company: companyInput.value, city: cityInput.value, bio: bioInput.value};
         let sendRequest = await updateProfileData(data);
+
+        localStorage.removeItem('profileDraft');
+        location.hash = 'completed';
     });
 }
