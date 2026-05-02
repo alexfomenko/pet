@@ -8,7 +8,7 @@ import {renderReviewsProfile} from "./reviewsProfile.js";
 
 export const user = {
     company: '',
-    city: 'hhhhhhh',
+    city: '',
     about: ''
 };
 export function getProfileState() {
@@ -16,6 +16,7 @@ export function getProfileState() {
     if (filled.length === 0) return 'empty';
     if (filled.length === 3) return 'completed';
     return 'fill';
+    // return 'empty';
 }
 // export function getProfileState() {
 //     let companyValue = document.querySelectorAll('.fill-state-label')[0].querySelector('input').value;
@@ -87,7 +88,9 @@ const pageConfig = {
 };
 
 export async function renderProfilePage(pageName) {
-    const { render, init } = pageConfig[pageName];
+    let config = pageConfig[pageName];
+    if(!config){console.warn(`Unknown page: ${pageName}`); return;}
+    const { render, init } = config;
 
     document.querySelector('.wrap').innerHTML = `
     <section class="section">

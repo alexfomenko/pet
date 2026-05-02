@@ -70,9 +70,14 @@ export function initFillProfile() {
 
     fillProfileSaveButton.addEventListener('click', async (e) => {
         let data = {company: companyInput.value, city: cityInput.value, bio: bioInput.value};
-        let sendRequest = await updateProfileData(data);
+        try{
+            await updateProfileData(data);
 
-        localStorage.removeItem('profileDraft');
-        location.hash = 'completed';
+            localStorage.removeItem('profileDraft');
+            location.hash = 'completed';
+        }
+        catch (error) {
+            console.log("An error occurred while saving", error);
+        }
     });
 }

@@ -44,10 +44,13 @@ function handleProfileHeaderEdit() {
 
             editBtn.style.display = "none";
 
-            saveBtn = document.createElement('button');
-            saveBtn.classList.add('save-btn','btn');
-            saveBtn.textContent = "Save";
-            header.appendChild(saveBtn);
+            if(!document.querySelector('.save-btn')) {
+                saveBtn = document.createElement('button');
+                saveBtn.classList.add('save-btn','btn');
+                saveBtn.textContent = "Save";
+                header.appendChild(saveBtn);
+            }
+
         }
         else if(e.target.classList.contains('save-btn')) {
             nameEl.textContent = nameEl.querySelector('input').value;
