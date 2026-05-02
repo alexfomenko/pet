@@ -1,16 +1,6 @@
 import {renderProfilePage} from "../components/profile/profileRouter.js";
 import {getProfileState} from "../components/profile/profileRouter.js";
 import {updateProfileData} from "../api/personalProfileApi.js";
-
-// window.addEventListener('DOMContentLoaded', async () => {
-//     const hash = location.hash.replace('#', '') || 'profile';
-//     if (hash === 'profile') {
-//         await renderProfilePage(getProfileState());
-//     } else {
-//         await renderProfilePage(hash);
-//     }
-// });
-
 window.addEventListener('hashchange', async() => {
     const hash = location.hash.replace('#', '') || 'profile';
     if(hash === 'profile') {
