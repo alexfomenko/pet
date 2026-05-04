@@ -14,7 +14,7 @@ export async function updateProfileData(data) {
             return {
                 success: false,
                 status: sendUpdateRequest.status,
-                text: "Invalid json from the server",
+                text: `Server responded with an error ${sendUpdateRequest.status}`,
                 items: null,
             }
         }
@@ -27,7 +27,7 @@ export async function updateProfileData(data) {
             return {
                 success: false,
                 status: sendUpdateRequest.status,
-                text: sendUpdateRequest.statusText,
+                text: "Failed to parse server response",
                 items: null,
             }
         }
@@ -43,10 +43,7 @@ export async function updateProfileData(data) {
         throw new Error('Failed to send data');
     }
 }
-//
-//
 // ## Структура эндпоинта
-//
 // **1. TRY 1 - Сам запрос** — fetch с методом, заголовками, телом:
 // ```js
 // let response = await fetch('/url', {
@@ -54,15 +51,11 @@ export async function updateProfileData(data) {
 //     headers: { ... },
 //     body: JSON.stringify(data),
 // });
-// ```
-//
 // **2. Проверка статуса** — сервер ответил с ошибкой:
 //     ```js
 // if (!response.ok) {
 //     return { success: false, status: response.status, ... }
 // }
-// ```
-//
 //     **3.TRY 2 - Парсинг тела** — сервер ответил ок, но тело может быть сломано:
 //     ```js
 // try {
@@ -70,24 +63,60 @@ export async function updateProfileData(data) {
 // } catch (error) {
 //     return { success: false, text: 'Invalid JSON', ... }
 // }
-// ```
-//
 //     **4. Возврат результата** — всё прошло успешно:
 //     ```js
 // return { success: true, ...parsedBody }
-// ```
-//
 //     **5. Внешний catch** — запрос вообще не ушёл (нет сети, сервер недоступен):
 // ```js
 // catch (error) {
 //     throw new Error('Failed to send request')
 // }
-// ```
-//
 // ---
-//
 //     По сути это цепочка проверок от грубых ошибок к мелким:
-//
-//     ```
 // сеть упала → статус плохой → JSON сломан → всё ок
-// ```
+
+export async function getProfileData() {
+    // 1
+    try{
+        let sendGetProfileRequest = await fetch('/profile', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+        // 2
+        if(!sendGetProfileRequest.ok) { //check 200, 400, 500
+            return {
+                success: false,
+                status: sendGetProfileRequest.status,
+                text: `Server responded with an error ${sendGetProfileRequest.status}`, //200, 400 ...
+                items: null,
+            }
+        }
+  //  3
+        let parsedJsonBody;
+        try{
+            parsedJsonBody = await sendGetProfileRequest.json();
+        }
+        catch (error) {
+            return {
+                success: false,
+                status: sendGetProfileRequest.status,
+                text: "Failed to parse server response",
+                items: null,
+            }
+        }
+        // 4
+        return {
+            success: false,
+            status: sendGetProfileRequest.status,
+            text: sendGetProfileRequest.statusText,
+            ...parsedJsonBody,
+        }
+
+    }
+    catch (error) {
+        throw new Error('Failed to send data');
+    }
+}
