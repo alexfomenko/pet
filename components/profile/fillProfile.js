@@ -26,14 +26,16 @@ export function renderFillProfile(){
                     </div>
 
                     <div class="fill-state-footer">
-                        <button class="ghost-btn" onclick="location.hash='empty'">Cancel</button>
-                        <button id="fill-profile-save" class="btn" onclick="location.hash='completed'">Save and continue</button>
+                        <button class="ghost-btn">Cancel</button>
+                        <button id="fill-profile-save" class="btn">Save and continue</button>
                     </div>
 
                 </div>
                 </div>
 `
 }
+// onclick="location.hash='empty'
+// onclick="location.hash='completed'
 // 1ST APPROACH - DELEGATION
 // document.querySelector('.wrap').addEventListener('click', (e) => {
 //     if (e.target.id === 'fill-profile-save') {
@@ -43,7 +45,7 @@ export function renderFillProfile(){
 // });
 
 //2ND APPROACH - SEPARATE FUNCTION
-export function initFillProfile() {
+export function handleUpdateProfileActions() {
     let fillProfileContainer = document.querySelector('.fill-state-body');
     let companyInput = document.getElementById('fill-profile-company');
     let cityInput= document.getElementById('fill-profile-city');

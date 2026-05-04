@@ -2,7 +2,7 @@ import {renderProfileHeader} from "./profileHeader.js";
 import {renderProfileTabs} from "./profileTabs.js";
 import {renderEmptyProfile} from "./emptyProfile.js";
 import {renderFillProfile} from "./fillProfile.js";
-import {initFillProfile} from "./fillProfile.js";
+import {handleUpdateProfileActions} from "./fillProfile.js";
 import {renderCompletedProfile} from "./completedProfile.js";
 import {renderReviewsProfile} from "./reviewsProfile.js";
 
@@ -82,7 +82,7 @@ export function getProfileState() {
 // 3RD ATTEMPT WITH CONFIG OBJECT INSTEAD OF IF
 const pageConfig = {
     empty:     { render: renderEmptyProfile,     init: null },
-    fill:      { render: renderFillProfile,      init: initFillProfile },
+    fill:      { render: renderFillProfile,      init: handleUpdateProfileActions },
     completed: { render: renderCompletedProfile, init: null },
     reviews:   { render: renderReviewsProfile,   init: null },
 };
