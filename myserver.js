@@ -24,7 +24,7 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 let notes = [];
 let users = [{ id: '1', email: 'test@mail.com', password: bcrypt.hashSync('123456', 10)}];
 
-
+// new way to getting pathname and query
 function getIdFromUrl(req) {
     let {pathname} = new URL(req.url, 'http://localhost' + port);
     return pathname.split('/')[2];
@@ -84,7 +84,7 @@ function sendStaticFile(res, filePath, contentType) {
 
 // START SERVER
 const server = http.createServer(async(req, res) => {
-
+    // old way to getting pathname and query
     let parsedUrl = url.parse(req.url, true);
     let { pathname, query} = parsedUrl;
 
@@ -313,6 +313,7 @@ const server = http.createServer(async(req, res) => {
     console.log("path 1", /^\/companies\/[\w\s]+\/reviews$/.test(pathname))
 
     if(req.method === "GET" && /^\/companies\/[\w\s]+\/reviews$/.test(pathname)) {
+        // old way to getting pathname and query
         let company= pathname.split('/')[2];
         let page = parseInt(query.page) || 1;
         let limit = parseInt(query.limit) || 3;
@@ -499,7 +500,9 @@ const server = http.createServer(async(req, res) => {
     // updating data
 
     if(req.method === "PUT" && req.url.startsWith('/update-review/')) {
-        let id = getIdFromUrl(req);
+        // let id = getIdFromUrl(req); // new way to getting pathname and query
+        let id = pathname.split('/')[2]; //old way to getting pathname and query
+
         let noteIndex = notes.findIndex(note => note.id === id);
         if(noteIndex === -1) {
             // res.writeHead(404, {'Content-Type': 'application/json'});
@@ -555,7 +558,9 @@ const server = http.createServer(async(req, res) => {
     // deleting data
 
     if(req.method === "DELETE" && req.url.startsWith('/delete-review')) {
-        let id = getIdFromUrl(req);
+        // let id = getIdFromUrl(req); // new way to getting pathname and query
+        let id = pathname.split('/')[2]; //old way to getting pathname and query
+
         let noteIndex = notes.findIndex(note => note.id === id);
         if(noteIndex === -1) {
             // res.writeHead(404,{'Content-type': 'application/json'});
@@ -798,6 +803,60 @@ const server = http.createServer(async(req, res) => {
     // else {
     //     return sendResponse(res, 404, "Not found")
     // }
+
+    //USER GETS HIS OWN DATA
+    //TODO add personal id ???
+    if(req.method === "GET" && req.url === '/profile') {
+        let token = req.headers['authorization']?.split(" ")[1];
+        if(!token) return sendResponse(res, 401, {message: "Unauthorized"});
+
+        // getting data(for id) from token
+        let tokenData;
+        try{
+            tokenData = jwt.verify(token, SECRET);
+        }
+        catch (error) {
+            sendResponse(res, 401, {message: "Invalid token"});
+        }
+
+        //finding user using id from token
+        let userIndex = users.findIndex((user) => user.id === tokenData.userId);
+        if(userIndex === -1) return sendResponse(res, 400, {message: "User not found"});
+
+        return sendResponse(res, 200, {
+            user: {
+                id: users[userIndex].id,
+                name:  users[userIndex].name,
+                email: users[userIndex].email,
+                city:  users[userIndex].city,
+                company:  users[userIndex].company,
+                bio:  users[userIndex].bio,
+            }
+        })
+    }
+
+    //SOMEONE WANTS TO GET USER PROFILE
+    if(req.method === "GET" && req.url.startsWith('/users/')) {
+        // check if userId was sent in url
+        // let userId = req.url.split('/')[2]; //worse option
+        let userId = pathname.split('/')[2]; //better option
+
+        if(!userId) return sendResponse(res, 400, {message: "No user id provided"});
+
+        //finding user
+        let userIndex = users.findIndex((user) => user.id === userId);
+        if(!userIndex) return sendResponse(res, 404, {message: "User not found"});
+
+        return sendResponse(res, 200, {
+            user: {
+                id: users[userIndex].id,
+                name:  users[userIndex].name,
+                city:  users[userIndex].city,
+                company:  users[userIndex].company,
+                bio:  users[userIndex].bio,
+            }
+        })
+    }
 });
 
 (async function start() {
