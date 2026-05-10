@@ -75,7 +75,7 @@ export async function updateProfileData(data) {
 //     По сути это цепочка проверок от грубых ошибок к мелким:
 // сеть упала → статус плохой → JSON сломан → всё ок
 
-export async function getProfileData() {
+export async function getOwnProfileData() {
     // 1
     try{
         let sendGetProfileRequest = await fetch('/profile', {
@@ -109,7 +109,7 @@ export async function getProfileData() {
         }
         // 4
         return {
-            success: false,
+            success: true,
             status: sendGetProfileRequest.status,
             text: sendGetProfileRequest.statusText,
             ...parsedJsonBody,

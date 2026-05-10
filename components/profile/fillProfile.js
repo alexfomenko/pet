@@ -1,5 +1,5 @@
 import {updateProfileData} from "../../api/personalProfileApi.js";
-import {getProfileData} from "../../api/personalProfileApi.js";
+import {getOwnProfileData} from "../../api/personalProfileApi.js";
 
 export function renderFillProfile(){
     return `
