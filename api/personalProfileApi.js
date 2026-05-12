@@ -120,3 +120,43 @@ export async function getOwnProfileData() {
         throw new Error('Failed to send data');
     }
 }
+
+//todo where to get userId
+export async function getProfileData(userId) {
+    try {
+        let url = `/users/${userId}`;
+        let sendGetProfileRequest = await fetch(url);
+
+        if (!sendGetProfileRequest.ok) {
+            return {
+                success: false,
+                status: sendGetProfileRequest.status,
+                text: sendGetProfileRequest.statusText,
+                items: null,
+            }
+        }
+
+        let parsedJson;
+        try{
+            parsedJson = await parsedJson.json();
+        }
+        catch (error){
+            return {
+                success: false,
+                status: sendGetProfileRequest.status,
+                text: "Failed to parse server response",
+                items: null,
+            }
+        }
+
+        return {
+            success: true,
+            status: sendGetProfileRequest.status,
+            text: sendGetProfileRequest.statusText,
+            ...parsedJson,
+        }
+    }
+    catch(error) {
+            throw new Error("Failed to send data");
+    }
+}
