@@ -102,7 +102,7 @@ export async function renderProfilePage(pageName) {
     <div class="container">
     ${renderProfileHeader(user)}
     ${renderProfileTabs()}
-    ${render()}
+    ${render(user)}
     </div>
     </section>
     `;
