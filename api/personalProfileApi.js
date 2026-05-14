@@ -1,5 +1,5 @@
 export async function updateProfileData(data) {
-    //1 - check if the server answered with 200, 400, 500
+    //1 - check if the request was actually sent
     try{
         console.log('token:', localStorage.getItem('token'));
         let sendUpdateRequest = await fetch('/profile', {
@@ -10,6 +10,8 @@ export async function updateProfileData(data) {
             },
             body: JSON.stringify(data),
         });
+
+        //2 - check if the server answered with 200, 400, 500
         if(!sendUpdateRequest.ok) {
             return {
                 success: false,
@@ -18,7 +20,7 @@ export async function updateProfileData(data) {
                 items: null,
             }
         }
-       // 2 - check if we can parse the body
+       // 3 - check if we can parse the body
         let parsedResponseBody;
         try{
             parsedResponseBody = await sendUpdateRequest.json();
@@ -31,7 +33,7 @@ export async function updateProfileData(data) {
                 items: null,
             }
         }
-        // 3 - if we can parse the body successfully, send the response
+        // 4 - if we can parse the body successfully, send the response
         return {
             success: true,
             status: sendUpdateRequest.status,
@@ -40,7 +42,12 @@ export async function updateProfileData(data) {
         }
     }
     catch (error) {
-        throw new Error('Failed to send data');
+        return {
+            success: false,
+            status: null,
+            text: "Network error, try again",
+            items: null,
+        }
     }
 }
 // ## Структура эндпоинта
@@ -121,7 +128,7 @@ export async function getOwnProfileData() {
     }
 }
 
-//todo where to get userId
+//todo where to get userId - dataset
 export async function getProfileData(userId) {
     try {
         let url = `/users/${userId}`;

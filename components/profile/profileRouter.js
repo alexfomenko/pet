@@ -5,6 +5,8 @@ import {renderFillProfile} from "./fillProfile.js";
 import {handleUpdateProfileActions} from "./fillProfile.js";
 import {renderCompletedProfile} from "./completedProfile.js";
 import {renderReviewsProfile} from "./reviewsProfile.js";
+import {getOwnProfileData} from "../../api/personalProfileApi.js";
+import {handleProfileHeaderEdit} from "./profileHeader.js";
 
 export const user = {
     company: '',
@@ -92,16 +94,20 @@ export async function renderProfilePage(pageName) {
     if(!config){console.warn(`Unknown page: ${pageName}`); return;}
     const { render, init } = config;
 
+    let sendGetProfileDataRequest = await getOwnProfileData();
+    let user = sendGetProfileDataRequest.success ? sendGetProfileDataRequest.user : null;
+
     document.querySelector('.wrap').innerHTML = `
     <section class="section">
     <div class="container">
-    ${renderProfileHeader()}
+    ${renderProfileHeader(user)}
     ${renderProfileTabs()}
     ${render()}
     </div>
     </section>
     `;
 
+    await handleProfileHeaderEdit();
     if (init) init();
 
     if(pageName === 'fill') {
@@ -115,15 +121,11 @@ export async function renderProfilePage(pageName) {
             cityInput.value = profileDraft.city;
             bioInput.value = profileDraft.bio;
         }
+        // get data from api request
         else {
-            console.log("Need to send getProfileDataRequest")
-            // Черновика нет — тянем с сервера
-            // Сценарий: первый раз зашёл (сервер вернёт пустые поля)
-            // Сценарий: уже сохранял раньше / нажал Cancel (сервер вернёт сохранённые данные)
-            // let getProfileData = await getProfileData();
-            // companyInput.value = getProfileData.company;
-            // cityInput.value = getProfileData.city;
-            // bioInput.value = getProfileData.bio;
+            companyInput.value = user?.company ?? '';
+            cityInput.value = user?.city ?? '';
+            bioInput.value = user?.bio ?? '';
         }
     }
 }

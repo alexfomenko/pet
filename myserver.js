@@ -771,7 +771,7 @@ const server = http.createServer(async(req, res) => {
                 catch (error){
                     return sendResponse(res, 400, {message: "Invalid json"});
                 }
-                let {company, city, bio} = parsedJson;
+                let {name, title, email, company, city, bio} = parsedJson;
 
                 //finding the user
                 let userIndex = users.findIndex((user) => user.id === decodedData.userId);
@@ -780,6 +780,9 @@ const server = http.createServer(async(req, res) => {
                 //TODO validation if wanted
 
                 //updating data if passed
+                if(name !== undefined) users[userIndex].name = String(name.trim());
+                if(title !== undefined) users[userIndex].title = String(title.trim());
+                if(email !== undefined) users[userIndex].email = String(email.trim());
                 if(company !== undefined) users[userIndex].company = String(company.trim());
                 if(city !== undefined) users[userIndex].city = String(city.trim());
                 if(bio !== undefined) users[userIndex].bio = String(bio.trim());
@@ -805,7 +808,6 @@ const server = http.createServer(async(req, res) => {
     // }
 
     //USER GETS HIS OWN DATA
-    //TODO add personal id ???
     if(req.method === "GET" && req.url === '/profile') {
         let token = req.headers['authorization']?.split(" ")[1];
         if(!token) return sendResponse(res, 401, {message: "Unauthorized"});
@@ -816,7 +818,7 @@ const server = http.createServer(async(req, res) => {
             tokenData = jwt.verify(token, SECRET);
         }
         catch (error) {
-            sendResponse(res, 401, {message: "Invalid token"});
+            return sendResponse(res, 401, {message: "Invalid token"});
         }
 
         //finding user using id from token

@@ -1,12 +1,25 @@
-export function renderProfileHeader(){
+import {updateProfileData} from "../../api/personalProfileApi.js";
+
+export function renderProfileHeader(user){
+    // let name;
+    // if (user === null || user === undefined) {
+    //     name = '—';
+    // } else if (user.name === null || user.name === undefined) {
+    //     name = '—';
+    // } else {
+    //     name = user.name;
+    // }
+
+    const name    = user?.name    ?? '—';
+    const email   = user?.email   ?? '—';
     return `           
             <div class="profile-header card">
                 <div class="company-about">
                     <img src="https://www.osh.by/wp-content/uploads/2023/12/1041436899_0_206_2905_1840_1920x0_80_0_0_c7022893b761781d76fe592010d14bd2.jpg" alt="photo" width="200" height="100">
                     <div class="account-data">
-                        <h1 class="person-name">Oleh Shevtsov</h1>
-                        <p class="person-title">Software Developer</p>
-                        <span class="person-email">olehshevtsov@gmail.com</span>
+                        <h1 class="person-name">${name}</h1>
+                        <p class="person-title">Software Developer</p> 
+                        <span class="person-email">${email}</span>
                     </div>
                 </div>
                         <button class="edit-btn btn">Edit</button>
@@ -27,7 +40,7 @@ export function renderProfileHeader(){
 //   `;
 // }
 
-function handleProfileHeaderEdit() {
+export async function handleProfileHeaderEdit() {
     let editBtn = document.querySelector('.edit-btn');
     let fillInBtn = document.querySelector('.fill-btn');
     let nameEl = document.querySelector('.person-name');
@@ -36,7 +49,13 @@ function handleProfileHeaderEdit() {
     let saveBtn;
     let header = document.querySelector('.profile-header');
 
-    header.addEventListener('click', (e) => {
+    let errorEl = document.createElement('span');
+    errorEl.classList.add('header-error');
+    errorEl.style.color = 'red';
+    errorEl.style.display = 'none';
+    header.appendChild(errorEl);
+
+    header.addEventListener('click', async (e) => {
         if(e.target.classList.contains('edit-btn')) {
             nameEl.innerHTML = `<input type="text" value="${nameEl.textContent}">`;
             titleEl.innerHTML = `<input type="text" value="${titleEl.textContent}">`;
@@ -53,9 +72,34 @@ function handleProfileHeaderEdit() {
 
         }
         else if(e.target.classList.contains('save-btn')) {
-            nameEl.textContent = nameEl.querySelector('input').value;
-            titleEl.textContent = titleEl.querySelector('input').value;
-            emailEl.textContent = emailEl.querySelector('input').value;
+            // nameEl.textContent = nameEl.querySelector('input').value;
+            // titleEl.textContent = titleEl.querySelector('input').value;
+            // emailEl.textContent = emailEl.querySelector('input').value;
+            //
+            // editBtn.style.display = 'inline-block';
+            // saveBtn.style.display = 'none';
+
+            let nameValue = nameEl.querySelector('input').value;
+            let titleValue = titleEl.querySelector('input').value;
+            let emailValue = emailEl.querySelector('input').value;
+            let data = {
+                name: nameValue,
+                title: titleValue,
+                email: emailValue,
+            }
+
+            // send request and check if it was success
+            let sendUpdateRequest = await updateProfileData(data);
+            if(!sendUpdateRequest.success) {
+                errorEl.textContent = sendUpdateRequest.text;
+                errorEl.style.display = 'inline';
+                return;
+            }
+
+            //changing input values
+            nameEl.textContent = nameValue;
+            titleEl.textContent = titleValue;
+            emailEl.textContent = emailValue;
 
             editBtn.style.display = 'inline-block';
             saveBtn.style.display = 'none';
