@@ -787,6 +787,11 @@ const server = http.createServer(async(req, res) => {
                 if(city !== undefined) users[userIndex].city = String(city.trim());
                 if(bio !== undefined) users[userIndex].bio = String(bio.trim());
 
+                //save to file system
+                await saveNoteToFile(USERS_FILE, users);
+
+                console.log(users[userIndex])
+
                 return sendResponse(res, 200, {
                     message: "Profile updated",
                     user: {
