@@ -1,4 +1,8 @@
-export function renderCompletedProfile(){
+export function renderCompletedProfile(user){
+    let company = user?.company ?? '-';
+    let city = user?.city ?? '-';
+    let bio = user?.bio ?? '-';
+
     return `
 <div class="profile-body card">
        <div class="completed-state">
@@ -8,14 +12,13 @@ export function renderCompletedProfile(){
                                 <div class="done-layout">
                                     <div class="about-card card">
                                         <h3>About yourself</h3>
-                                        <p>About me
-                                            I'm a Frontend Developer with 5 years of experience developing web interfaces. I specialize in React, TypeScript, and modern UI solutions. I love creating fast and user-friendly interfaces.</p>
+                                        <p> ${bio} </p>
                                     </div>
 
                                     <div class="side-stack">
                                         <div class="mini-card card">
-                                            <span>Company</span>
-                                            <strong>Kedi</strong>
+                                            <span>${company}</span>
+                                            <strong>${city}</strong>
                                         </div>
                                         <div class="mini-card card">
                                             <span>City</span>
@@ -29,3 +32,5 @@ export function renderCompletedProfile(){
                             </div>
     `
 }
+
+// I'm a Frontend Developer with 5 years of experience developing web interfaces. I specialize in React, TypeScript, and modern UI solutions. I love creating fast and user-friendly interfaces.
