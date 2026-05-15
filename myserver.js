@@ -797,6 +797,7 @@ const server = http.createServer(async(req, res) => {
                     user: {
                         id: users[userIndex].id,
                         name:  users[userIndex].name,
+                        title: users[userIndex].title,
                         city:  users[userIndex].city,
                         company:  users[userIndex].company,
                         bio:  users[userIndex].bio,
@@ -834,6 +835,7 @@ const server = http.createServer(async(req, res) => {
             user: {
                 id: users[userIndex].id,
                 name:  users[userIndex].name,
+                title: users[userIndex].title,
                 email: users[userIndex].email,
                 city:  users[userIndex].city,
                 company:  users[userIndex].company,

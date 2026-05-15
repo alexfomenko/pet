@@ -12,13 +12,14 @@ export function renderProfileHeader(user){
 
     const name    = user?.name    ?? '—';
     const email   = user?.email   ?? '—';
+    let title = user?.title ?? '-';
     return `           
             <div class="profile-header card">
                 <div class="company-about">
                     <img src="https://www.osh.by/wp-content/uploads/2023/12/1041436899_0_206_2905_1840_1920x0_80_0_0_c7022893b761781d76fe592010d14bd2.jpg" alt="photo" width="200" height="100">
                     <div class="account-data">
                         <h1 class="person-name">${name}</h1>
-                        <p class="person-title">Software Developer</p> 
+                        <p class="person-title">${title}</p> 
                         <span class="person-email">${email}</span>
                     </div>
                 </div>
