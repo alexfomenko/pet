@@ -88,21 +88,68 @@ export async function getReviews(page, limit, company = null, sort = null) {
     }
 }
 
-export async function sendPostRequest(data) {
+// export async function submitReview(data) {
+//     try {
+//         let sendRequest = await fetch('/submit-review', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${localStorage.getItem('token')}`
+//             },
+//             body: JSON.stringify(data),
+//         });
+//         let json = await sendRequest.json();
+//         return {ok: sendRequest.ok, status: sendRequest.status, json};
+//     }
+//     catch (error) {
+//         throw new Error('Failed to send the data');
+//     }
+// }
+
+export async function submitReview(data) {
     try {
         let sendRequest = await fetch('/submit-review', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
             body: JSON.stringify(data),
         });
-        let json = await sendRequest.json();
-        return {ok: sendRequest.ok, status: sendRequest.status, json};
+
+        if(!sendRequest.ok) {
+            return {
+                success: false,
+                status: sendRequest.status,
+                text: `Server responded with an error ${sendRequest.status}`,
+                items: null,
+            }
+        }
+
+
+        let parsedResponse;
+        try{
+            parsedResponse = await sendRequest.json();
+        }
+        catch (error) {
+            return {
+                success: false,
+                status: sendRequest.status,
+                text: `Failed to parse server response`,
+                items: null,
+            }
+        }
+
+        return {
+            ok: sendRequest.ok,
+            status: sendRequest.status,
+            parsedResponse,
+        };
     }
     catch (error) {
-        throw new Error('Failed to send the data');
+        throw new Error('Network error, try again');
     }
 }
-
 export async function sendDeleteRequest(closestReviewItemId) {
     try {
         let sendRequest = await fetch(`/delete-review/${closestReviewItemId}`, {

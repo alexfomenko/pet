@@ -466,13 +466,29 @@ const server = http.createServer(async(req, res) => {
     // posting data
 
     if(req.method === "POST" && req.url === '/submit-review') {
+        //get token if available
+        let token = req.headers['authorization']?.split(" ")[1];
+        let userId =null;
+        if(token) {
+            try{
+                let decodedData = jwt.verify(token, SECRET);
+                userId = decodedData.userId;
+            }
+            catch(error) {
+                return sendResponse(res, 401, {message: "Invalid token"});
+            }
+        }
+
+        console.log(userId);
+
+        //processing body
         let body = '';
         req.on('data', (chunk) => (body += chunk));
         req.on('end', async () => {
             try {
                 let parsedJson = JSON.parse(body);
                 // let date = new Date();
-                let note = {id: uuidv4(), company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, name:parsedJson.name, email:parsedJson.email, date: parsedJson.date};
+                let note = {id: uuidv4(), userId, company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, name:parsedJson.name, email:parsedJson.email, date: parsedJson.date};
 
                 //update notes array - temporary storage
                 notes.push(note);
@@ -486,7 +502,13 @@ const server = http.createServer(async(req, res) => {
                 // res.writeHead(201, {'Content-Type' : 'application/json'})
                 // res.end(JSON.stringify(note))
                 //or
-                return sendResponse(res, 201, {success: true, message:"Your review has been added", id: note.id});
+                return sendResponse(res, 201, {
+                    success: true,
+                    message:"Your review has been added",
+                    id: note.id,
+                    userId,
+                }
+                );
             }
             catch (error) {
                 // res.writeHead(404, {'Content-Type' : 'application/json'})

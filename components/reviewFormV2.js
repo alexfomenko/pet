@@ -1,4 +1,4 @@
-import {sendPostRequest} from "../api/reviewsApi.js";
+import {submitReview} from "../api/reviewsApi.js";
 import {renderReviewsV2} from "./newReviewArticleV2.js";
 import {getCompanyReviews} from "../api/reviewsApiV2.js";
 import {appState} from "../appState.js";
@@ -97,7 +97,7 @@ sendReviewButton.addEventListener('click', async (e) => {
 
     // if(validateForm()) {
         // sendReviewButton.disabled = false;
-        let request = await sendPostRequest(data);
+        let request = await submitReview(data);
         // let reviewId = requestResult.json.id; //TODO do I need ?
         // console.log(reviewId)
 

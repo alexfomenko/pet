@@ -1,4 +1,4 @@
-import {getReviews, sendPostRequest} from '../api/reviewsApi.js';
+import {getReviews, submitReview} from '../api/reviewsApi.js';
 import {createNewRow} from "./newReviewRow.js";
 import {createReviewColumn} from "./newReviewRow.js";
 // import {createReviewColumn} from "../utils/utils.js";
@@ -60,7 +60,7 @@ sendReviewButton.addEventListener('click', async (e) => {
     };
 
     //adding review to the page if the request was successful
-    let requestResult = await sendPostRequest(data);
+    let requestResult = await submitReview(data);
     let reviewId = requestResult.json.id;
     console.log(reviewId)
     // if(requestResult.status === 201) {    or   // if(requestResult.success === 201) {
