@@ -126,7 +126,6 @@ export async function submitReview(data) {
             }
         }
 
-
         let parsedResponse;
         try{
             parsedResponse = await sendRequest.json();
@@ -141,8 +140,9 @@ export async function submitReview(data) {
         }
 
         return {
-            ok: sendRequest.ok,
+            success: true,
             status: sendRequest.status,
+            text: sendRequest.statusText,
             parsedResponse,
         };
     }

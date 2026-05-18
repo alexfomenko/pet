@@ -61,11 +61,13 @@ sendReviewButton.addEventListener('click', async (e) => {
 
     //adding review to the page if the request was successful
     let requestResult = await submitReview(data);
-    let reviewId = requestResult.json.id;
+    let reviewId = requestResult.parsedResponse.id;
+    let userId = requestResult.parsedResponse.userId;
     console.log(reviewId)
+    console.log(userId);
     // if(requestResult.status === 201) {    or   // if(requestResult.success === 201) {
 
-    if (requestResult.ok) {
+    if (requestResult.success) {
 //         // creating a new row
 //         let newReviewItem = document.createElement('div');
 //         newReviewItem.classList.add("review-item");
