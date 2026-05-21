@@ -2,7 +2,7 @@
 import {createButton} from "./reviewButton.js";
 let reviewsContainer = document.getElementById("reviewsContainer");
 
-export function createNewRow(reviewId, companyValue, ratingValue, reviewValue, date) {
+export function createNewRow(reviewId, userId, companyValue, ratingValue, reviewValue, date) {
     // creating a new row
     let newReviewItem = document.createElement('div');
     newReviewItem.classList.add("review-item");
@@ -10,6 +10,7 @@ export function createNewRow(reviewId, companyValue, ratingValue, reviewValue, d
 
     //adding review data to the table
     newReviewItem.dataset.id = reviewId;
+    newReviewItem.dataset.userId = userId;
 //         newReviewItem.innerHTML = `
 //              <div class="column company"> ${companyValue} </div>
 //              <div class="column rating"> ${ratingValue} </div>
@@ -39,7 +40,7 @@ export function renderReviews(reviewsArray) {
     let reviewsContainer = document.getElementById("reviewsContainer");
     reviewsContainer.innerHTML = "";
     reviewsArray.forEach((review) => {
-        let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
+        let newRow = createNewRow(review.id, review.userId, review.company, review.rating, review.review, review.date);
         reviewsContainer.appendChild(newRow);
     })
 }
