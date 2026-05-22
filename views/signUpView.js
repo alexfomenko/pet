@@ -47,6 +47,7 @@ button.addEventListener('click', async(e) => {
     showToast(sendSignUpRequest.message);
 
     localStorage.setItem("token", sendSignUpRequest.token);
+    localStorage.setItem("name", sendSignUpRequest.user.name);
 
     window.location.href ='/html/reviews';
 })

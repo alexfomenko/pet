@@ -662,6 +662,7 @@ const server = http.createServer(async(req, res) => {
                     token,
                     user: {
                         id: user.id,
+                        name: user.name,
                         email: user.email,
                     }
                 })
