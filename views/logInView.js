@@ -41,7 +41,7 @@ button.addEventListener('click', async(e) => {
 
     //set token
     localStorage.setItem("token", sendSignInRequest.token);
-    localStorage.setItem("name", sendSignInRequest.user.name);
+    localStorage.setItem("userName", sendSignInRequest.user.name);
     //7
 
     // open review page

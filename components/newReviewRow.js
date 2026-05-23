@@ -2,7 +2,7 @@
 import {createButton} from "./reviewButton.js";
 let reviewsContainer = document.getElementById("reviewsContainer");
 
-export function createNewRow(reviewId, userId, companyValue, ratingValue, reviewValue, date) {
+export function createNewRow(reviewId, userId, companyValue, userNameValue, ratingValue, reviewValue, date) {
     // creating a new row
     let newReviewItem = document.createElement('div');
     newReviewItem.classList.add("review-item");
@@ -20,6 +20,7 @@ export function createNewRow(reviewId, userId, companyValue, ratingValue, review
 //              <button class = 'delete-btn' title="Delete review">🗑️</button>
 // `
     newReviewItem.appendChild(createReviewColumn(companyValue, 'column', 'company'));
+    newReviewItem.appendChild(createReviewColumn(userNameValue, 'column', 'company'));
     newReviewItem.appendChild(createReviewColumn(ratingValue, 'column', 'rating'));
     newReviewItem.appendChild(createReviewColumn(reviewValue, 'column', 'review'));
     newReviewItem.appendChild(createReviewColumn(date, 'column', 'date'));
@@ -36,11 +37,12 @@ export function createReviewColumn(textContent, ...classes) {
     return reviewColumn;
 }
 
+//todo check review.userName
 export function renderReviews(reviewsArray) {
     let reviewsContainer = document.getElementById("reviewsContainer");
     reviewsContainer.innerHTML = "";
     reviewsArray.forEach((review) => {
-        let newRow = createNewRow(review.id, review.userId, review.company, review.rating, review.review, review.date);
+        let newRow = createNewRow(review.id, review.userId, review.company,review.userName, review.rating, review.review, review.date);
         reviewsContainer.appendChild(newRow);
     })
 }

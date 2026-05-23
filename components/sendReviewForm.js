@@ -35,6 +35,9 @@ sendReviewButton.addEventListener('click', async (e) => {
     let ratingValue = document.getElementById('rating').value.trim();
     let reviewValue = document.getElementById('review').value.trim();
 
+    //getting userName fro, storage
+    let userNameValue = localStorage.getItem('userName') || "Anonymous";
+
     //creating delete button
     let deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-btn');
@@ -91,7 +94,7 @@ sendReviewButton.addEventListener('click', async (e) => {
 //         newReviewItem.appendChild(createButton('edit-btn', 'Update review', '✏️'));
 //         newReviewItem.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
 
-        let newReviewItem = createNewRow(reviewId, userId, companyValue, ratingValue, reviewValue, currentDate);
+        let newReviewItem = createNewRow(reviewId, userId, companyValue, userNameValue, ratingValue, reviewValue, currentDate);
         reviewsContainer.appendChild(newReviewItem);
 
         //clean the form
