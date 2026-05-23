@@ -477,7 +477,8 @@ const server = http.createServer(async(req, res) => {
     if(req.method === "POST" && req.url === '/submit-review') {
         //get token if available
         let token = req.headers['authorization']?.split(" ")[1];
-        let userId =null;
+        if(token === "null") token = null;
+        let userId = null;
         if(token) {
             try{
                 let decodedData = jwt.verify(token, SECRET);

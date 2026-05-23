@@ -108,11 +108,16 @@ export async function getReviews(page, limit, company = null, sort = null) {
 
 export async function submitReview(data) {
     try {
+        let token = localStorage.getItem('token');
         let sendRequest = await fetch('/submit-review', {
             method: 'POST',
+            // headers: {
+            //     'Content-Type': 'application/json',
+            //     'Authorization': `Bearer ${localStorage.getItem('token')}`
+            // },
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                ...(token ? { 'Authorization': `Bearer ${token}` } : {})
             },
             body: JSON.stringify(data),
         });
