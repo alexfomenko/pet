@@ -14,6 +14,7 @@ import {createNewRow} from "../components/newReviewRow.js";
 import {renderPagination} from "../components/reviewsPagination.js";
 // import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "../components/newReviewRow.js";
+import {populateFilterBar} from "../components/reviewsFilterBar.js";
 
 // TODO SUBSTITUTE THIS VARIABLE WITH IMPORT FILE
 export let appState = {
@@ -47,83 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     renderPagination(appState.currentPage, response.totalPages);
 
-//     // previous button
-//     let prevButton = document.createElement('button');
-//     prevButton.textContent = '←';
-//     prevButton.disabled = currentPage === 1;
-//     paginationEl.appendChild(prevButton);
-//
-//     // numbered buttons
-//     for (let i = 1; i <= totalPages; i++) {
-//         let button = document.createElement('button');
-//         button.textContent = i;
-//         button.classList.add('page-btn');
-//         paginationEl.appendChild(button);
-//         if (i === currentPage) button.classList.add('active');
-//
-//         button.addEventListener('click', async(e) => {
-//             let target = e.target;
-//             currentPage = i;
-//             let response = await getReviews(i, 1);
-//             renderReviews(response.items);
-//
-//             document.querySelectorAll('.pagination .page-btn').forEach((btn) => {
-//                 if (btn.classList.contains('active') && btn !== target) {
-//                     btn.classList.remove('active');
-//                 }
-//             })
-//
-//             target.classList.add('active');
-//             prevButton.disabled = currentPage === 1;
-//             nextButton.disabled = currentPage === totalPages;
-//         })
-//     }
-//
-//     // next button
-//     let nextButton = document.createElement('button');
-//     nextButton.textContent = '→';
-//     nextButton.disabled = currentPage >= totalPages;
-//     paginationEl.appendChild(nextButton);
-//
-//     prevButton.addEventListener('click', async(e) => {
-//         currentPage = currentPage - 1;
-//         let response = await getReviews(currentPage, 1);
-//         renderReviews(response.items);
-//         prevButton.disabled = currentPage === 1;
-//
-//         document.querySelectorAll('.pagination .page-btn').forEach((btn) => {
-//             btn.classList.remove('active');
-//         })
-//
-//         let activeButton = Array.from(document.querySelectorAll('.pagination .page-btn'))
-//             .find((btn) => btn.textContent === String(currentPage));
-//         if (activeButton) {
-//             activeButton.classList.add('active');
-//         }
-//
-//         prevButton.disabled = currentPage === 1;
-//         nextButton.disabled = currentPage === totalPages;
-//     })
-//
-//     nextButton.addEventListener('click', async(e) => {
-//         currentPage = currentPage + 1;
-//         let response = await getReviews(currentPage, 1);
-//         renderReviews(response.items);
-//
-//          document.querySelectorAll('.pagination .page-btn').forEach((btn) => {
-//              btn.classList.remove('active');
-//          })
-//
-//         let activeButton = Array.from(document.querySelectorAll('.pagination .page-btn'))
-//             .find((btn) => btn.textContent === String(currentPage));
-//
-//         if (activeButton) {
-//             activeButton.classList.add('active');
-//         }
-//         prevButton.disabled = currentPage === 1;
-//         nextButton.disabled = currentPage === totalPages;
-//
-//     })
 })
 
 

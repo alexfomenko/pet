@@ -22,6 +22,12 @@ addReviewButton.addEventListener('click', async (e) => {
     // modal.style.display = 'flex';
     overlay.classList.add('active');
 
+    //check if user is logged in and we should show name&email fields
+    let token = localStorage.getItem('token');
+    if(!token) {
+        document.getElementById('personal_data').classList.remove('hidden');
+    }
+
     //clear form
     document.querySelectorAll('.star-rating span').forEach((star) => {
         star.classList.remove('active');
@@ -75,6 +81,7 @@ sendReviewButton.addEventListener('click', async (e) => {
     let name = document.getElementById('person_name').value; //TODO
     let email = document.getElementById('person_email').value; //TODO
     let date = new Date().toDateString();
+    let userName = localStorage.getItem('userName') || "Anonymous";
     // if(!rating) {
     //     let ratingField = document.querySelector('.rating-error');
     //     ratingField.classList.toggle('error');
@@ -113,11 +120,6 @@ sendReviewButton.addEventListener('click', async (e) => {
 
 function validateForm() {
     let isValid = true;
-    // let rating = document.querySelector('#company_rating');
-    // let rating = document.querySelector('#company_rating_2');
-    // let review = document.querySelector('#company_review');
-    // let ratingErrorField = document.querySelector('.rating-error');
-    // let reviewErrorField = document.querySelector('.review-error');
 
     // if(e.target.id === "company_rating") {
     let ratingValue = Number(rating.value);

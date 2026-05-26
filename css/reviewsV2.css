@@ -483,6 +483,10 @@ input[type="text"], input[type="email"] {
     background: #fafafa;
 }
 
+.hidden{
+    display: none;
+}
+
 /*modal footer*/
 .modal-footer{
     display: flex;

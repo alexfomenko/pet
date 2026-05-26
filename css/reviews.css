@@ -152,6 +152,12 @@
     list-style-type: none;
 }
 
+.hidden{
+    display: none;
+}
+
+/*Pagination*/
+
 .pagination {
     display: flex;
     justify-content: center;

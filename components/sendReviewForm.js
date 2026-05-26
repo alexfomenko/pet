@@ -18,6 +18,11 @@ if(showFormButton) {
     showFormButton.addEventListener('click', () => {
         // reviewForm.classList.toggle('.hidden');
         // console.log("Hello")
+        //check if user is logged in in order to show/hide name&email fields
+        let token = localStorage.getItem('token');
+        if(!token) {
+            document.getElementById('personalData').classList.remove('hidden');
+        }
         reviewForm.style.display = reviewForm.style.display === 'block' ? 'none' : 'block';
     })
 }
