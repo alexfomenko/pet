@@ -167,3 +167,54 @@ export async function getProfileData(userId) {
             throw new Error("Failed to send data");
     }
 }
+
+export async function getUserReviews() {
+    let userReviews;
+    try{
+       userReviews = await fetch('/profile/reviews', {
+           method: "GET",
+           headers: {
+               'Content-type': 'application/json',
+               "Authorization": `Bearer ${localStorage.getItem('token')}`
+           }
+       });
+
+       if(!userReviews.ok){
+           return {
+               success: false,
+               status: userReviews.status,
+               text: `Server responded with an error ${userReviews.status}`,
+               items: null,
+           }
+       }
+
+        let parsedResponse;
+        try{
+            parsedResponse = await userReviews.json();
+        }
+        catch (error) {
+            return {
+                success: false,
+                status: userReviews.status,
+                text: "Failed to parse the response",
+                items: null,
+            }
+        }
+
+        return {
+            success: true,
+            status: userReviews.status,
+            text: userReviews.statusText,
+            ...parsedResponse,
+        }
+    }
+
+    catch (error){
+        return {
+            success: false,
+            status: null,
+            text: "Network error, try again",
+            items: null,
+        }
+    }
+}
