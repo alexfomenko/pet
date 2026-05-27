@@ -899,6 +899,36 @@ const server = http.createServer(async(req, res) => {
             }
         })
     }
+
+    if(req.method === "GET" && req.url ==='/profile/reviews') {
+        //check if token was sent at all
+        let token = req.headers['authorization']?.split(" ")[1];
+        if(!token) return sendResponse(res, 401, {message: "Unauthorized"});
+        //check if token is real
+        let tokenData;
+        try{
+            tokenData = jwt.verify(token, SECRET);
+        }
+        catch (error){
+            return sendResponse(res, 401, {message: "Invalid token"})
+        }
+
+        //check if user exists
+        let user = users.find((user) => user.id === tokenData.userId);
+        if(!user) sendResponse(res,400, {message: "User not found"});
+        //find users reviews
+        let userReviews = notes.filter((review) => {
+            return review.userId === user.id;
+        })
+
+        console.log(userReviews);
+
+        return sendResponse(res, 200, {
+            userId: tokenData.userId,
+            reviews: userReviews,
+        })
+    }
+
 });
 
 (async function start() {
