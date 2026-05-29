@@ -7,6 +7,7 @@ import {renderCompletedProfile} from "./completedProfile.js";
 import {renderReviewsProfile} from "./reviewsProfile.js";
 import {getOwnProfileData} from "../../api/personalProfileApi.js";
 import {handleProfileHeaderEdit} from "./profileHeader.js";
+import {getUserReviews} from "../../api/personalProfileApi.js";
 
 export const user = {
     company: '',
@@ -83,12 +84,27 @@ export function getProfileState() {
 
 // 3RD ATTEMPT WITH CONFIG OBJECT INSTEAD OF IF
 const pageConfig = {
-    empty:     { render: renderEmptyProfile,     init: null },
-    fill:      { render: renderFillProfile,      init: handleUpdateProfileActions },
-    completed: { render: renderCompletedProfile, init: null },
-    reviews:   { render: renderReviewsProfile,   init: null },
+    empty:     { render: () => renderEmptyProfile(),         init: null },
+    fill:      { render: () => renderFillProfile(),          init: handleUpdateProfileActions },
+    completed: { render: ({ user }) => renderCompletedProfile(user), init: null },
+    reviews:   { render: ({ reviews }) => renderReviewsProfile(reviews), init: null },
 };
 
+// const pageConfig = {
+//     completed: {
+//         render: function(data) {
+//             return renderCompletedProfile(data.user);
+//         },
+//         init: null
+//     },
+//
+//     reviews: {
+//         render: function(data) {
+//             return renderReviewsProfile(data.reviews);
+//         },
+//         init: null
+//     }
+// };
 export async function renderProfilePage(pageName) {
     let config = pageConfig[pageName];
     if(!config){console.warn(`Unknown page: ${pageName}`); return;}
@@ -97,12 +113,18 @@ export async function renderProfilePage(pageName) {
     let sendGetProfileDataRequest = await getOwnProfileData();
     let user = sendGetProfileDataRequest.success ? sendGetProfileDataRequest.user : null;
 
+    let reviews = [];
+    if (pageName === 'reviews') {
+        let sendGetUserReviewsRequest = await getUserReviews();
+        reviews = sendGetUserReviewsRequest.success ? sendGetUserReviewsRequest.reviews : [];
+    }
+
     document.querySelector('.wrap').innerHTML = `
     <section class="section">
     <div class="container">
     ${renderProfileHeader(user)}
     ${renderProfileTabs()}
-    ${render(user)}
+    ${render({ user, reviews })}
     </div>
     </section>
     `;
@@ -128,4 +150,5 @@ export async function renderProfilePage(pageName) {
             bioInput.value = user?.bio ?? '';
         }
     }
+
 }

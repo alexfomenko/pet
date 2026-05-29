@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "views/oldFirstScript.js",
   "scripts": {
-    "start": "node gpt/server1_gpt.js"
+    "start": "node myserver.js"
   },
   "keywords": [],
   "author": "",
