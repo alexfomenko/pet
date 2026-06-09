@@ -315,6 +315,10 @@ select#sorting{
 .stars-front .star {
     background: #ffd700;
 }
+
+.active {
+    background: gold;
+}
 /*------*/
 
 /*Review Body*/
@@ -337,6 +341,7 @@ select#sorting{
 }
 
 .review-footer-buttons{
-
+    display: flex;
+    gap: 5px;
 }
 

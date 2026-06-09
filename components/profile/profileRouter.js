@@ -4,7 +4,7 @@ import {renderEmptyProfile} from "./emptyProfile.js";
 import {renderFillProfile} from "./fillProfile.js";
 import {handleUpdateProfileActions} from "./fillProfile.js";
 import {renderCompletedProfile} from "./completedProfile.js";
-import {renderReviewsProfile} from "./reviewsProfile.js";
+import {handleChangeReviewActions, renderReviewsProfile} from "./reviewsProfile.js";
 import {getOwnProfileData} from "../../api/personalProfileApi.js";
 import {handleProfileHeaderEdit} from "./profileHeader.js";
 import {getUserReviews} from "../../api/personalProfileApi.js";
@@ -87,7 +87,7 @@ const pageConfig = {
     empty:     { render: () => renderEmptyProfile(),         init: null },
     fill:      { render: () => renderFillProfile(),          init: handleUpdateProfileActions },
     completed: { render: ({ user }) => renderCompletedProfile(user), init: null },
-    reviews:   { render: ({ reviews }) => renderReviewsProfile(reviews), init: null },
+    reviews:   { render: ({ reviews }) => renderReviewsProfile(reviews), init: handleChangeReviewActions},
 };
 
 // const pageConfig = {
