@@ -556,11 +556,11 @@ const server = http.createServer(async(req, res) => {
 
                 //validate rating typeof number is not nan infinity range tseloe
                 let rating = Number(parsedJson.rating);
-                console.log(rating)
+                // console.log(rating)
                 if(typeof rating === 'number' && !Number.isNaN(rating) && Number.isFinite(rating) && rating > 0 && rating < 10) {
                     notes[noteIndex].rating = rating;
                 }
-                console.log(typeof rating === 'number' && !Number.isNaN(rating) && Number.isFinite(rating) && rating > 0 && rating < 10)
+                // console.log(typeof rating === 'number' && !Number.isNaN(rating) && Number.isFinite(rating) && rating > 0 && rating < 10)
 
                 //validate review
                 let review = parsedJson.review;

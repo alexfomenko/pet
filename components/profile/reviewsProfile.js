@@ -140,7 +140,7 @@ export function handleChangeReviewActions() {
                 // ratingStars.innerHTML = `<input type = 'text' value = "${closestReviewRow.dataset.initialRatingValue}">`
                 reviewEl.innerHTML = `<textarea id="review_updated">${closestReviewRow.dataset.initialReviewValue}</textarea>`
 
-                test(starsContainer);
+                handleStarRatingUpdate(starsContainer);
 
                 removeAllButtons(closestReviewRow);
                 reviewFooterButtons.appendChild(createButton('save-review-btn ghost-btn', "Save", 'Save'));
@@ -212,7 +212,7 @@ function createButton(className, title, textContent) {
     return button;
 }
 
-function test(starsContainer) {
+function handleStarRatingUpdate(starsContainer) {
     starsContainer.addEventListener('click', (e) => {
         let rect = starsContainer.getBoundingClientRect();
         let clickX = e.clientX - rect.left;
