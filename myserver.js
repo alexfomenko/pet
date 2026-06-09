@@ -488,6 +488,8 @@ const server = http.createServer(async(req, res) => {
                 return sendResponse(res, 401, {message: "Invalid token"});
             }
         }
+        let user = users.find((user) => user.id === userId);
+        let userName = user.name;
 
         console.log(userId);
 
@@ -498,7 +500,7 @@ const server = http.createServer(async(req, res) => {
             try {
                 let parsedJson = JSON.parse(body);
                 // let date = new Date();
-                let note = {id: uuidv4(), userId, company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, name:parsedJson.name, email:parsedJson.email, date: parsedJson.date};
+                let note = {id: uuidv4(), userId, company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, date: parsedJson.date};
 
                 //update notes array - temporary storage
                 notes.push(note);
@@ -517,7 +519,8 @@ const server = http.createServer(async(req, res) => {
                     message:"Your review has been added",
                     id: note.id,
                     userId,
-                }
+                    userName,
+                    }
                 );
             }
             catch (error) {
