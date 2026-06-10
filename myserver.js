@@ -334,10 +334,21 @@ const server = http.createServer(async(req, res) => {
         let reviewsByCompany = notes.filter((companyName) => {
             return companyName.company.toLowerCase() === company.toLowerCase();
         });
-        // console.log("array1:", reviewsByCompany);
+
+        //adding userName to reviews
+        let reviewsByCompanyWithUsers = reviewsByCompany.map((review) => {
+            let user = users.find((user) => {
+                return user.id === review.userId;
+            })
+            return {
+               ...review,
+                userName: user? user.name : "Anonymous",
+            }
+        })
+        // console.log("array1:", reviewsByCompanyWithUsers);
 
         if(filter && !isNaN(filter) ) {
-            reviewsByCompany=reviewsByCompany.filter((review) => {
+            reviewsByCompanyWithUsers=reviewsByCompanyWithUsers.filter((review) => {
                 // console.log(review.rating);
                 // console.log(Number(review.rating));
                 return Number(review.rating) === filter;
@@ -347,12 +358,12 @@ const server = http.createServer(async(req, res) => {
 
         if(sort && sort!== "no_sort") {
             if(sort === "newest") {
-                reviewsByCompany = [...reviewsByCompany].sort((review1, review2) => {
+                reviewsByCompanyWithUsers = [...reviewsByCompanyWithUsers].sort((review1, review2) => {
                     return new Date(review2.date) - new Date(review1.date);
                 })
             }
             else if(sort === "oldest") {
-                reviewsByCompany = [...reviewsByCompany].sort((review1, review2) => {
+                reviewsByCompanyWithUsers = [...reviewsByCompanyWithUsers].sort((review1, review2) => {
                     return new Date(review1.date) - new Date(review2.date);
                 })
             }
@@ -363,10 +374,10 @@ const server = http.createServer(async(req, res) => {
         let paginationRangeEnd = paginationRangeStart + limit;
 
         // 2 -get reviews data according to pagination range
-        let reviewsByCompanyPerPage = reviewsByCompany.slice(paginationRangeStart, paginationRangeEnd);
+        let reviewsByCompanyPerPage = reviewsByCompanyWithUsers.slice(paginationRangeStart, paginationRangeEnd);
 
         // 3 - optional: determine total amount of reviews and, accordingly, number of pages
-        let reviewsTotalNumber = reviewsByCompany.length;
+        let reviewsTotalNumber = reviewsByCompanyWithUsers.length;
         let pagesTotalNumber = Math.ceil(reviewsTotalNumber / limit);
 
         return sendResponse(res, 200, {

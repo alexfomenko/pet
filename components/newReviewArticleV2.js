@@ -31,7 +31,7 @@ export function renderReviewsV2(reviews) {
         let personDataName = document.createElement('p');
         personDataName.classList.add('person-name');
         let userName = localStorage.getItem('userName') || "Anonymous";
-        personDataName.textContent = `${review.name}`; //todo
+        personDataName.textContent = `${review.userName}`; //todo
         personData.appendChild(personDataName);
 
         //head-1-data-personDataAbout

@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async ()=> {
 
     //showing all articles
     let results = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
+    console.log(results)
     renderReviewsV2(results.items);
 
     //showing all grades
