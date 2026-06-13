@@ -145,7 +145,7 @@ export async function getProfileData(userId) {
 
         let parsedJson;
         try{
-            parsedJson = await parsedJson.json();
+            parsedJson = await sendGetProfileRequest.json();
         }
         catch (error){
             return {

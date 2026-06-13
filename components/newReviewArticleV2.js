@@ -31,7 +31,8 @@ export function renderReviewsV2(reviews) {
         let personDataName = document.createElement('p');
         personDataName.classList.add('person-name');
         let userName = localStorage.getItem('userName') || "Anonymous";
-        personDataName.textContent = `${review.userName}`; //todo
+        personDataName.textContent = `${review.userName}`;
+        personDataName.dataset.userId = review.userId;
         personData.appendChild(personDataName);
 
         //head-1-data-personDataAbout
@@ -97,3 +98,12 @@ export function renderReviewsV2(reviews) {
     })
 }
 
+export function seeProfileHandler() {
+    let reviewsContainer = document.querySelector('.content-reviews');
+    reviewsContainer.addEventListener('click', (e) => {
+        if(e.target.classList.contains('person-name')) {
+             let userId = e.target.dataset.userId;
+             if(!userId) return;
+        }
+    })
+}

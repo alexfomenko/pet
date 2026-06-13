@@ -904,7 +904,7 @@ const server = http.createServer(async(req, res) => {
 
         //finding user
         let userIndex = users.findIndex((user) => user.id === userId);
-        if(!userIndex) return sendResponse(res, 404, {message: "User not found"});
+        if(userIndex === -1) return sendResponse(res, 404, {message: "User not found"});
 
         return sendResponse(res, 200, {
             user: {

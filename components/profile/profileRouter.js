@@ -9,13 +9,10 @@ import {getOwnProfileData} from "../../api/personalProfileApi.js";
 import {handleProfileHeaderEdit} from "./profileHeader.js";
 import {getUserReviews} from "../../api/personalProfileApi.js";
 
-export const user = {
-    company: '',
-    city: '',
-    about: ''
-};
-export function getProfileState() {
-    const filled = [user.company, user.city, user.about].filter(Boolean);
+
+// GET CURRENT PROFILE STATE AND DETERMINE WHICH HASH AND, CORRESPONDINGLY, PAGE TO SHOW
+export function getProfileState(user) {
+    const filled = [user?.company, user?.city, user?.bio].filter(Boolean);
     if (filled.length === 0) return 'empty';
     if (filled.length === 3) return 'completed';
     return 'fill';
@@ -82,7 +79,7 @@ export function getProfileState() {
 //     if (pageName === 'fill') initFillProfile();
 // }
 
-// 3RD ATTEMPT WITH CONFIG OBJECT INSTEAD OF IF
+// 3RD ATTEMPT WITH CONFIG OBJECT INSTEAD OF IF - длинной цепочки ифов
 const pageConfig = {
     empty:     { render: () => renderEmptyProfile(),         init: null },
     fill:      { render: () => renderFillProfile(),          init: handleUpdateProfileActions },
@@ -105,16 +102,72 @@ const pageConfig = {
 //         init: null
 //     }
 // };
-export async function renderProfilePage(pageName) {
-    let config = pageConfig[pageName];
-    if(!config){console.warn(`Unknown page: ${pageName}`); return;}
-    const { render, init } = config;
 
+
+
+
+// То есть #profile — это не отдельная страница. Это команда: “покажи мне правильное состояние профиля по данным пользователя”.
+// export async function renderProfilePage(pageName) {
+//     let config = pageConfig[pageName];
+//     if(!config){console.warn(`Unknown page: ${pageName}`); return;}
+//     const { render, init } = config;
+//
+//     let sendGetProfileDataRequest = await getOwnProfileData();
+//     let user = sendGetProfileDataRequest.success ? sendGetProfileDataRequest.user : null;
+//
+//     let reviews = [];
+//     if (pageName === 'reviews') {
+//         let sendGetUserReviewsRequest = await getUserReviews();
+//         reviews = sendGetUserReviewsRequest.success ? sendGetUserReviewsRequest.reviews : [];
+//     }
+//
+//     document.querySelector('.wrap').innerHTML = `
+//     <section class="section">
+//     <div class="container">
+//     ${renderProfileHeader(user)}
+//     ${renderProfileTabs()}
+//     ${render({ user, reviews })}
+//     </div>
+//     </section>
+//     `;
+//
+//     await handleProfileHeaderEdit();
+//     if (init) init();
+//
+//     if(pageName === 'fill') {
+//         let companyInput = document.getElementById('fill-profile-company');
+//         let cityInput= document.getElementById('fill-profile-city');
+//         let bioInput = document.getElementById('fill-profile-about');
+//         let profileDraft = JSON.parse(localStorage.getItem('profileDraft') || '{}');
+//         // Есть черновик — восстанавливаем.Сценарий: нажал "назад" / перезагрузил / закрыл вкладку и открыл снова
+//         if(Object.keys(profileDraft).length > 0) {
+//             companyInput.value = profileDraft.company;
+//             cityInput.value = profileDraft.city;
+//             bioInput.value = profileDraft.bio;
+//         }
+//         // get data from api request
+//         else {
+//             companyInput.value = user?.company ?? '';
+//             cityInput.value = user?.city ?? '';
+//             bioInput.value = user?.bio ?? '';
+//         }
+//     }
+// }
+
+export async function renderProfilePage(hash) {
     let sendGetProfileDataRequest = await getOwnProfileData();
     let user = sendGetProfileDataRequest.success ? sendGetProfileDataRequest.user : null;
 
+    if(hash==='profile') {
+        hash = getProfileState(user);
+    }
+
+    let config = pageConfig[hash];
+    if(!config){console.warn(`Unknown page: ${hash}`); return;}
+    const { render, init } = config;
+
     let reviews = [];
-    if (pageName === 'reviews') {
+    if (hash === 'reviews') {
         let sendGetUserReviewsRequest = await getUserReviews();
         reviews = sendGetUserReviewsRequest.success ? sendGetUserReviewsRequest.reviews : [];
     }
@@ -132,7 +185,7 @@ export async function renderProfilePage(pageName) {
     await handleProfileHeaderEdit();
     if (init) init();
 
-    if(pageName === 'fill') {
+    if(hash === 'fill') {
         let companyInput = document.getElementById('fill-profile-company');
         let cityInput= document.getElementById('fill-profile-city');
         let bioInput = document.getElementById('fill-profile-about');
@@ -150,5 +203,4 @@ export async function renderProfilePage(pageName) {
             bioInput.value = user?.bio ?? '';
         }
     }
-
 }
