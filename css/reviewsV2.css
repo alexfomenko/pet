@@ -236,25 +236,25 @@ body {
 
 
 /*Content Review*/
-.content-reviews .review {
+.review {
 
 }
 
 /*Review Head*/
-.content-reviews .review-head {
+.review-head {
     display: flex;
     gap: 100px;
     align-items: center;
     justify-content: space-between;
 }
 
-.content-reviews .review-head .company {
+.company {
     display: flex;
     gap: 15px;
     align-items: center;
 }
 
-.content-reviews .review-head .company .person-logo {
+ .person-logo {
     border-radius: 999px;
     background: linear-gradient(180deg, #EAF2FF 0%, #DDEBFF 100%);
     border: 1px solid rgba(47, 111, 237, .18);
@@ -267,19 +267,28 @@ body {
     color: rgba(15, 23, 42, .70);
 }
 
-.content-reviews .review-head .company .person-data .person-name {
-    color: #64748B;
+.person-name {
     font-size: 12px;
     margin-top: 2px;
+    color: inherit;
+    text-decoration: none;
 }
 
-.content-reviews .review-head .company .person-data .company-about {
+.person-name:visited {
+    color: inherit;
+}
+
+.person-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.company-about {
     font-weight: 800;
     font-size: 13px;
     margin: 0;
 }
 
-.content-reviews .review-head .stars{
+.stars{
     font-size: 15px;
     font-weight: 600;
 }

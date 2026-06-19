@@ -8,6 +8,7 @@ import {handleChangeReviewActions, renderReviewsProfile} from "./reviewsProfile.
 import {getOwnProfileData} from "../../api/personalProfileApi.js";
 import {handleProfileHeaderEdit} from "./profileHeader.js";
 import {getUserReviews} from "../../api/personalProfileApi.js";
+import {getProfileData} from "../../api/personalProfileApi.js";
 
 
 // GET CURRENT PROFILE STATE AND DETERMINE WHICH HASH AND, CORRESPONDINGLY, PAGE TO SHOW
@@ -154,29 +155,42 @@ const pageConfig = {
 //     }
 // }
 
-export async function renderProfilePage(hash) {
-    let sendGetProfileDataRequest = await getOwnProfileData();
+export async function renderProfilePage(hash, userId=null) {
+    let sendGetProfileDataRequest;
+
+    //if public profile or private
+    let isProfilePublic = userId !== null;
+    if(isProfilePublic) {
+        sendGetProfileDataRequest = await getProfileData(userId);
+    }
+    else {
+        sendGetProfileDataRequest = await getOwnProfileData();
+    }
+
     let user = sendGetProfileDataRequest.success ? sendGetProfileDataRequest.user : null;
 
+    //if private profile determine what to render by hash
     if(hash==='profile') {
         hash = getProfileState(user);
     }
 
     let config = pageConfig[hash];
     if(!config){console.warn(`Unknown page: ${hash}`); return;}
-    const { render, init } = config;
+    let { render, init } = config;
 
+    //if hash === reviews
     let reviews = [];
     if (hash === 'reviews') {
         let sendGetUserReviewsRequest = await getUserReviews();
         reviews = sendGetUserReviewsRequest.success ? sendGetUserReviewsRequest.reviews : [];
     }
 
+    //rendering
     document.querySelector('.wrap').innerHTML = `
     <section class="section">
     <div class="container">
-    ${renderProfileHeader(user)}
-    ${renderProfileTabs()}
+    ${renderProfileHeader(user, !isProfilePublic)}
+    ${isProfilePublic? '' : renderProfileTabs()}
     ${render({ user, reviews })}
     </div>
     </section>

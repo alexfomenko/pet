@@ -28,11 +28,11 @@ export function renderReviewsV2(reviews) {
         person.appendChild(personData);
 
         //head-1-data-personDataName
-        let personDataName = document.createElement('p');
+        let personDataName = document.createElement('a');
         personDataName.classList.add('person-name');
         let userName = localStorage.getItem('userName') || "Anonymous";
-        personDataName.textContent = `${review.userName}`;
-        personDataName.dataset.userId = review.userId;
+        personDataName.textContent = `${review.userName}` || userName;
+        personDataName.href = `/html/personalProfile?userId=${review.userId}`;
         personData.appendChild(personDataName);
 
         //head-1-data-personDataAbout
@@ -95,15 +95,5 @@ export function renderReviewsV2(reviews) {
 
         //
         reviewsContainer.appendChild(article);
-    })
-}
-
-export function seeProfileHandler() {
-    let reviewsContainer = document.querySelector('.content-reviews');
-    reviewsContainer.addEventListener('click', (e) => {
-        if(e.target.classList.contains('person-name')) {
-             let userId = e.target.dataset.userId;
-             if(!userId) return;
-        }
     })
 }

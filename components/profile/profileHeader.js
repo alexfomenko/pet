@@ -1,6 +1,6 @@
 import {updateProfileData} from "../../api/personalProfileApi.js";
 
-export function renderProfileHeader(user){
+export function renderProfileHeader(user, canEdit = true){
     // let name;
     // if (user === null || user === undefined) {
     //     name = '—';
@@ -23,7 +23,7 @@ export function renderProfileHeader(user){
                         <span class="person-email">${email}</span>
                     </div>
                 </div>
-                        <button class="edit-btn btn">Edit</button>
+                     ${canEdit ? `<button class="edit-btn btn">Edit</button>` : '' }   
             </div>`
 }
 
