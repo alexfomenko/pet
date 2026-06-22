@@ -8,14 +8,15 @@ await handleRoute();
 async function handleRoute() {
     let params = new URLSearchParams(location.search);
     let userId = params.get('userId');
-    if(userId) {
-        await renderProfilePage('completed', userId); //todo
+
+    if (userId) {
+        await renderProfilePage('completed', userId);
         return;
     }
-    let hash = location.hash.replace('#', '') || 'profile';
-        await renderProfilePage(hash)
-}
 
+    let hash = location.hash.replace('#', '') || 'profile';
+    await renderProfilePage(hash);
+}
 // location.hash возвращает hash вместе с решёткой:location.hash // "#fill"
 // Поэтому код делает replace Чтобы из "#fill" получить "fill".
 // location.hash.slice(1) делает тоже

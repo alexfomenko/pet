@@ -28,12 +28,26 @@ export function renderReviewsV2(reviews) {
         person.appendChild(personData);
 
         //head-1-data-personDataName
+        // let personDataName = document.createElement('a');
+        // personDataName.classList.add('person-name');
+        // let userName = localStorage.getItem('userName') || "Anonymous";
+        // personDataName.textContent = `${review.userName}` || userName;
+        // if (review.userId) {
+        //     personDataName.href = `/html/personalProfile?userId=${review.userId}`;
+        // } else {
+        //     personDataName.removeAttribute('href');
+        // }
+        // personData.appendChild(personDataName);
         let personDataName = document.createElement('a');
         personDataName.classList.add('person-name');
-        let userName = localStorage.getItem('userName') || "Anonymous";
-        personDataName.textContent = `${review.userName}` || userName;
-        personDataName.href = `/html/personalProfile?userId=${review.userId}`;
+        personDataName.textContent = review.userName || "Anonymous";
+        if (review.userId) {
+            personDataName.href = `/html/personalProfile?userId=${review.userId}`;
+        } else {
+            personDataName.href = `/html/personalProfile?userId=anonymous`;
+        }
         personData.appendChild(personDataName);
+
 
         //head-1-data-personDataAbout
         let personDataAbout = document.createElement('div');

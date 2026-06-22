@@ -2,6 +2,12 @@ export function renderCompletedProfile(user){
     let company = user?.company ?? '-';
     let city = user?.city ?? '-';
     let bio = user?.bio ?? '-';
+    // if(!user || user.id === null) {
+    //     return `<p class="empty=profile">No account registered for the user </p>`;
+    // }
+    if (!user || user.id == null) {
+        return `<p class="empty-profile">No account registered for the user</p>`;
+    }
 
     return `
 <div class="profile-body card">

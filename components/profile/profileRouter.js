@@ -159,11 +159,24 @@ export async function renderProfilePage(hash, userId=null) {
     let sendGetProfileDataRequest;
 
     //if public profile or private
-    let isProfilePublic = userId !== null;
-    if(isProfilePublic) {
+    // let isProfilePublic = userId && userId !== 'undefined' && userId !== 'null';
+    // if(isProfilePublic) {
+    //     sendGetProfileDataRequest = await getProfileData(userId);
+    // }
+    // else {
+    //     sendGetProfileDataRequest = await getOwnProfileData();
+    // }
+    let isAnonymousProfile = userId === 'anonymous';
+    let isProfilePublic = userId && userId !== 'undefined' && userId !== 'null' && !isAnonymousProfile;
+
+    if (isProfilePublic) {
         sendGetProfileDataRequest = await getProfileData(userId);
-    }
-    else {
+    } else if (isAnonymousProfile) {
+        sendGetProfileDataRequest = {
+            success: true,
+            user: null,
+        };
+    } else {
         sendGetProfileDataRequest = await getOwnProfileData();
     }
 
