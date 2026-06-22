@@ -5,6 +5,8 @@ import {showGradeRows} from "../components/gradeCardV2.js";
 import "../components/reviewFormV2.js"
 import "../components/reviewsFilterBarV2.js"
 import "../components/reviewsSortBarV2.js"
+import "../components/reviewsPaginationV2.js";
+import {renderPaginationV2} from "../components/reviewsPaginationV2.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     let company = document.querySelector(".company-name").textContent;
@@ -13,4 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderReviewsV2(results.items);
 
     await showGradeRows(company);
+
+    //show pagination
+    await renderPaginationV2(company);
 })
