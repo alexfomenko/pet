@@ -111,6 +111,7 @@
 }
 
 .company { flex: 2; }  /* 20% ширины */
+.name { flex: 1; }
 .rating  { flex: 1; }  /* 10% */
 .review  { flex: 5; }  /* 50% */
 .date    { flex: 1; }  /* 20% */

@@ -7,11 +7,17 @@ import "../components/reviewsFilterBarV2.js"
 import "../components/reviewsSortBarV2.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
-    let company = document.querySelector(".company-name").textContent;
+    let companyNameElement = document.querySelector(".company-name");
+
+    let params = new URLSearchParams(location.search);
+    let company = params.get('company');
+
+    companyNameElement.textContent = company;
+    document.querySelector(".company-logo").textContent = company || " ";
+
     let results = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
 
     renderReviewsV2(results.items);
 
     await showGradeRows(company);
-
 })

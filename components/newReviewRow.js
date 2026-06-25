@@ -19,8 +19,9 @@ export function createNewRow(reviewId, userId, companyValue, userNameValue, rati
 //              <button class ="edit-btn" title = "Update review"> ✏️</button>
 //              <button class = 'delete-btn' title="Delete review">🗑️</button>
 // `
-    newReviewItem.appendChild(createReviewColumn(companyValue, 'column', 'company'));
-    newReviewItem.appendChild(createReviewColumn(userNameValue, 'column', 'company'));
+//     newReviewItem.appendChild(createReviewColumn(companyValue, 'column', 'company'));
+    newReviewItem.appendChild(createCompanyLinkColumn(companyValue, 'column', 'company' ));
+    newReviewItem.appendChild(createReviewColumn(userNameValue, 'column', 'name'));
     newReviewItem.appendChild(createReviewColumn(ratingValue, 'column', 'rating'));
     newReviewItem.appendChild(createReviewColumn(reviewValue, 'column', 'review'));
     newReviewItem.appendChild(createReviewColumn(date, 'column', 'date'));
@@ -37,7 +38,19 @@ export function createReviewColumn(textContent, ...classes) {
     return reviewColumn;
 }
 
-//todo check review.userName
+export function createCompanyLinkColumn(companyValue,...classes) {
+    let reviewColumn = document.createElement('div');
+    reviewColumn.classList.add(...classes);
+
+    let companyLink = document.createElement('a');
+    companyLink.href = `/html/companyAbout?company=${encodeURIComponent(companyValue)}`;
+    companyLink.textContent = companyValue;
+
+    reviewColumn.appendChild(companyLink);
+    return reviewColumn;
+}
+
+
 export function renderReviews(reviewsArray) {
     let reviewsContainer = document.getElementById("reviewsContainer");
     reviewsContainer.innerHTML = "";
