@@ -67,3 +67,47 @@ export async function calculateGrades(company) {
         ratings: parsedJson.ratings, // []
     }
 }
+
+export async function getCompanyAboutData(company) {
+    let sendRequest;
+    try{
+        let url = `/companies/${encodeURIComponent(company)}`;
+        sendRequest = await fetch(url);
+        if(!sendRequest.ok) {
+            return {
+                success: false,
+                status: sendRequest.status,
+                text: sendRequest.statusText,
+                item: null,
+            }
+        }
+
+        let parsedJson;
+        try{
+            parsedJson = await sendRequest.json();
+        }
+        catch (error) {
+            return {
+                success: false,
+                status: sendRequest.status,
+                text: "Couldn't parse the server response",
+                item: null,
+            }
+        }
+
+        return {
+            success: true,
+            status: sendRequest.status,
+            text: sendRequest.statusText,
+            ...parsedJson,
+        }
+    }
+    catch (error) {
+       return {
+           success: false,
+           status: null,
+           text: "Couldn't send the request",
+           item: null,
+       }
+    }
+}

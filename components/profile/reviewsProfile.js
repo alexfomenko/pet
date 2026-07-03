@@ -44,7 +44,9 @@ function renderReviewArticle(review) {
                     <article class="review card" data-review-id="${reviewId}">
                         <div class="review-head">
                             <div class="company">
-                                <div class="company-about">${company}</div>
+                                <div class="company-about">
+                                <a href="/html/companyAbout?company=${encodeURIComponent(review.company)}">${company}</a>
+                                </div>
                             </div>
 
                             <div class="stars" data-rating-value = ${rating}>

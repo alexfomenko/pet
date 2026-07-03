@@ -23,6 +23,30 @@ const USERS_FILE = path.join(DATA_DIR, 'users.json');
 
 let notes = [];
 let users = [{ id: '1', email: 'test@mail.com', password: bcrypt.hashSync('123456', 10)}];
+let companies = [{
+    slug: "kedi",
+    name: "Kedi",
+    location: "Turkey, Istanbul",
+    employees: "201-2000",
+    workFormat: "Hybrid/Remote",
+    languages: "English/Turkish",
+    avgInterviewTime: "12 days",
+    description: " Kedi is a product-driven company building digital tools for modern teams. The visual style of this page follows the same clean pattern as your screenshot: light background, white cards, soft borders, rounded corners, restrained typography, and one clear blue call-to-action.\n" +
+        "The page is structured so the user instantly sees the company identity, rating, core facts, and detailed information without visual overload. It works well for platforms with reviews, employer branding, or public company profiles."
+},
+    {
+        slug: "kopek",
+        name: "Kopek",
+        location: "Turkey, Izmir",
+        employees: "101-1000",
+        workFormat: "Remote",
+        languages: "English/Turkish",
+        avgInterviewTime: "5 days",
+        description: " Kopek is a product-driven company building digital tools for modern teams. The visual style of this page follows the same clean pattern as your screenshot: light background, white cards, soft borders, rounded corners, restrained typography, and one clear blue call-to-action.\n" +
+            "The page is structured so the user instantly sees the company identity, rating, core facts, and detailed information without visual overload. It works well for platforms with reviews, employer branding, or public company profiles."
+    },
+
+];
 
 // new way to getting pathname and query
 function getIdFromUrl(req) {
@@ -315,6 +339,20 @@ const server = http.createServer(async(req, res) => {
             totalPages,
             filter: company || null,
         });
+    }
+
+    //GET COMPANY ABOUT INFO
+    if(req.method === 'GET' && /^\/companies\/([\w\s-]|%20)+$/.test(pathname)){
+        let companySlug = decodeURIComponent(pathname.split('/')[2]);
+        let companyData = companies.find((company) => {
+            return company.slug === companySlug;
+        })
+
+        if(!companyData) return sendResponse(res, 404, {message: "Company not found"});
+
+        return sendResponse(res, 200, {
+            ...companyData,
+        })
     }
 
     // GET COMPANY REVIEWS
