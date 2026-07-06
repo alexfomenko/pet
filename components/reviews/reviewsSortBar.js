@@ -1,8 +1,8 @@
-import {getReviews} from "../api/reviewsApi.js";
+import {getReviews} from "../../api/reviewsApi.js";
 // import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "./newReviewRow.js";
 
-import {appState} from "../views/reviewsView.js";// added
+import {appState} from "../../views/reviewsView.js";// added
 import {updatePaginationUi} from "./reviewsPagination.js"; //added
 
 

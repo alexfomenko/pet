@@ -1,12 +1,12 @@
 import {appState} from "../appState.js";
-import "../components/reviewsFilterBarV2.js";
-import {renderReviewsV2} from "../components/newReviewArticleV2.js";
-import "../components/reviewsSortBarV2.js";
-import {getCompanyReviews} from "../api/reviewsApiV2.js";
-import {showGradeRows} from "../components/gradeCardV2.js";
-import "../components/reviewsPaginationV2.js";
-import {renderPaginationV2} from "../components/reviewsPaginationV2.js";
-import "../components/reviewFormV2.js"
+import "../components/company/companyReviewsFilterBar.js";
+import {renderReviewsV2} from "../components/company/companyReviewAricle.js";
+import "../components/company/companyReviewsSortBar.js";
+import {getCompanyReviews} from "../api/companyApi.js";
+import {showGradeRows} from "../components/company/companyGradeCard.js";
+import "../components/company/companyReviewsPagination.js";
+import {renderPaginationV2} from "../components/company/companyReviewsPagination.js";
+import "../components/company/companyReviewForm.js"
 
 document.addEventListener("DOMContentLoaded", async ()=> {
     // console.log('hi');

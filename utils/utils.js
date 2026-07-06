@@ -1,4 +1,4 @@
-import {createNewRow} from "../components/newReviewRow.js";
+import {createNewRow} from "../components/reviews/newReviewRow.js";
 
 // export function removeAllButtons(closestReviewRow) {
 //     let buttons = closestReviewRow.querySelectorAll('button');

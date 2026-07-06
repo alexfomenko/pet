@@ -1,6 +1,6 @@
-import {getReviews} from "../api/reviewsApi.js";
+import {getReviews} from "../../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
-import {appState} from "../views/reviewsView.js";
+import {appState} from "../../views/reviewsView.js";
 
 
 let paginationEl = document.getElementById("paginationEl");

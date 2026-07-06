@@ -1,4 +1,4 @@
-import {calculateGrades} from "../api/reviewsApiV2.js";
+import {calculateGrades} from "../../api/companyApi.js";
 
 export async function showGradeRows(company) {
     // let company = document.querySelector('.company-name').textContent;

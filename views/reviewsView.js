@@ -1,20 +1,20 @@
 // import "./views/reviewsView.js";
 import "../api/reviewsApi.js";
-import "../components/reviewButton.js";
-import "../components/sendReviewForm.js";
-import "../components/newReviewRow.js";
+import "../components/reviews/reviewButton.js";
+import "../components/reviews/sendReviewForm.js";
+import "../components/reviews/newReviewRow.js";
 import "../utils/utils.js";
-import "../components/reviewRowActions.js";
-import "../components/reviewsFilterBar.js";
-import "../components/reviewsSortBar.js"
+import "../components/reviews/reviewRowActions.js";
+import "../components/reviews/reviewsFilterBar.js";
+import "../components/reviews/reviewsSortBar.js"
 
 import {getReviews} from '../api/reviewsApi.js';
-import {createNewRow} from "../components/newReviewRow.js";
+import {createNewRow} from "../components/reviews/newReviewRow.js";
 // added as a try
-import {renderPagination} from "../components/reviewsPagination.js";
+import {renderPagination} from "../components/reviews/reviewsPagination.js";
 // import {renderReviews} from "../utils/utils.js";
-import {renderReviews} from "../components/newReviewRow.js";
-import {populateFilterBar} from "../components/reviewsFilterBar.js";
+import {renderReviews} from "../components/reviews/newReviewRow.js";
+import {populateFilterBar} from "../components/reviews/reviewsFilterBar.js";
 
 // TODO SUBSTITUTE THIS VARIABLE WITH IMPORT FILE
 export let appState = {

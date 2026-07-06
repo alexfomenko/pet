@@ -1,6 +1,6 @@
-import {getCompanyReviews} from "../api/reviewsApiV2.js";
-import {appState} from "../appState.js";
-import {renderReviewsV2} from "./newReviewArticleV2.js";
+import {getCompanyReviews} from "../../api/companyApi.js";
+import {appState} from "../../appState.js";
+import {renderReviewsV2} from "./companyReviewAricle.js";
 
 let pagination = document.querySelector('.pagination');
 

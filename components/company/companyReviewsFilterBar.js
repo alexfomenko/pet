@@ -1,6 +1,6 @@
-import {appState} from "../appState.js";
-import {getCompanyReviews} from "../api/reviewsApiV2.js";
-import {renderReviewsV2} from "./newReviewArticleV2.js";
+import {appState} from "../../appState.js";
+import {getCompanyReviews} from "../../api/companyApi.js";
+import {renderReviewsV2} from "./companyReviewAricle.js";
 
 let filterBar = document.querySelector('[name="gradeFilter"]');
 let reviewContainer = document.querySelector(".content-reviews");
