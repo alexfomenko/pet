@@ -291,7 +291,16 @@ const server = http.createServer(async(req, res) => {
 
         //adding userName to reviews
         let reviewsWithUsers = notes.map((review) => {
-            let user = users.find((user) => user.userId === review.userId);
+            // id:"Anonymous" username:Anonymous
+            if(!review.userId) {
+                return {
+                    ...review,
+                    userId: "Anonymous",
+                    userName: "Anonymous"
+                }
+            }
+            // id:361 username:Sasha ||  // id:361 username:Unknown
+            let user = users.find((user) => user.id === review.userId);
             return {
                 ...review,
                 userName: user? user.name : "Unknown"

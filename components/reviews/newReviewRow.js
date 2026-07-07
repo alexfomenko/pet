@@ -20,8 +20,8 @@ export function createNewRow(reviewId, userId, companyValue, userNameValue, rati
 //              <button class = 'delete-btn' title="Delete review">🗑️</button>
 // `
 //     newReviewItem.appendChild(createReviewColumn(companyValue, 'column', 'company'));
-    newReviewItem.appendChild(createCompanyLinkColumn(companyValue, 'column', 'company' ));
-    newReviewItem.appendChild(createReviewColumn(userNameValue, 'column', 'name'));
+    newReviewItem.appendChild(createLinkedReviewColumn(companyValue, null, 'column', 'company' ));
+    newReviewItem.appendChild(createLinkedReviewColumn(userNameValue, userId, 'column', 'name'));
     newReviewItem.appendChild(createReviewColumn(ratingValue, 'column', 'rating'));
     newReviewItem.appendChild(createReviewColumn(reviewValue, 'column', 'review'));
     newReviewItem.appendChild(createReviewColumn(date, 'column', 'date'));
@@ -38,17 +38,24 @@ export function createReviewColumn(textContent, ...classes) {
     return reviewColumn;
 }
 
-export function createCompanyLinkColumn(companyValue,...classes) {
+export function createLinkedReviewColumn(columnValue, userId,...classes) {
     let reviewColumn = document.createElement('div');
     reviewColumn.classList.add(...classes);
 
-    let companyLink = document.createElement('a');
-    companyLink.href = `/html/companyAbout?company=${encodeURIComponent(companyValue)}`;
-    companyLink.textContent = companyValue;
+    let link = document.createElement('a');
+    if(!userId) {
+        link.href = `/html/companyAbout?company=${encodeURIComponent(columnValue)}`;
+    }
+    else {
+        link.href = `/html/personalProfile?userId=${encodeURIComponent(userId)}`;
+    }
 
-    reviewColumn.appendChild(companyLink);
+    link.textContent = columnValue;
+
+    reviewColumn.appendChild(link);
     return reviewColumn;
 }
+
 
 
 export function renderReviews(reviewsArray) {
@@ -56,6 +63,7 @@ export function renderReviews(reviewsArray) {
     reviewsContainer.innerHTML = "";
     reviewsArray.forEach((review) => {
         let newRow = createNewRow(review.id, review.userId, review.company,review.userName, review.rating, review.review, review.date);
+        console.log(review.id, review.userId, review.company,review.userName, review.rating, review.review, review.date)
         reviewsContainer.appendChild(newRow);
     })
 }
