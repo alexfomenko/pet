@@ -540,9 +540,10 @@ const server = http.createServer(async(req, res) => {
 
     if(req.method === "POST" && req.url === '/submit-review') {
         //get token if available
-        let token = req.headers['authorization']?.split(" ")[1];
-        if(token === "null") token = null;
+        let token = req.headers['authorization']?.split(" ")[1] ?? null;
+        // console.log(token)
         let userId = null;
+
         if(token) {
             try{
                 let decodedData = jwt.verify(token, SECRET);
@@ -552,10 +553,14 @@ const server = http.createServer(async(req, res) => {
                 return sendResponse(res, 401, {message: "Invalid token"});
             }
         }
+        // console.log(token)
         let user = users.find((user) => user.id === userId);
-        let userName = user.name;
+        // console.log(user)
+        let userName = user?.name ?? "Anonymous";
+        // console.log(userName)
+        // console.log(userId);
 
-        console.log(userId);
+        console.log({ token, userId, users });
 
         //processing body
         let body = '';
