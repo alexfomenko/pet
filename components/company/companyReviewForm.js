@@ -108,7 +108,7 @@ sendReviewButton.addEventListener('click', async (e) => {
         // let reviewId = requestResult.json.id; //TODO do I need ?
         // console.log(reviewId)
 
-        if(request.ok) {
+        if(request.success) {
             let companyReviews = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
             let reviews = companyReviews.items;
             renderReviewsV2(reviews);
