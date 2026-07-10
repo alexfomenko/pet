@@ -33,6 +33,30 @@
     flex: 1;
 }
 
+.review-table-header{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: flex-start;
+}
+
+#filterBar, #sortBar {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    background: #f2f2f2;
+    cursor: pointer;
+    border-left: 1px solid #ccc;
+    outline: none;
+}
+
+#searchBar{
+    padding: 8px;
+    font-size: 14px;
+    width: 250px;
+}
+
 .show-form-btn {
     padding: 10px 20px;
     font-size: 16px;
@@ -211,14 +235,3 @@
 /*}*/
 
 
-#filterBar, #sortBar {
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 5px;
-    margin: 10px;
-    border: none;
-    background: #f2f2f2;
-    cursor: pointer;
-    border-left: 1px solid #ccc;
-    outline: none;
-}
