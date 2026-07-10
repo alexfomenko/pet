@@ -22,6 +22,7 @@ export let appState = {
     currentPage: 1,
     currentPageLimit: 5,
     sorting: null,
+    search: null,
 }
 
 
