@@ -71,7 +71,7 @@ export async function getAllCompanies() {
 export async function getReviews(page, limit, company = null, sort = null, search = null) {
     let sendGetRequest;
     try {
-        let url = `/get-review?page=${page}&limit=${limit}`;
+        let url = `/get-reviews?page=${page}&limit=${limit}`;
 
         // checking if company parameter was passed
         if(company && company !=="all") url += `&company=${encodeURIComponent(company)}`;

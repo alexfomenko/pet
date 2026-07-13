@@ -290,10 +290,13 @@ const server = http.createServer(async(req, res) => {
     }
 
     // GET ALL REVIEWS
-    if(req.method === 'GET' && req.url.startsWith('/get-review')) {
+    if(req.method === 'GET' && req.url.startsWith('/get-reviews')) {
 
         let page = parseInt(query.page) || 1;
         let limit = parseInt(query.limit) || 10;
+        let company = query.company;
+        let sorting = query.sort;
+        let search = query.search?.toLowerCase();
 
         //adding userName to reviews
         let reviewsWithUsers = notes.map((review) => {
@@ -316,13 +319,20 @@ const server = http.createServer(async(req, res) => {
         console.log(reviewsWithUsers);
 
         //adding filtering by company
-        let company = query.company;
         if(company && company !== "all") {
             reviewsWithUsers = notes.filter(note => note.company === company)
         }
 
+        //adding search
+        if(search) {
+            reviewsWithUsers = reviewsWithUsers.filter((review) => {
+                return review.review.includes(search) ||
+                    review.company.includes(search) ||
+                    review.userName.includes(search)
+            })
+        }
+
         //adding sorting
-        let sorting = query.sort;
         if(sorting === "date_new_to_old") {
             reviewsWithUsers = [...reviewsWithUsers].sort((review1, review2) => new Date(review2.date) - new Date(review1.date));
         }
