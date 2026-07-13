@@ -7,6 +7,8 @@ import "../utils/utils.js";
 import "../components/reviews/reviewRowActions.js";
 import "../components/reviews/reviewsFilterBar.js";
 import "../components/reviews/reviewsSortBar.js"
+import "../components/reviews/reviewsSearchBar.js"
+import "../components/reviews/reviewsAppState"
 
 import {getReviews} from '../api/reviewsApi.js';
 import {createNewRow} from "../components/reviews/newReviewRow.js";

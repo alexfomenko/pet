@@ -68,23 +68,53 @@ export async function getAllCompanies() {
 //     }
 // }
 
-export async function getReviews(page, limit, company = null, sort = null) {
+export async function getReviews(page, limit, company = null, sort = null, search = null) {
+    let sendGetRequest;
     try {
         let url = `/get-review?page=${page}&limit=${limit}`;
 
         // checking if company parameter was passed
         if(company && company !=="all") url += `&company=${encodeURIComponent(company)}`;
-        if(sort && sort !=="no_sort") url+= `&sort=${sort}`; // added
+        if(sort && sort !=="no_sort") url+= `&sort=${sort}`;
+        if(search) url += `search=${search}`;
 
-        let sendGetRequest = await fetch(url);
+        sendGetRequest = await fetch(url);
         if (!sendGetRequest.ok) {
-            throw new Error('Failed to get data');
+            return {
+                success: false,
+                status: sendGetRequest.status,
+                text: `Server responded with an error ${sendGetRequest.status}`,
+                items: null,
+            }
+        }
+
+        let parsedResponse;
+        try{
+            parsedResponse = await sendGetRequest.json();
+        }
+        catch (error){
+            return {
+                success: false,
+                status: sendGetRequest.status,
+                text: `Failed to parse server response`,
+                items: null,
+            }
         }
         // console.log(await sendGetRequest.json())
-        return await sendGetRequest.json();
-    } catch (error) {
-        console.log(error);
-        throw error;
+        return {
+            success: true,
+            status: sendGetRequest.status,
+            text: sendGetRequest.statusText,
+            ...parsedResponse,
+        };
+    }
+    catch (error) {
+        return {
+            success: false,
+            status: null,
+            text: 'Network error, try again',
+            items: null,
+        };
     }
 }
 
