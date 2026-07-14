@@ -167,7 +167,7 @@ paginationEl.addEventListener('click', async(e) => {
 
 // 4 sending get request when clicking pagination button
 async function loadPage() {
-    // appState.currentPage = pageNumber;
+    // companyReviewsState.currentPage = pageNumber;
     let response = await getReviews(reviewsAppState.currentPage, reviewsAppState.currentPageLimit, reviewsAppState.filterByCompany, reviewsAppState.sorting);
     totalPages = response.totalPages;
 

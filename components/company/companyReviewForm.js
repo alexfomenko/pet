@@ -1,7 +1,7 @@
 import {submitReview} from "../../api/reviewsApi.js";
 import {renderReviewsV2} from "./companyReviewAricle.js";
 import {getCompanyReviews} from "../../api/companyApi.js";
-import {appState} from "../../appState.js";
+import {companyReviewsState} from "./companyReviewsState.js";
 
 
 let addReviewButton =  document.querySelector('.title-button');
@@ -109,7 +109,7 @@ sendReviewButton.addEventListener('click', async (e) => {
         // console.log(reviewId)
 
         if(request.success) {
-            let companyReviews = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
+            let companyReviews = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
             let reviews = companyReviews.items;
             renderReviewsV2(reviews);
             //TODO add clear form

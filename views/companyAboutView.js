@@ -1,5 +1,5 @@
 import {getCompanyReviews} from "../api/companyApi.js";
-import {appState} from "../appState.js";
+import {companyReviewsState} from "../components/company/companyReviewsState.js";
 import {renderReviewsV2} from "../components/company/companyReviewAricle.js";
 import {showGradeRows} from "../components/company/companyGradeCard.js";
 import "../components/company/companyReviewForm.js"
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderCompanyAbout(companyData);
     }
 
-    let companyReviews = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
+    let companyReviews = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
     renderReviewsV2(companyReviews.items);
 
     await showGradeRows(company);

@@ -1,4 +1,4 @@
-import {appState} from "../appState.js";
+import {companyReviewsState} from "../components/company/companyReviewsState.js";
 import "../components/company/companyReviewsFilterBar.js";
 import {renderReviewsV2} from "../components/company/companyReviewAricle.js";
 import "../components/company/companyReviewsSortBar.js";
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async ()=> {
     let company = document.querySelector('.company-name').textContent;
 
     //showing all articles
-    let results = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
+    let results = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
     console.log(results)
     renderReviewsV2(results.items);
 

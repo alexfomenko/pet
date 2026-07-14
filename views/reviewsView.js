@@ -19,7 +19,7 @@ import {renderReviews} from "../components/reviews/newReviewRow.js";
 import {populateFilterBar} from "../components/reviews/reviewsFilterBar.js";
 import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
 
-// export let appState = {
+// export let companyReviewsState = {
 //     filterByCompany: null,
 //     currentPage: 1,
 //     currentPageLimit: 5,

@@ -1,5 +1,5 @@
 import {getCompanyReviews} from "../../api/companyApi.js";
-import {appState} from "../../appState.js";
+import {companyReviewsState} from "./companyReviewsState.js";
 import {renderReviewsV2} from "./companyReviewAricle.js";
 
 let pagination = document.querySelector('.pagination');
@@ -10,14 +10,14 @@ let totalPages;
  export async function renderPaginationV2(company) {
     pagination.innerHTML = "";
 
-    let request = await getCompanyReviews(company, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort);
+    let request = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
     totalPages = request.pagesTotalNumber;
 
     let prevButton = document.createElement('button');
      prevButton.classList.add('prev-btn'); // TODO
      prevButton.textContent = '←';
      pagination.appendChild(prevButton);
-     prevButton.disabled = appState.currentPage === 1;
+     prevButton.disabled = companyReviewsState.currentPage === 1;
 
      for(let i = 1; i <= totalPages; i++) {
          let numberedButton = document.createElement('button');
@@ -25,14 +25,14 @@ let totalPages;
          numberedButton.textContent = String(i);
          // console.log(numberedButton.textContent)
          pagination.appendChild(numberedButton);
-         if(i === appState.currentPage) numberedButton.classList.add('btn-active'); //TODO
+         if(i === companyReviewsState.currentPage) numberedButton.classList.add('btn-active'); //TODO
      }
 
     let nextButton = document.createElement('button');
      nextButton.classList.add('next-btn'); // TODO
      nextButton.textContent = '→';
      pagination.appendChild(nextButton);
-     nextButton.disabled = appState.currentPage === totalPages;
+     nextButton.disabled = companyReviewsState.currentPage === totalPages;
  }
 
 pagination.addEventListener('click', async(e) => {
@@ -41,17 +41,17 @@ pagination.addEventListener('click', async(e) => {
 
     let target = e.target;
     if(target.classList.contains('prev-btn')) {
-        if(appState.currentPage > 1) {
-            appState.currentPage = appState.currentPage - 1;
+        if(companyReviewsState.currentPage > 1) {
+            companyReviewsState.currentPage = companyReviewsState.currentPage - 1;
             // //1 - change app variables
-            // appState.currentPage = appState.currentPage - 1;
+            // companyReviewsState.currentPage = companyReviewsState.currentPage - 1;
             // //2 - send request and render new articles
-            // let response = await getCompanyReviews(company,appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort );
+            // let response = await getCompanyReviews(company,companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort );
             // renderReviewsV2(response.items);
             //
             // //3 - check enabled/disabled buttons
-            // prevButton.disabled = appState.currentPage === 1;
-            // nextButton.disabled = appState.currentPage === totalPages;
+            // prevButton.disabled = companyReviewsState.currentPage === 1;
+            // nextButton.disabled = companyReviewsState.currentPage === totalPages;
             //
             // //4 - change active buttons
             // let numberedButtons = document.querySelectorAll('.number-btn');
@@ -60,7 +60,7 @@ pagination.addEventListener('click', async(e) => {
             // })
             //
             // numberedButtons.forEach((button) => {
-            //     if(Number(button.textContent) === appState.currentPage) {
+            //     if(Number(button.textContent) === companyReviewsState.currentPage) {
             //         button.classList.add('btn-active');
             //     }
             // })
@@ -72,8 +72,8 @@ pagination.addEventListener('click', async(e) => {
         }
     }
     if(target.classList.contains('next-btn')) {
-        if(appState.currentPage < totalPages) {
-            appState.currentPage = appState.currentPage + 1;
+        if(companyReviewsState.currentPage < totalPages) {
+            companyReviewsState.currentPage = companyReviewsState.currentPage + 1;
 
             await getReviews();
             updatePagination();
@@ -82,7 +82,7 @@ pagination.addEventListener('click', async(e) => {
     if(target.classList.contains('number-btn')) {
         let pageNumber = Number(e.target.textContent);
         // console.log(pageNumber);
-        appState.currentPage = pageNumber;
+        companyReviewsState.currentPage = pageNumber;
 
         await getReviews();
         updatePagination();
@@ -90,7 +90,7 @@ pagination.addEventListener('click', async(e) => {
 })
 
 async function getReviews() {
-    let response = await getCompanyReviews(company,appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort );
+    let response = await getCompanyReviews(company,companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort );
     renderReviewsV2(response.items);
 }
 
@@ -98,8 +98,8 @@ function updatePagination() {
     let prevButton = document.querySelector('.prev-btn');
     let nextButton = document.querySelector('.next-btn');
 
-    prevButton.disabled = appState.currentPage === 1;
-    nextButton.disabled = appState.currentPage === totalPages;
+    prevButton.disabled = companyReviewsState.currentPage === 1;
+    nextButton.disabled = companyReviewsState.currentPage === totalPages;
 
     let numberedButtons = document.querySelectorAll('.number-btn');
     numberedButtons.forEach((button) => {
@@ -107,7 +107,7 @@ function updatePagination() {
     })
 
     numberedButtons.forEach((button) => {
-        if(Number(button.textContent) === appState.currentPage) {
+        if(Number(button.textContent) === companyReviewsState.currentPage) {
             button.classList.add('btn-active');
         }
     })

@@ -1,4 +1,4 @@
-import {appState} from "../../appState.js";
+import {companyReviewsState} from "./companyReviewsState.js";
 import {getCompanyReviews} from "../../api/companyApi.js";
 import {renderReviewsV2} from "./companyReviewAricle.js";
 
@@ -9,12 +9,12 @@ filterBar.addEventListener('change', async(e) => {
     let selectedRating = e.target.value;
     reviewContainer.innerHTML = "";
 
-    appState.filter = selectedRating;
-    appState.currentPage = 1;
+    companyReviewsState.filter = selectedRating;
+    companyReviewsState.currentPage = 1;
 
     let companyName = document.querySelector('.company-name').textContent;
 
-    let results = await getCompanyReviews(companyName, appState.currentPage, appState.currentPageLimit, appState.filter, appState.sort); //new endpoint create
+    let results = await getCompanyReviews(companyName, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort); //new endpoint create
 
     console.log(results.items);
 

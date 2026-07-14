@@ -206,6 +206,9 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/components/reviews/reviewsAppState.js') {
         sendStaticFile(res, 'components/reviews/reviewsAppState.js', 'application/javascript')
     }
+    else if(req.method === 'GET' && req.url === '/components/company/companyReviewsState.js') {
+        sendStaticFile(res, 'components/company/companyReviewsState.js', 'application/javascript')
+    }
     else if(req.method === 'GET' && req.url === '/utils/utils.js') {
          sendStaticFile(res, 'utils/utils.js', 'application/javascript')
     }
@@ -224,8 +227,8 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/views/companyAboutView.js') {
         sendStaticFile(res, 'views/companyAboutView.js', 'application/javascript')
     }
-    else if(req.method === 'GET' && req.url === '/appState.js') {
-        sendStaticFile(res, 'appState.js', 'application/javascript')
+    else if(req.method === 'GET' && req.url === '/companyReviewsState.js') {
+        sendStaticFile(res, 'companyReviewsState.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/components/company/companyReviewsFilterBar.js') {
         sendStaticFile(res, '/components/company/companyReviewsFilterBar.js', 'application/javascript')
