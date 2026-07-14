@@ -1,8 +1,6 @@
 import {getReviews} from "../../api/reviewsApi.js";
-// import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "./newReviewRow.js";
-
-import {appState} from "../../views/reviewsView.js";// added
+import {reviewsAppState} from "./reviewsAppState.js";
 import {updatePaginationUi} from "./reviewsPagination.js"; //added
 
 
@@ -47,10 +45,10 @@ sortBar.addEventListener('change', async (e) => {
     console.log(target)
     reviewsContainer.innerHTML = "";
 
-    appState.currentPage = 1;
-    appState.sorting = target;
+    reviewsAppState.currentPage = 1;
+    reviewsAppState.sorting = target;
 
-    let response = await getReviews(appState.currentPage, appState.currentPageLimit, appState.filterByCompany, appState.sorting);
+    let response = await getReviews(reviewsAppState.currentPage, reviewsAppState.currentPageLimit, reviewsAppState.filterByCompany, reviewsAppState.sorting);
     let reviews = response.items;
     let totalPages = response.totalPages;
 
@@ -75,5 +73,5 @@ sortBar.addEventListener('change', async (e) => {
     //     sortedReviews = reviews.sort((review1, review2) => review2.rating - review1.rating);
     // }
     renderReviews(reviews);
-    updatePaginationUi(appState.currentPage, totalPages);
+    updatePaginationUi(reviewsAppState.currentPage, totalPages);
 })

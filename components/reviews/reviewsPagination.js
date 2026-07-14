@@ -1,6 +1,6 @@
 import {getReviews} from "../../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
-import {appState} from "../../views/reviewsView.js";
+import {reviewsAppState} from "./reviewsAppState.js";
 
 
 let paginationEl = document.getElementById("paginationEl");
@@ -140,15 +140,15 @@ export function renderPagination(page, pages) {
 paginationEl.addEventListener('click', async(e) => {
     if(e.target.classList.contains("page-btn")) {
         let pageNum = Number(e.target.dataset.page);
-        appState.currentPage = pageNum; // added
+        reviewsAppState.currentPage = pageNum; // added
         await loadPage();
         // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
         }
 
     if(e.target.classList.contains("prev-btn")) {
         // if(currentPage > 1 ) await loadPage(currentPage - 1);
-        if(appState.currentPage > 1 ) {
-            appState.currentPage -= 1;
+        if(reviewsAppState.currentPage > 1 ) {
+            reviewsAppState.currentPage -= 1;
             await loadPage(); // added
         }
         // prevButton.disabled = currentPage === 1;
@@ -157,8 +157,8 @@ paginationEl.addEventListener('click', async(e) => {
 
     if(e.target.classList.contains("next-btn")) {
         // if(currentPage < totalPages) await loadPage(currentPage + 1);
-        if(appState.currentPage < totalPages) {
-            appState.currentPage += 1;
+        if(reviewsAppState.currentPage < totalPages) {
+            reviewsAppState.currentPage += 1;
             await loadPage();
         }
         // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
@@ -168,11 +168,11 @@ paginationEl.addEventListener('click', async(e) => {
 // 4 sending get request when clicking pagination button
 async function loadPage() {
     // appState.currentPage = pageNumber;
-    let response = await getReviews(appState.currentPage, appState.currentPageLimit, appState.filterByCompany, appState.sorting);
+    let response = await getReviews(reviewsAppState.currentPage, reviewsAppState.currentPageLimit, reviewsAppState.filterByCompany, reviewsAppState.sorting);
     totalPages = response.totalPages;
 
     renderReviews(response.items);
-    updatePaginationUi(appState.currentPage, totalPages);
+    updatePaginationUi(reviewsAppState.currentPage, totalPages);
 }
 
 // 5 update pagination ui - remove color from disabled buttons and add it to the active button

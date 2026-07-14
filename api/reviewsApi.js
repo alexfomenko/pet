@@ -76,7 +76,7 @@ export async function getReviews(page, limit, company = null, sort = null, searc
         // checking if company parameter was passed
         if(company && company !=="all") url += `&company=${encodeURIComponent(company)}`;
         if(sort && sort !=="no_sort") url+= `&sort=${sort}`;
-        if(search) url += `search=${search}`;
+        if(search) url += `&search=${search}`;
 
         sendGetRequest = await fetch(url);
         if (!sendGetRequest.ok) {

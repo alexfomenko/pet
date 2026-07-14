@@ -297,6 +297,7 @@ const server = http.createServer(async(req, res) => {
         let company = query.company;
         let sorting = query.sort;
         let search = query.search?.toLowerCase();
+        console.log(search)
 
         //adding userName to reviews
         let reviewsWithUsers = notes.map((review) => {
@@ -316,7 +317,7 @@ const server = http.createServer(async(req, res) => {
             }
         });
 
-        console.log(reviewsWithUsers);
+        // console.log(reviewsWithUsers);
 
         //adding filtering by company
         if(company && company !== "all") {
@@ -326,9 +327,9 @@ const server = http.createServer(async(req, res) => {
         //adding search
         if(search) {
             reviewsWithUsers = reviewsWithUsers.filter((review) => {
-                return review.review.includes(search) ||
-                    review.company.includes(search) ||
-                    review.userName.includes(search)
+                return review.review?.toLowerCase().includes(search)
+                    || review.company?.toLowerCase().includes(search)
+                    || review.userName?.toLowerCase().includes(search);
             })
         }
 

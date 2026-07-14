@@ -1,9 +1,5 @@
-import {getReviews, submitReview} from '../../api/reviewsApi.js';
+import {submitReview} from '../../api/reviewsApi.js';
 import {createNewRow} from "./newReviewRow.js";
-import {createReviewColumn} from "./newReviewRow.js";
-// import {createReviewColumn} from "../utils/utils.js";
-import {createButton} from "./reviewButton.js";
-import {appState} from "../../views/reviewsView.js";
 import {getAllCompanies} from "../../api/reviewsApi.js";
 
 let showFormButton = document.getElementById('showFormButton');

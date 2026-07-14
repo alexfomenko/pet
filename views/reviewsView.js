@@ -17,15 +17,15 @@ import {renderPagination} from "../components/reviews/reviewsPagination.js";
 // import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "../components/reviews/newReviewRow.js";
 import {populateFilterBar} from "../components/reviews/reviewsFilterBar.js";
+import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
 
-// TODO SUBSTITUTE THIS VARIABLE WITH IMPORT FILE
-export let appState = {
-    filterByCompany: null,
-    currentPage: 1,
-    currentPageLimit: 5,
-    sorting: null,
-    search: null,
-}
+// export let appState = {
+//     filterByCompany: null,
+//     currentPage: 1,
+//     currentPageLimit: 5,
+//     sorting: null,
+//     search: null,
+// }
 
 
 let reviewsContainer = document.getElementById("reviewsContainer");
@@ -37,7 +37,7 @@ let currentPage = 1;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    let response = await getReviews(appState.currentPage, appState.currentPageLimit);
+    let response = await getReviews(reviewsAppState.currentPage, reviewsAppState.currentPageLimit);
     let reviews = response.items;
 
     let responseByPage = await getReviews(1, 100);
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // setPaginationData(response.page, response.totalPages, renderReviews);
 
-    renderPagination(appState.currentPage, response.totalPages);
+    renderPagination(reviewsAppState.currentPage, response.totalPages);
 
 })
 
