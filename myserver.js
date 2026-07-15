@@ -375,7 +375,7 @@ const server = http.createServer(async(req, res) => {
 
     //GET COMPANY ABOUT INFO
     if(req.method === 'GET' && /^\/companies\/([\w\s-]|%20)+$/.test(pathname)){
-        let companySlug = decodeURIComponent(pathname.split('/')[2]);
+        let companySlug = decodeURIComponent(pathname.split('/')[2]).toLowerCase();
         let companyData = companies.find((company) => {
             return company.slug === companySlug;
         })
