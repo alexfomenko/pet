@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     let companyReviews = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
-    renderReviewsV2(companyReviews.items);
+    console.log(`response: ${companyReviews.reviewsTotalNumber}`)
+    renderReviewsV2(companyReviews.items, companyReviews.reviewsTotalNumber);
 
     await showGradeRows(company);
 })

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async ()=> {
     //showing all articles
     let results = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
     console.log(results)
-    renderReviewsV2(results.items);
+    renderReviewsV2(results.items, results.reviewsTotalNumber);
 
     //showing all grades
     await showGradeRows(company);
