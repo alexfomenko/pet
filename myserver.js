@@ -138,7 +138,7 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/html/signup') {
          sendStaticFile(res, 'html/signup.html', 'text/html')
     }
-    else if(req.method === 'GET' && req.url === '/html/companyReviews') {
+    else if(req.method === 'GET' && pathname=== '/html/companyReviews') { //changed req.url to pathname
         sendStaticFile(res, 'html/companyReviews.html', 'text/html')
     }
     // else if(req.method === 'GET' && req.url === '/html/companyAbout') {
