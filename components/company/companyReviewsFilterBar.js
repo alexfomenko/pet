@@ -1,6 +1,6 @@
 import {companyReviewsState} from "./companyReviewsState.js";
 import {getCompanyReviews} from "../../api/companyApi.js";
-import {renderReviewsV2} from "./companyReviewAricle.js";
+import {renderCompanyReviews} from "./companyReviewAricle.js";
 
 let filterBar = document.querySelector('[name="gradeFilter"]');
 let reviewContainer = document.querySelector(".content-reviews");
@@ -18,5 +18,5 @@ filterBar.addEventListener('change', async(e) => {
 
     console.log(results.items);
 
-    renderReviewsV2(results.items);
+    renderCompanyReviews(results.items);
 })

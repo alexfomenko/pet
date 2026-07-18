@@ -9,6 +9,7 @@ import {getOwnProfileData} from "../../api/personalProfileApi.js";
 import {handleProfileHeaderEdit} from "./profileHeader.js";
 import {getUserReviews} from "../../api/personalProfileApi.js";
 import {getProfileData} from "../../api/personalProfileApi.js";
+import {logOutFunction} from "./profileHeader.js";
 
 
 // GET CURRENT PROFILE STATE AND DETERMINE WHICH HASH AND, CORRESPONDINGLY, PAGE TO SHOW
@@ -210,6 +211,7 @@ export async function renderProfilePage(hash, userId=null) {
     `;
 
     await handleProfileHeaderEdit();
+    logOutFunction();
     if (init) init();
 
     if(hash === 'fill') {

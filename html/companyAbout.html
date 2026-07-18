@@ -26,13 +26,19 @@
                         </div>
                     </div>
                 </div>
-                <button class="title-button" type="button">Add review</button>
+
+                <div class="header-actions">
+                    <button class="title-button" type="button">Add review</button>
+                    <a href="/html/personalProfile" class="account-btn">My cabinet</a>
+                    <button type="button" class="logout-btn" id="logoutButton">Log out</button>
+                </div>
+
             </div>
 
             <!--            Navigation-->
             <nav class="tabs">
                 <a class="tab tab-about">About</a>
-                <a  href="/html/companyReviews" class="tab tab-reviews">Reviews
+                <a  href="/html/companyReviews" class="tab tab-reviews js-company-reviews-link">Reviews
                     <span class="reviews-number">5</span>
                 </a>
             </nav>
@@ -133,7 +139,7 @@
                         <div class="card">
                             <div class="content-head">
                                 <h3>Employee reviews</h3>
-                                <a href="/html/companyReviews" class="tab">See all reviews</a>
+                                <a href="/html/companyReviews" class="tab js-company-reviews-link">See all reviews</a>
                                 <div>
                                     <select name="gradeFilter" class="filterByGrade">
                                         <option value="no_filter"> No filter </option>

@@ -18,7 +18,7 @@ import {renderPagination} from "../components/reviews/reviewsPagination.js";
 import {renderReviews} from "../components/reviews/newReviewRow.js";
 import {populateFilterBar} from "../components/reviews/reviewsFilterBar.js";
 import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
-
+import "../components/reviews/logOut.js"
 // export let companyReviewsState = {
 //     filterByCompany: null,
 //     currentPage: 1,

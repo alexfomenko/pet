@@ -23,7 +23,12 @@ export function renderProfileHeader(user, canEdit = true){
                         <span class="person-email">${email}</span>
                     </div>
                 </div>
-                     ${canEdit ? `<button class="edit-btn btn">Edit</button>` : '' }   
+                
+                <div class="header-actions">
+                   ${canEdit ? `<button class="edit-btn btn">Edit</button>` : '' }   
+                    <button type="button" class="logout-btn" id="logoutButton">Log out</button>
+                </div>
+                    
             </div>`
 }
 
@@ -106,4 +111,14 @@ export async function handleProfileHeaderEdit() {
             saveBtn.style.display = 'none';
         }
     })
+}
+
+export function logOutFunction() {
+    const logoutButton = document.getElementById('logoutButton');
+    logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName');
+
+        window.location.href = '/html/login';
+    });
 }

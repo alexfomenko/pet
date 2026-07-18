@@ -206,6 +206,9 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/components/reviews/reviewsAppState.js') {
         sendStaticFile(res, 'components/reviews/reviewsAppState.js', 'application/javascript')
     }
+    else if(req.method === 'GET' && req.url === '/components/reviews/logOut.js') {
+        sendStaticFile(res, 'components/reviews/logOut.js', 'application/javascript')
+    }
     else if(req.method === 'GET' && req.url === '/components/company/companyReviewsState.js') {
         sendStaticFile(res, 'components/company/companyReviewsState.js', 'application/javascript')
     }

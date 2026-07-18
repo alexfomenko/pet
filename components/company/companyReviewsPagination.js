@@ -1,6 +1,6 @@
 import {getCompanyReviews} from "../../api/companyApi.js";
 import {companyReviewsState} from "./companyReviewsState.js";
-import {renderReviewsV2} from "./companyReviewAricle.js";
+import {renderCompanyReviews} from "./companyReviewAricle.js";
 
 let pagination = document.querySelector('.pagination');
 
@@ -91,7 +91,7 @@ pagination.addEventListener('click', async(e) => {
 
 async function getReviews() {
     let response = await getCompanyReviews(company,companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort );
-    renderReviewsV2(response.items);
+    renderCompanyReviews(response.items);
 }
 
 function updatePagination() {

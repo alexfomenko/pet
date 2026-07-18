@@ -1,4 +1,4 @@
-export function renderReviewsV2(reviews, reviewsTotal) {
+export function renderCompanyReviews(reviews, reviewsTotal) {
     let reviewsTabNumber = document.querySelector('.reviews-number');
     reviewsTabNumber.textContent = reviewsTotal;
 

@@ -1,5 +1,5 @@
 import {submitReview} from "../../api/reviewsApi.js";
-import {renderReviewsV2} from "./companyReviewAricle.js";
+import {renderCompanyReviews} from "./companyReviewAricle.js";
 import {getCompanyReviews} from "../../api/companyApi.js";
 import {companyReviewsState} from "./companyReviewsState.js";
 
@@ -111,7 +111,7 @@ sendReviewButton.addEventListener('click', async (e) => {
         if(request.success) {
             let companyReviews = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
             let reviews = companyReviews.items;
-            renderReviewsV2(reviews);
+            renderCompanyReviews(reviews);
             //TODO add clear form
             overlay.classList.remove('active'); //hide form
         }

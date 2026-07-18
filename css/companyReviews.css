@@ -87,6 +87,38 @@ body {
     background-color: #6f6f6f;
 }
 
+/*header buttons*/
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.account-btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #d6e6ff;
+    background: #eff6ff;
+    color: #0e70c0;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.logout-btn {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #f1d0cd;
+    background: #fff;
+    color: #b42318;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 /*Navigation Tabs*/
 
 .tabs{
