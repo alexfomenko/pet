@@ -179,6 +179,12 @@ export async function renderProfilePage(hash, userId=null) {
         };
     } else {
         sendGetProfileDataRequest = await getOwnProfileData();
+        if(sendGetProfileDataRequest.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userName');
+            window.location.href = '/html/login';
+            return;
+        }
     }
 
     let user = sendGetProfileDataRequest.success ? sendGetProfileDataRequest.user : null;

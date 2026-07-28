@@ -282,6 +282,9 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/api/personalProfileApi.js') {
         sendStaticFile(res, 'api/personalProfileApi.js', 'application/javascript')
     }
+    else if(req.method === 'GET' && req.url === '/components/common/authNav.js') {
+        sendStaticFile(res, '/components/common/authNav.js', 'application/javascript')
+    }
     // else if(req.method === 'GET' && req.url === '/layout/layout.js') {
     //     sendStaticFile(res, 'layout/layout.js', 'application/javascript')
     // }

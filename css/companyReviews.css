@@ -88,6 +88,11 @@ body {
 }
 
 /*header buttons*/
+.company-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
 
 .header-actions {
     display: flex;

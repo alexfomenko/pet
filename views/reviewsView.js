@@ -19,6 +19,7 @@ import {renderReviews} from "../components/reviews/newReviewRow.js";
 import {populateFilterBar} from "../components/reviews/reviewsFilterBar.js";
 import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
 import "../components/reviews/logOut.js"
+import {renderAuthNav} from "../components/common/authNav.js";
 // export let companyReviewsState = {
 //     filterByCompany: null,
 //     currentPage: 1,
@@ -37,6 +38,7 @@ let currentPage = 1;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
+    renderAuthNav();
     let response = await getReviews(reviewsAppState.currentPage, reviewsAppState.currentPageLimit);
     let reviews = response.items;
 

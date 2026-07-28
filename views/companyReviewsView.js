@@ -8,13 +8,11 @@ import "../components/company/companyReviewsPagination.js";
 import {renderPaginationV2} from "../components/company/companyReviewsPagination.js";
 import "../components/company/companyReviewForm.js"
 import {renderCompanyHeader} from "../components/company/companyAboutRender.js";
-<<<<<<< HEAD
-=======
-import "../components/reviews/logOut.js"
->>>>>>> 8b59901 (added cabinet and logout buttons)
+import {renderAuthNav} from "../components/common/authNav.js";
 
 document.addEventListener("DOMContentLoaded", async ()=> {
     // console.log('hi');
+    renderAuthNav();
 
     //showing header data
     renderCompanyHeader();

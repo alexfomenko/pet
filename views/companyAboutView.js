@@ -9,8 +9,11 @@ import {getCompanyAboutData} from "../api/companyApi.js";
 import {renderCompanyHeader} from "../components/company/companyAboutRender.js";
 import {renderCompanyAbout} from "../components/company/companyAboutRender.js";
 import "../components/reviews/logOut.js"
+import {renderAuthNav} from "../components/common/authNav.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+    renderAuthNav();
+
     let params = new URLSearchParams(location.search);
     let company = params.get('company');
 
