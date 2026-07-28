@@ -218,3 +218,59 @@ export async function getUserReviews() {
         }
     }
 }
+
+export async function uploadProfileAvatar(formData) { //todo update endpoint
+    //1 - check if the request was actually sent
+    try{
+        console.log('token:', localStorage.getItem('token'));
+        let sendUpdateRequest = await fetch('/profile/avatar', {
+            method: "PUT",
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: formData,
+        });
+
+        //2 - check if the server answered with 200, 400, 500
+        if(!sendUpdateRequest.ok) {
+            return {
+                success: false,
+                status: sendUpdateRequest.status,
+                text: `Server responded with an error ${sendUpdateRequest.status}`,
+                items: null,
+            }
+        }
+        // 3 - check if we can parse the body
+        let parsedResponseBody;
+        try{
+            parsedResponseBody = await sendUpdateRequest.json();
+        }
+        catch (error){
+            return {
+                success: false,
+                status: sendUpdateRequest.status,
+                text: "Failed to parse server response",
+                items: null,
+            }
+        }
+        // 4 - if we can parse the body successfully, send the response
+        return {
+            success: true,
+            status: sendUpdateRequest.status,
+            text: sendUpdateRequest.statusText,
+            ...parsedResponseBody,
+        }
+    }
+    catch (error) {
+        return {
+            success: false,
+            status: null,
+            text: "Network error, try again",
+            items: null,
+        }
+    }
+}
+
+//todo
+// deleteProfileAvatar()
+// validateAvatarFile(file)

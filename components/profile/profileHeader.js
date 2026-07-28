@@ -1,4 +1,5 @@
 import {updateProfileData} from "../../api/personalProfileApi.js";
+import {uploadProfileAvatar} from "../../api/personalProfileApi.js";
 
 export function renderProfileHeader(user, canEdit = true){
     // let name;
@@ -16,7 +17,15 @@ export function renderProfileHeader(user, canEdit = true){
     return `           
             <div class="profile-header card">
                 <div class="company-about">
-                    <img src="https://www.osh.by/wp-content/uploads/2023/12/1041436899_0_206_2905_1840_1920x0_80_0_0_c7022893b761781d76fe592010d14bd2.jpg" alt="photo" width="200" height="100">
+<!--                avatar-->
+                <div class="avatar-control">
+<!--    <img class="profile-avatar" src="/uploads/avatars/photo.webp" alt="Profile photo">-->
+    <img class="profile-avatar" src="" alt="Profile photo">
+    <button type="button" class="avatar-change-btn" aria-label="Change profile photo">  📷 </button>
+    <input class="avatar-input" type="file" accept="image/jpeg,image/png,image/webp" hidden >
+</div>
+<!--avatar finish-->
+<!--                    <img src="https://www.osh.by/wp-content/uploads/2023/12/1041436899_0_206_2905_1840_1920x0_80_0_0_c7022893b761781d76fe592010d14bd2.jpg" alt="photo" width="200" height="100">-->
                     <div class="account-data">
                         <h1 class="person-name">${name}</h1>
                         <p class="person-title">${title}</p> 
@@ -120,5 +129,39 @@ export function logOutFunction() {
         localStorage.removeItem('userName');
 
         window.location.href = '/html/login';
+    });
+}
+
+export async function handleAvatarChange() {
+    const avatarChangeButton = document.querySelector('.avatar-change-btn');
+    const avatarInput = document.querySelector('.avatar-input');
+    const preview = document.querySelector('.profile-avatar');
+
+    avatarChangeButton.addEventListener('click', () => {
+        avatarInput.click();
+    });
+
+    avatarInput.addEventListener('change', async () => {
+        const file = avatarInput.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) {
+            // showError('The image must be smaller than 5 MB'); //todo
+            alert('The image must be smaller than 5 MB'); //todo
+            return;
+        }
+        preview.src = URL.createObjectURL(file);
+        // Здесь продолжается первоначальный код с FormData и fetch.
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        await uploadProfileAvatar(formData); //todo uncomment
+
+        // await fetch('/profile/avatar', {
+        //     method: 'PUT',
+        //     headers: {
+        //         Authorization: `Bearer ${localStorage.getItem('token')}`
+        //     },
+        //     body: formData
+        // });
     });
 }
