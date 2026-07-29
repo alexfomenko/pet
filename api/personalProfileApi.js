@@ -220,6 +220,11 @@ export async function getUserReviews() {
 }
 
 export async function uploadProfileAvatar(formData) { //todo update endpoint
+
+    // const formData = new FormData();
+    // formData.append('avatar', file);
+    // (file) instead of formData
+
     //1 - check if the request was actually sent
     try{
         console.log('token:', localStorage.getItem('token'));
@@ -274,3 +279,21 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint
 //todo
 // deleteProfileAvatar()
 // validateAvatarFile(file)
+// PUT    /profile/avatar
+// DELETE /profile/avatar
+// GET    /uploads/avatars/:filename
+
+// Серверный процесс:
+//     Проверить token
+//       ↓
+// Принять файл, максимум 5 MB
+//       ↓
+// Проверить настоящий формат изображения
+//       ↓
+// Обрезать по центру и уменьшить до 512×512
+//       ↓
+// Сохранить как UUID.webp
+//       ↓
+// Записать avatarUrl в пользователя
+//       ↓
+// Вернуть { avatarUrl }

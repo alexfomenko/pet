@@ -974,6 +974,7 @@ const server = http.createServer(async(req, res) => {
                 city:  users[userIndex].city,
                 company:  users[userIndex].company,
                 bio:  users[userIndex].bio,
+                avatarUrl: users[userIndex].avatarUrl ?? null,
             }
         })
     }
@@ -997,8 +998,15 @@ const server = http.createServer(async(req, res) => {
                 city:  users[userIndex].city,
                 company:  users[userIndex].company,
                 bio:  users[userIndex].bio,
+                avatarUrl: users[userIndex].avatarUrl ?? null,
             }
         })
+    }
+
+    if(req.method === "PUT" && req.url === '/profile/avatar') {
+        return {
+            "avatarUrl": "/uploads/avatars/87c3df4a.webp"
+        }
     }
 
     if(req.method === "GET" && req.url ==='/profile/reviews') {
