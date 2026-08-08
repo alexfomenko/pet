@@ -3,20 +3,17 @@ const fs = require('fs').promises;
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-
+const busboy = require('busboy');
 const {v4: uuidv4} = require('uuid');
-
 let url =  require("url");
-// const {user} = require("./components/profile/profileRouter");
 
 let port = 3000;
 const SECRET = 'super_secret_key';
 
 const DATA_DIR = path.join(__dirname, 'json');
-
 const NOTES_FILE = path.join(DATA_DIR, 'notes.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
+const AVATARS_DIR = path.join(__dirname, 'uploads', 'avatar');
 
 // let NOTES_FILE = path.join(__dirname, 'notes.json');
 // let USERS_FILE = path.join(__dirname, 'users.json');
@@ -922,6 +919,9 @@ const server = http.createServer(async(req, res) => {
                 if(bio !== undefined) users[userIndex].bio = String(bio.trim());
 
                 //save to file system
+                // async function saveNoteToFile(file, array) {
+                //     await fs.writeFile(file, JSON.stringify(array));
+                // }
                 await saveNoteToFile(USERS_FILE, users);
 
                 console.log(users[userIndex])
@@ -1003,12 +1003,6 @@ const server = http.createServer(async(req, res) => {
         })
     }
 
-    if(req.method === "PUT" && req.url === '/profile/avatar') {
-        return {
-            "avatarUrl": "/uploads/avatars/87c3df4a.webp"
-        }
-    }
-
     if(req.method === "GET" && req.url ==='/profile/reviews') {
         //check if token was sent at all
         let token = req.headers['authorization']?.split(" ")[1];
@@ -1038,6 +1032,91 @@ const server = http.createServer(async(req, res) => {
         })
     }
 
+    if(req.method === "PUT" && req.url === '/profile/avatar') {
+        // return {
+        //     "avatarUrl": "/uploads/avatars/87c3df4a.webp"
+        // }
+        //token
+        let token = req.headers.authorization.split(' ')[1];
+        if(!token) sendResponse(res, 401, {message: "Unauthorized"});
+        //token data
+        let decodedData;
+        try{
+            decodedData = jwt.verify(token, SECRET);
+        }
+        catch (error){
+            return sendResponse(res, 401, {message: "Invalid token"})
+        }
+        //finding user
+        let userIndex = users.findIndex((user) => user.id === decodedData.userId);
+        if(userIndex=== -1) return sendResponse(res, 404, {message: "User not found"});
+
+        //busboy starts
+        let parser = busboy({
+            headers: req.headers,
+            limits: {
+                files: 1,
+                maxFilesSize: 5 * 1024 * 1024
+            }
+        })
+
+        let avatarBuffer = null;
+        let avatarMimeType = null;
+        let avatarTooLarge = false;
+
+        //while receiving file
+        parser.on('file', (fieldName, fileStream, fileInfo) => {
+            if(fieldName !== 'avatar') {
+                fileStream.resume();
+                return;
+            }
+
+            avatarMimeType = fileInfo.mimeType;
+
+            let chunks = [];
+
+            fileStream.on('data', (chunk) => {
+                chunks.push(chunk);
+            })
+            fileStream.on('limit', (chunk) => {
+                avatarTooLarge = true;
+            })
+            fileStream.on('end', (chunk) => {
+                avatarBuffer = Buffer.concat(chunks);
+            })
+        })
+        //after stopped file receiving
+        parser.on('close', async () => {
+            if(avatarTooLarge) return sendResponse(res, 400, {message: "The image must be smaller than 5mb"});
+            if(!avatarBuffer) return sendResponse(res, 400, {message: "Avatar file not provided"});
+            const extensions = {
+                'image/jpeg': '.jpg',
+                'image/png': '.png',
+                'image/webp': '.webp'
+            }
+            let extension = extensions[avatarMimeType];
+            if(!extension) return sendResponse(res, 400, {message: 'Unsupported img type'});
+            //preparing to save the file
+            try{
+                await fs.mkdir(AVATARS_DIR, {recursive: true});
+                let fileName = `${decodedData.userId}${extension}`; //only part of the path
+                let filePath = path.join(AVATARS_DIR, fileName); //full path
+                await fs.writeFile(filePath, avatarBuffer);
+
+                let avatarUrl =`/uploads/avatars/${fileName}`;
+                users[userIndex].avatarUrl = avatarUrl;
+
+                await saveNoteToFile(USERS_FILE,users);
+
+            }
+            catch (error){
+                console.log(error);
+                return sendResponse(res, 500, {message: 'Failed to save avatar'});
+            }
+        })
+        req.pipe(parser);
+        return ;
+    }
 });
 
 (async function start() {

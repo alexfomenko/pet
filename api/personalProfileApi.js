@@ -219,7 +219,7 @@ export async function getUserReviews() {
     }
 }
 
-export async function uploadProfileAvatar(formData) { //todo update endpoint
+export async function uploadProfileAvatar(formData) { //todo update endpoint in case json will be sent
 
     // const formData = new FormData();
     // formData.append('avatar', file);
@@ -234,6 +234,8 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: formData,
+            // body: file,
+            //content type is set by browser
         });
 
         //2 - check if the server answered with 200, 400, 500
@@ -242,7 +244,7 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint
                 success: false,
                 status: sendUpdateRequest.status,
                 text: `Server responded with an error ${sendUpdateRequest.status}`,
-                items: null,
+                avatarUrl: null,
             }
         }
         // 3 - check if we can parse the body
@@ -255,7 +257,7 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint
                 success: false,
                 status: sendUpdateRequest.status,
                 text: "Failed to parse server response",
-                items: null,
+                avatarUrl: null,
             }
         }
         // 4 - if we can parse the body successfully, send the response
@@ -271,7 +273,7 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint
             success: false,
             status: null,
             text: "Network error, try again",
-            items: null,
+            avatarUrl: null,
         }
     }
 }
