@@ -1,6 +1,6 @@
 import {updateProfileData} from "../../api/personalProfileApi.js";
 import {uploadProfileAvatar} from "../../api/personalProfileApi.js";
-import path from "path";
+
 
 export function renderProfileHeader(user, canEdit = true){
     // let name;
@@ -15,13 +15,14 @@ export function renderProfileHeader(user, canEdit = true){
     const name    = user?.name    ?? '—';
     const email   = user?.email   ?? '—';
     let title = user?.title ?? '-';
+    let avatarImgSrc = user?.avatarUrl ?? ' ';
     return `           
             <div class="profile-header card">
                 <div class="company-about">
 <!--                avatar-->
                 <div class="avatar-control">
 <!--&lt;!&ndash;    <img class="profile-avatar" src="/uploads/avatars/photo.webp" alt="Profile photo">&ndash;&gt; //todo-->
-    <img class="profile-avatar" src=" " alt="Profile photo">
+    <img class="profile-avatar" src="${avatarImgSrc}" alt="Profile photo">
     <button type="button" class="avatar-change-btn" aria-label="Change profile photo">  📷 </button>
     <input class="avatar-input" type="file" accept="image/jpeg,image/png,image/webp" hidden >
 </div>
@@ -183,172 +184,23 @@ export async function handleAvatarChange() {
         const formData = new FormData();
         formData.append('avatar', file);
         try {
-            let result = await uploadProfileAvatar(formData); //todo uncomment
-            // if(!result.success) {
-            //     avatarImage.src = oldImage;
-            //     alert(result.text);
-            //     return;
-            // }
-            // avatarImage.src = result.avatarUrl; //todo when back is ready
+            let result = await uploadProfileAvatar(formData);
+            if(!result.success) {
+                avatarImage.src = oldImage;
+                alert(result.text);
+                return;
+            }
+            // avatarImage.src = result.avatarUrl;
+            avatarImage.src = `${result.avatarUrl}?t=${Date.now()}`;
         }
         catch (error){
             avatarImage.src = oldImage;
-            alert("Unexpected error"); //todo
+            alert("Unexpected error");
         }
         finally {
-            URL.revokeObjectURL(previewUrl); //todo ???
-            avatarChangeButton.disabled = false; //todo ???
+            URL.revokeObjectURL(previewUrl);
+            avatarChangeButton.disabled = false;
             avatarInput.value = '';
         }
     });
-}
-
-//когда срабатывает change ?
-const DATA_DIR = path.join(__dirname, 'json');
-
-const NOTES_FILE = path.join(DATA_DIR, 'notes.json');
-const USERS_FILE = path.join(DATA_DIR, 'users.json');
-
-//save to file system
-// async function saveNoteToFile(file, array) {
-//     await fs.writeFile(file, JSON.stringify(array));
-// }
-// await saveNoteToFile(USERS_FILE, users);
-const AVATARS_DIR = path.join(
-    __dirname,
-    'uploads',
-    'avatars'
-);
-
-const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
-
-const EXTENSIONS_BY_MIME_TYPE = {
-    'image/jpeg': '.jpg',
-    'image/png': '.png',
-    'image/webp': '.webp'
-};
-
-if (
-    req.method === 'PUT' &&
-    pathname === '/profile/avatar'
-) {
-    const token = req.headers.authorization?.split(' ')[1];
-
-    if (!token) {
-        return sendResponse(res, 401, {
-            message: 'Unauthorized'
-        });
-    }
-
-    let decodedData;
-
-    try {
-        decodedData = jwt.verify(token, SECRET);
-    } catch {
-        return sendResponse(res, 401, {
-            message: 'Invalid token'
-        });
-    }
-
-    const userIndex = users.findIndex(
-        user => user.id === decodedData.userId
-    );
-
-    if (userIndex === -1) {
-        return sendResponse(res, 404, {
-            message: 'User not found'
-        });
-    }
-
-    const mimeType = req.headers['content-type'];
-    const extension = EXTENSIONS_BY_MIME_TYPE[mimeType];
-
-    if (!extension) {
-        return sendResponse(res, 400, {
-            message: 'Unsupported image type'
-        });
-    }
-
-    const chunks = [];
-    let receivedBytes = 0;
-
-    let fileTooLarge = false;
-
-    req.on('data', chunk => {
-        receivedBytes += chunk.length;
-
-        if (receivedBytes > MAX_AVATAR_SIZE) {
-            fileTooLarge = true;
-            return;
-        }
-
-        chunks.push(chunk);
-    });
-
-    req.on('end', async () => {
-        if (fileTooLarge) {
-            return sendResponse(res, 400, {
-                message: 'The image must be smaller than 5 MB'
-            });
-        }
-
-        if (receivedBytes === 0) {
-            return sendResponse(res, 400, {
-                message: 'Avatar file was not provided'
-            });
-        }
-
-        const avatarBuffer = Buffer.concat(chunks);
-
-        try {
-            await fs.mkdir(AVATARS_DIR, {
-                recursive: true
-            });
-
-            const fileName =
-                `${decodedData.userId}${extension}`;
-
-            const filePath = path.join(
-                AVATARS_DIR,
-                fileName
-            );
-
-            await fs.writeFile(
-                filePath,
-                avatarBuffer
-            );
-
-            const avatarUrl =
-                `/uploads/avatars/${fileName}`;
-
-            users[userIndex].avatarUrl = avatarUrl;
-
-            await saveNoteToFile(
-                USERS_FILE,
-                users
-            );
-
-            return sendResponse(res, 200, {
-                avatarUrl
-            });
-        } catch (error) {
-            console.error(error);
-
-            return sendResponse(res, 500, {
-                message: 'Failed to save avatar'
-            });
-        }
-    });
-
-    req.on('error', error => {
-        console.error(error);
-
-        if (!res.writableEnded) {
-            return sendResponse(res, 400, {
-                message: 'Failed to read avatar'
-            });
-        }
-    });
-
-    return;
 }

@@ -220,7 +220,6 @@ export async function getUserReviews() {
 }
 
 export async function uploadProfileAvatar(formData) { //todo update endpoint in case json will be sent
-
     // const formData = new FormData();
     // formData.append('avatar', file);
     // (file) instead of formData

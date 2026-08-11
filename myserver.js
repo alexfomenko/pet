@@ -13,10 +13,7 @@ const SECRET = 'super_secret_key';
 const DATA_DIR = path.join(__dirname, 'json');
 const NOTES_FILE = path.join(DATA_DIR, 'notes.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
-const AVATARS_DIR = path.join(__dirname, 'uploads', 'avatar');
-
-// let NOTES_FILE = path.join(__dirname, 'notes.json');
-// let USERS_FILE = path.join(__dirname, 'users.json');
+const AVATARS_DIR = path.join(__dirname, 'uploads', 'avatars');
 
 let notes = [];
 let users = [{ id: '1', email: 'test@mail.com', password: bcrypt.hashSync('123456', 10)}];
@@ -1038,7 +1035,9 @@ const server = http.createServer(async(req, res) => {
         // }
         //token
         let token = req.headers.authorization.split(' ')[1];
-        if(!token) sendResponse(res, 401, {message: "Unauthorized"});
+        if(!token) {
+            return sendResponse(res, 401, {message: "Unauthorized"});
+        }
         //token data
         let decodedData;
         try{
@@ -1107,6 +1106,7 @@ const server = http.createServer(async(req, res) => {
                 users[userIndex].avatarUrl = avatarUrl;
 
                 await saveNoteToFile(USERS_FILE,users);
+                return sendResponse(res, 200, {avatarUrl});
 
             }
             catch (error){
@@ -1116,6 +1116,26 @@ const server = http.createServer(async(req, res) => {
         })
         req.pipe(parser);
         return ;
+    }
+
+    else if(req.method === "GET" && pathname.startsWith('/uploads/avatars')){
+        let fileName = path.basename(pathname);
+        console.log(fileName)
+        let extension = path.extname(fileName).toLowerCase();
+
+        let extensionTypes = {
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.png': 'image/png',
+            '.webp': 'image/webp'
+        }
+
+        const contentType = extensionTypes[extension];
+        if(!contentType) {
+            return sendResponse(res, 400, {message: "Unsupported img type"});
+        }
+
+        return sendStaticFile(res, path.join('uploads', 'avatars', fileName), contentType);
     }
 });
 
