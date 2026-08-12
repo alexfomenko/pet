@@ -105,9 +105,6 @@ const pageConfig = {
 //     }
 // };
 
-
-
-
 // То есть #profile — это не отдельная страница. Это команда: “покажи мне правильное состояние профиля по данным пользователя”.
 // export async function renderProfilePage(pageName) {
 //     let config = pageConfig[pageName];
@@ -189,7 +186,7 @@ export async function renderProfilePage(hash, userId=null) {
 
     let user = sendGetProfileDataRequest.success ? sendGetProfileDataRequest.user : null;
 
-    //if private profile determine what to render by hash
+    //if private profile determine what page to render and what eventListeners to add by hash
     if(hash==='profile') {
         hash = getProfileState(user);
     }
@@ -216,8 +213,9 @@ export async function renderProfilePage(hash, userId=null) {
     </section>
     `;
 
+    //adding eventListeners
     await handleProfileHeaderEdit();
-    await handleAvatarChange(); //todo
+    await handleAvatarChange();
     logOutFunction();
     if (init) init();
 
