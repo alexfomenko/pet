@@ -195,3 +195,4 @@ export function updatePaginationUi(currentPage, totalPages) {
     prevButton.disabled = currentPage === 1;
     nextButton.disabled = currentPage === totalPages;
 }
+
