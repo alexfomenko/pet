@@ -6,7 +6,7 @@ let showFormButton = document.getElementById('showFormButton');
 let reviewForm = document.getElementById('reviewForm');
 let sendReviewButton = document.getElementById('sendReviewButton');
 let reviewContainer = document.getElementById('reviewsContainer');
-console.log('FORM:', document.getElementById('reviewForm'));
+// console.log('FORM:', document.getElementById('reviewForm'));
 
 // SHOW FORM
 

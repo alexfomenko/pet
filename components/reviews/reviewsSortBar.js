@@ -1,7 +1,8 @@
 import {getReviews} from "../../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
 import {reviewsAppState} from "./reviewsAppState.js";
-import {updatePaginationUi} from "./reviewsPagination.js"; //added
+// import {updatePaginationUi} from "./reviewsPagination.js"; //added
+import {updatePagination} from "../common/pagination.js";
 
 
 let sortBar = document.getElementById('sortBar');
@@ -73,5 +74,6 @@ sortBar.addEventListener('change', async (e) => {
     //     sortedReviews = reviews.sort((review1, review2) => review2.rating - review1.rating);
     // }
     renderReviews(reviews);
-    updatePaginationUi(reviewsAppState.currentPage, totalPages);
+    // updatePaginationUi(reviewsAppState.currentPage, totalPages);
+    updatePagination(reviewsAppState.currentPage, totalPages);
 })

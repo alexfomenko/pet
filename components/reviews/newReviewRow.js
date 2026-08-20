@@ -63,7 +63,7 @@ export function renderReviews(reviewsArray) {
     reviewsContainer.innerHTML = "";
     reviewsArray.forEach((review) => {
         let newRow = createNewRow(review.id, review.userId, review.company,review.userName, review.rating, review.review, review.date);
-        console.log(review.id, review.userId, review.company,review.userName, review.rating, review.review, review.date)
+        // console.log(review.id, review.userId, review.company,review.userName, review.rating, review.review, review.date)
         reviewsContainer.appendChild(newRow);
     })
 }

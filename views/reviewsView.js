@@ -13,13 +13,15 @@ import "../components/reviews/reviewsAppState.js"
 import {getReviews} from '../api/reviewsApi.js';
 import {createNewRow} from "../components/reviews/newReviewRow.js";
 // added as a try
-import {renderPagination} from "../components/reviews/reviewsPagination.js";
+// import {renderPagination} from "../components/reviews/reviewsPagination.js";
 // import {renderReviews} from "../utils/utils.js";
 import {renderReviews} from "../components/reviews/newReviewRow.js";
 import {populateFilterBar} from "../components/reviews/reviewsFilterBar.js";
 import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
 import "../components/reviews/logOut.js"
 import {renderAuthNav} from "../components/common/authNav.js";
+import {renderPagination} from "../components/common/pagination.js";
+
 // export let companyReviewsState = {
 //     filterByCompany: null,
 //     currentPage: 1,
@@ -51,8 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // setPaginationData(response.page, response.totalPages, renderReviews);
 
-    renderPagination(reviewsAppState.currentPage, response.totalPages);
+    // renderPagination(reviewsAppState.currentPage, response.totalPages);
 
+    renderPagination(reviewsAppState.currentPage, response.totalPages);
 })
 
 

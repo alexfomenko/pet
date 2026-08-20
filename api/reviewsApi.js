@@ -21,7 +21,7 @@ export async function getAllCompanies() {
         }
         // console.log(await sendGetRequest.json())
         // return await sendGetCompaniesRequest.json(); // instead of this
-        console.log(parsedJsonBody);
+        // console.log(parsedJsonBody);
         return {
             success: true,
             status: sendGetCompaniesRequest.status,

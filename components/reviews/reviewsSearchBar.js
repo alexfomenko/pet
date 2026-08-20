@@ -1,6 +1,7 @@
 import {getReviews} from "../../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
-import {renderPagination} from "./reviewsPagination.js";
+// import {renderPagination} from "./reviewsPagination.js";
+import {renderPagination} from "../common/pagination.js";
 import {reviewsAppState} from "./reviewsAppState.js";
 
 let searchBar = document.getElementById('searchBar');

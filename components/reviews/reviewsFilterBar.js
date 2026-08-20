@@ -1,8 +1,9 @@
 import {getReviews} from "../../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
 import {reviewsAppState} from "./reviewsAppState.js";
-import {renderPagination, updatePaginationUi} from "./reviewsPagination.js";
+// import {renderPagination, updatePaginationUi} from "./reviewsPagination.js";
 import {getAllCompanies} from "../../api/reviewsApi.js";
+import {renderPagination, updatePagination} from "../common/pagination.js";
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
@@ -86,7 +87,9 @@ filterBar.addEventListener("change", async (e) => {
 
     renderReviews(reviews);
     renderPagination(reviewsAppState.currentPage, totalPages);
-    updatePaginationUi(reviewsAppState.currentPage, totalPages);
+    // updatePaginationUi(reviewsAppState.currentPage, totalPages);
+    updatePagination(reviewsAppState.currentPage, totalPages);
+
 })
 
 // мне нужно поставить страницу 1 и перевыделить кнопки
