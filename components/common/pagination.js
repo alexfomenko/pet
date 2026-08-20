@@ -82,7 +82,7 @@ function createNumberButton(pageNumber, currentPage) {
     button.type = 'button';
     button.textContent = String(pageNumber);
     button.classList.add("page-btn");
-    // button.dataset.page = String(pageNumber);
+    button.dataset.page = String(pageNumber);
 
     if(pageNumber === currentPage) button.classList.add('active'); button.setAttribute('aria-current', "page");
 
