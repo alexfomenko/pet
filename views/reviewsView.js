@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // setPaginationData(response.page, response.totalPages, renderReviews);
 
-    // renderPagination(reviewsAppState.currentPage, response.totalPages);
-
     renderPagination(reviewsAppState.currentPage, response.totalPages);
+
+    // renderPagination(reviewsAppState.currentPage, response.totalPages, loadReviewsPage);
 })
 
 
