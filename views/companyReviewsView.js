@@ -9,7 +9,7 @@ import {showGradeRows} from "../components/company/companyGradeCard.js";
 import "../components/company/companyReviewForm.js"
 import {renderCompanyHeader} from "../components/company/companyAboutRender.js";
 import {renderAuthNav} from "../components/common/authNav.js";
-import {renderPagination} from "../components/common/pagination.js";
+import {renderPagination, loadCompanyReviewsPage} from "../components/common/pagination.js";
 import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
 
 document.addEventListener("DOMContentLoaded", async ()=> {
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", async ()=> {
 
     //show pagination
     // await renderPaginationV2(company);
-    renderPagination(companyReviewsState.currentPage, result.pagesTotalNumber );
-    // renderPagination(companyReviewsState.currentPage, result.pagesTotalNumber, loadCompanyReviewsPage);
+    // renderPagination(companyReviewsState.currentPage, result.pagesTotalNumber );
+    renderPagination(companyReviewsState.currentPage, result.pagesTotalNumber, loadCompanyReviewsPage.bind(null, company), companyReviewsState);
 
 })
 

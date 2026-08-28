@@ -5,7 +5,6 @@ import {renderCompanyReviews} from "../company/companyReviewAricle.js";
 import {getCompanyReviews} from "../../api/companyApi.js";
 import {companyReviewsState} from "../company/companyReviewsState.js";
 
-
 const paginationEl = document.getElementById("paginationEl");
 
 let totalPages = 1;
@@ -31,7 +30,7 @@ function createPageRange(startPage, endPage) {
     return pages;
 }
 
-export function renderPagination(currentPage, totalPages) {
+export function renderPagination(currentPage, totalPages, loadPageFn, state) {
     totalPages = Number(totalPages);
     paginationEl.innerHTML = "";
 
@@ -76,6 +75,39 @@ export function renderPagination(currentPage, totalPages) {
     nextButton.setAttribute('aria-label', "Next page");
     nextButton.disabled = currentPage === totalPages;
     paginationEl.appendChild(nextButton);
+
+    //event listener
+    paginationEl.addEventListener('click', async(event) => {
+        let clickedBtn = event.target.closest('button');
+        console.log(clickedBtn)
+        if(!clickedBtn || !paginationEl.contains(clickedBtn)) return;
+
+        if(clickedBtn.disabled) return; // не обрабатывать заблокированные стрелки
+
+        let nextPage = state.currentPage; // assume the page doesn't change
+
+        if (clickedBtn.classList.contains('prev-btn')) {
+            nextPage = state.currentPage - 1;
+        }
+        if (clickedBtn.classList.contains('next-btn')) {
+            nextPage = state.currentPage + 1;
+        }
+        else if (clickedBtn.dataset.page) {
+            nextPage = Number(clickedBtn.dataset.page);
+        }
+        // console.log({ nextPage, totalPages });
+        // nextPage = Math.max(1, Math.min(nextPage, totalPages)); //additional security: value !< 1 !>max
+        // need to change current to export function renderPagination(page, pages) {
+        //     totalPages = Number(pages);
+        // in case I want this check so that the external let totalPages is updated and passed to the event listener
+        // console.log(nextPage)
+
+        if(nextPage === state.currentPage) return;
+
+        state.currentPage = nextPage; // updating appState
+
+        await loadPageFn(); // request reviews and update pagination
+    }, { once: true })
 }
 
 //determine what pagination elements should be seen
@@ -112,38 +144,7 @@ function createDotsButton(currentPage, totalPages, direction) {
     return button;
 }
 
-paginationEl.addEventListener('click', async(event) => {
-    let clickedBtn = event.target.closest('button');
-    if(!clickedBtn || !paginationEl.contains(clickedBtn)) return;
-
-    if(clickedBtn.disabled) return; // не обрабатывать заблокированные стрелки
-
-    let nextPage = reviewsAppState.currentPage; // assume the page doesn't change
-
-    if (clickedBtn.classList.contains('prev-btn')) {
-        nextPage = reviewsAppState.currentPage - 1;
-    }
-    if (clickedBtn.classList.contains('next-btn')) {
-        nextPage = reviewsAppState.currentPage + 1;
-    }
-    else if (clickedBtn.dataset.page) {
-        nextPage = Number(clickedBtn.dataset.page);
-    }
-
-    // console.log({ nextPage, totalPages });
-    // nextPage = Math.max(1, Math.min(nextPage, totalPages)); //additional security: value !< 1 !>max
-    // need to change current to export function renderPagination(page, pages) {
-    //     totalPages = Number(pages);
-    // in case I want this check so that the external let totalPages is updated and passed to the event listener
-    // console.log(nextPage)
-    if(nextPage === reviewsAppState.currentPage) return;
-
-    reviewsAppState.currentPage = nextPage; // updating appState
-
-    await loadPage(); // request reviews and update pagination
-})
-
-async function loadPage() {
+export async function loadReviewsPage() {
     let response = await getReviews(reviewsAppState.currentPage,
         reviewsAppState.currentPageLimit,
         reviewsAppState.filterByCompany,
@@ -154,102 +155,23 @@ async function loadPage() {
    totalPages = response.totalPages;
 
    renderReviews(response.items); // or renderCompanyReviews(result.items, result.reviewsTotalNumber);
-   renderPagination(reviewsAppState.currentPage, totalPages);
+   renderPagination(reviewsAppState.currentPage, totalPages, loadReviewsPage, reviewsAppState);
 }
 
-// async function loadCompanyReviewsPage() {
-//     let response = await getCompanyReviews(reviewsAppState.currentPage, //todo company
-//         companyReviewsState.currentPageLimit,
-//         companyReviewsState.currentPageLimit,
-//         companyReviewsState.filter,
-//         companyReviewsState.sort);
-//
-//     if(!response.success) return console.log(response.text);
-//     totalPages = response.totalPages;
-//
-//     renderReviews(response.items); // or renderCompanyReviews(result.items, result.reviewsTotalNumber);
-//     renderPagination(reviewsAppState.currentPage, totalPages);
-// }
+export async function loadCompanyReviewsPage(company) {
+    let response = await getCompanyReviews(company, //todo company
+        companyReviewsState.currentPage,
+        companyReviewsState.currentPageLimit,
+        companyReviewsState.filter,
+        companyReviewsState.sort);
+
+    if(!response.success) return console.log(response.text);
+    totalPages = response.totalPages;
+
+    renderCompanyReviews(response.items, response.reviewsTotalNumber); // or renderCompanyReviews(result.items, result.reviewsTotalNumber);
+    renderPagination(companyReviewsState.currentPage, totalPages);
+}
 
 export function updatePagination(currentPage, totalPages) {
     renderPagination(currentPage, totalPages);
 }
-//
-// export function renderPagination(currentPage, totalPages, onPageChange) {
-//     totalPages = Number(totalPages);
-//     paginationEl.innerHTML = "";
-//
-//     if(totalPages === 0) return; //if there are no reviews server will return 0 pages > we don't need pagination
-//
-//     // create prevButton
-//     let prevButton = document.createElement('button');
-//     prevButton.type = "button";
-//     prevButton.textContent = "←";
-//     prevButton.classList.add('page-btn', 'prev-btn');
-//     prevButton.setAttribute('aria-label', "Previous page");
-//     prevButton.disabled = currentPage === 1; // prevButton disabled if its page 1
-//     paginationEl.appendChild(prevButton);
-//
-//     // getting array of elements that need to be shown
-//     let paginationItems = getPaginationItems(currentPage, totalPages);
-//     // console.log(currentPage)
-//     // console.log(paginationItems);
-//
-//     paginationItems.forEach((item) => {
-//         // console.log(item);
-//         // console.log(typeof item)
-//         if(typeof item === "number") {
-//             let numberBtn = createNumberButton(item, currentPage);
-//             paginationEl.appendChild(numberBtn);
-//         }
-//         if(item === "left_dots") {
-//             let dotsBtn = createDotsButton(currentPage, totalPages, "left");
-//             paginationEl.appendChild(dotsBtn);
-//         }
-//         if(item === "right_dots") {
-//             let dotsBtn = createDotsButton(currentPage, totalPages, "right");
-//             paginationEl.appendChild(dotsBtn);
-//         }
-//     })
-//
-//     //create nextBtn
-//     let nextButton = document.createElement('button');
-//     nextButton.type = "button";
-//     nextButton.textContent = "→";
-//     nextButton.classList.add("page-btn", "next-btn");
-//     nextButton.setAttribute('aria-label', "Next page");
-//     nextButton.disabled = currentPage === totalPages;
-//     paginationEl.appendChild(nextButton);
-//
-//     //event listener
-//     paginationEl.addEventListener('click', async(event) => {
-//         let clickedBtn = event.target.closest('button');
-//         if(!clickedBtn || !paginationEl.contains(clickedBtn)) return;
-//
-//         if(clickedBtn.disabled) return; // не обрабатывать заблокированные стрелки
-//
-//         let nextPage = reviewsAppState.currentPage; // assume the page doesn't change
-//
-//         if (clickedBtn.classList.contains('prev-btn')) {
-//             nextPage = reviewsAppState.currentPage - 1;
-//         }
-//         if (clickedBtn.classList.contains('next-btn')) {
-//             nextPage = reviewsAppState.currentPage + 1;
-//         }
-//         else if (clickedBtn.dataset.page) {
-//             nextPage = Number(clickedBtn.dataset.page);
-//         }
-//
-//         // console.log({ nextPage, totalPages });
-//         // nextPage = Math.max(1, Math.min(nextPage, totalPages)); //additional security: value !< 1 !>max
-//         // need to change current to export function renderPagination(page, pages) {
-//         //     totalPages = Number(pages);
-//         // in case I want this check so that the external let totalPages is updated and passed to the event listener
-//         // console.log(nextPage)
-//         if(nextPage === reviewsAppState.currentPage) return;
-//
-//         reviewsAppState.currentPage = nextPage; // updating appState
-//
-//         await onPageChange(); // request reviews and update pagination
-//     })
-// }

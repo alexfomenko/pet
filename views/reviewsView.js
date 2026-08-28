@@ -20,8 +20,7 @@ import {populateFilterBar} from "../components/reviews/reviewsFilterBar.js";
 import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
 import "../components/reviews/logOut.js"
 import {renderAuthNav} from "../components/common/authNav.js";
-import {renderPagination} from "../components/common/pagination.js";
-
+import {renderPagination, loadReviewsPage} from "../components/common/pagination.js";
 // export let companyReviewsState = {
 //     filterByCompany: null,
 //     currentPage: 1,
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // setPaginationData(response.page, response.totalPages, renderReviews);
 
-    renderPagination(reviewsAppState.currentPage, response.totalPages);
+    renderPagination(reviewsAppState.currentPage, response.totalPages, loadReviewsPage, reviewsAppState);
 
     // renderPagination(reviewsAppState.currentPage, response.totalPages, loadReviewsPage);
 })
