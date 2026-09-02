@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async ()=> {
 
     //showing all articles
     let result = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
-    console.log(result)
+    // console.log(result)
     renderCompanyReviews(result.items, result.reviewsTotalNumber);
 
     //showing all grades
@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", async ()=> {
 
     //show pagination
     // await renderPaginationV2(company);
-    // renderPagination(companyReviewsState.currentPage, result.pagesTotalNumber );
     renderPagination(companyReviewsState.currentPage, result.pagesTotalNumber, loadCompanyReviewsPage.bind(null, company), companyReviewsState);
 
 })
