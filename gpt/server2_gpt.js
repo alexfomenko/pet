@@ -1,8 +1,8 @@
 // Готовый server1_gpt.js (асинхронный вариант)
 // Что изменилось и зачем
 // Используем const fs = require('fs').promises; — современный, асинхронный API файлов.
-// При старте: await loadNotes() читает notes.json (если файла нет — массив пустой).
-// После каждого POST / PUT / DELETE вызываем await saveNotes() — сохраняем актуальное состояние в notes.json.
+// При старте: await loadNotes() читает notes_old.json (если файла нет — массив пустой).
+// После каждого POST / PUT / DELETE вызываем await saveNotes() — сохраняем актуальное состояние в notes_old.json.
 // Внутри req.on('end', async () => { ... }) используем await — так корректно дождёмся записи в файл перед ответом.
 
 
@@ -31,7 +31,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const PORT = 3000;
-const DATA_FILE = path.join(__dirname, 'notes.json');
+const DATA_FILE = path.join(__dirname, 'notes_old.json');
 
 let notes = [];
 
@@ -68,13 +68,13 @@ function getIdFromUrl(req) {
 /** ---------- СЕРВЕР ---------- **/
 
 const server = http.createServer((req, res) => {
-    // GET /notes — получить все заметки
-    if (req.method === 'GET' && req.url === '/notes') {
+    // GET /notes.json — получить все заметки
+    if (req.method === 'GET' && req.url === '/notes.json') {
         return sendJson(res, 200, notes);
     }
 
-    // POST /notes — добавить заметку
-    if (req.method === 'POST' && req.url === '/notes') {
+    // POST /notes.json — добавить заметку
+    if (req.method === 'POST' && req.url === '/notes.json') {
         let body = '';
         req.on('data', (chunk) => (body += chunk));
         req.on('end', async () => {
@@ -98,8 +98,8 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // PUT /notes/:id — обновить текст заметки
-    if (req.method === 'PUT' && req.url.startsWith('/notes/')) {
+    // PUT /notes.json/:id — обновить текст заметки
+    if (req.method === 'PUT' && req.url.startsWith('/notes.json/')) {
         const id = getIdFromUrl(req);
         const idx = notes.findIndex((n) => n.id === id);
         if (idx === -1) return notFound(res, 'Заметка не найдена');
@@ -126,8 +126,8 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // DELETE /notes/:id — удалить заметку
-    if (req.method === 'DELETE' && req.url.startsWith('/notes/')) {
+    // DELETE /notes.json/:id — удалить заметку
+    if (req.method === 'DELETE' && req.url.startsWith('/notes.json/')) {
         const id = getIdFromUrl(req);
         const idx = notes.findIndex((n) => n.id === id);
         if (idx === -1) return notFound(res, 'Заметка не найдена');

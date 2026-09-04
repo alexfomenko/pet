@@ -1,5 +1,5 @@
 // 📘 Обновлённый server1_gpt.js (с query-параметрами)
-// Ниже версия с фильтрацией search и ограничением limit в GET /notes.
+// Ниже версия с фильтрацией search и ограничением limit в GET /notes.json.
 
 const http = require('http');
 const { v4: uuidv4 } = require('uuid');
@@ -7,7 +7,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 const PORT = 3000;
-const DATA_FILE = path.join(__dirname, 'notes.json');
+const DATA_FILE = path.join(__dirname, 'notes_old.json');
 
 let notes = [];
 
@@ -45,8 +45,8 @@ function getIdFromUrl(req) {
 
 const server = http.createServer((req, res) => {
 
-    // GET /notes — с поддержкой query
-    if (req.method === 'GET' && req.url.startsWith('/notes')) {
+    // GET /notes.json — с поддержкой query
+    if (req.method === 'GET' && req.url.startsWith('/notes.json')) {
         const myUrl = new URL(req.url, 'http://localhost:' + PORT);
 
         let result = [...notes];
@@ -68,8 +68,8 @@ const server = http.createServer((req, res) => {
         return sendJson(res, 200, result);
     }
 
-    // POST /notes
-    if (req.method === 'POST' && req.url === '/notes') {
+    // POST /notes.json
+    if (req.method === 'POST' && req.url === '/notes.json') {
         let body = '';
         req.on('data', (chunk) => (body += chunk));
         req.on('end', async () => {
@@ -93,8 +93,8 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // PUT /notes/:id
-    if (req.method === 'PUT' && req.url.startsWith('/notes/')) {
+    // PUT /notes.json/:id
+    if (req.method === 'PUT' && req.url.startsWith('/notes.json/')) {
         const id = getIdFromUrl(req);
         const idx = notes.findIndex((n) => n.id === id);
         if (idx === -1) return notFound(res, 'Заметка не найдена');
@@ -121,8 +121,8 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // DELETE /notes/:id
-    if (req.method === 'DELETE' && req.url.startsWith('/notes/')) {
+    // DELETE /notes.json/:id
+    if (req.method === 'DELETE' && req.url.startsWith('/notes.json/')) {
         const id = getIdFromUrl(req);
         const idx = notes.findIndex((n) => n.id === id);
         if (idx === -1) return notFound(res, 'Заметка не найдена');

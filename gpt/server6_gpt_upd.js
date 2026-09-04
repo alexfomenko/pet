@@ -26,7 +26,7 @@ const fsRaw = require('fs'); // для потоков статики
 const path = require('path');
 
 const PORT = 3000;
-const DATA_FILE = path.join(__dirname, 'notes.json');
+const DATA_FILE = path.join(__dirname, 'notes_old.json');
 
 /* ===================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===================== */
 
@@ -150,8 +150,8 @@ const server = http.createServer(handleAsync(async (req, res) => {
     const served = await serveStatic(req, res);
     if (served) return;
 
-    // GET /notes?limit=&search=
-    if (req.method === 'GET' && req.url.startsWith('/notes')) {
+    // GET /notes.json?limit=&search=
+    if (req.method === 'GET' && req.url.startsWith('/notes.json')) {
         const myUrl = new URL(req.url, 'http://localhost:' + PORT);
         let result = [...notes];
 
@@ -170,8 +170,8 @@ const server = http.createServer(handleAsync(async (req, res) => {
         return sendJson(res, 200, result);
     }
 
-    // POST /notes
-    if (req.method === 'POST' && req.url === '/notes') {
+    // POST /notes.json
+    if (req.method === 'POST' && req.url === '/notes.json') {
         try {
             const { text } = await parseJsonBody(req);
             if (typeof text !== 'string' || text.trim() === '') {
@@ -186,8 +186,8 @@ const server = http.createServer(handleAsync(async (req, res) => {
         }
     }
 
-    // PUT /notes/:id
-    if (req.method === 'PUT' && req.url.startsWith('/notes/')) {
+    // PUT /notes.json/:id
+    if (req.method === 'PUT' && req.url.startsWith('/notes.json/')) {
         const id = getIdFromUrl(req);
         const idx = notes.findIndex((n) => n.id === id);
         if (idx === -1) return sendError(res, 404, 'Заметка не найдена');
@@ -205,8 +205,8 @@ const server = http.createServer(handleAsync(async (req, res) => {
         }
     }
 
-    // DELETE /notes/:id
-    if (req.method === 'DELETE' && req.url.startsWith('/notes/')) {
+    // DELETE /notes.json/:id
+    if (req.method === 'DELETE' && req.url.startsWith('/notes.json/')) {
         const id = getIdFromUrl(req);
         const idx = notes.findIndex((n) => n.id === id);
         if (idx === -1) return sendError(res, 404, 'Заметка не найдена');

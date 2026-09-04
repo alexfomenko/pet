@@ -178,3 +178,27 @@ searchInput.addEventListener('input', (e) => {
     }
 })
 
+let field = document.querySelector('.char-count');
+let counter = document.querySelector('.char-counter');
+let currentCount = counter.querySelector(".js-current-count");
+let maxLength = field.maxLength;
+field.addEventListener('input', (e) => {
+    let currentLength = field.value.length;
+    currentCount.textContent = currentLength;
+    counter.classList.toggle( "char-counter--warning",
+        currentLength >= maxLength * 0.9)
+})
+
+// const field = document.querySelector("#review");
+// const counter = document.querySelector("#review-counter");
+// const currentCount = counter.querySelector(".js-current-count");
+//
+// field.addEventListener("input", () => {
+//     const length = field.value.length;
+//
+//     currentCount.textContent = length;
+//     counter.classList.toggle(
+//         "char-counter--warning",
+//         length >= field.maxLength * 0.9
+//     );
+// });

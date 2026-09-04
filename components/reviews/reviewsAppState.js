@@ -1,7 +1,7 @@
 export let reviewsAppState = {
     filterByCompany: null,
     currentPage: 1,
-    currentPageLimit: 5,
+    currentPageLimit: 10,
     sorting: null,
     search: null,
 }

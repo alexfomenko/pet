@@ -59,7 +59,7 @@ async function serveStatic(req, res) {
         if (handled) return;
 
         // Если не статика → дальше API
-        if (req.method === 'GET' && req.url.startsWith('/notes')) {
+        if (req.method === 'GET' && req.url.startsWith('/notes.json')) {
             // ... ваш API
         }
 

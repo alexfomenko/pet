@@ -48,11 +48,11 @@ function getIdFromUrl(req) {
     return pathname.split('/')[2];
 }
 
-//read notes from file
+//read notes.json from file
 async function getNotesFromFile() {
     try {
         let notes = await fs.readFile(NOTES_FILE, 'utf-8');
-        // console.log(notes);
+        // console.log(notes.json);
         if(notes.length > 0) {
             return JSON.parse(notes);
         } else {
@@ -364,7 +364,7 @@ const server = http.createServer(async(req, res) => {
         let totalPages = Math.ceil(totalItems / limit);
 
         // res.writeHead(200, {'Content-Type': 'application/json'});
-        // res.end(JSON.stringify(notes))
+        // res.end(JSON.stringify(notes.json))
         //or
         return sendResponse(res, 200, {
             page,
@@ -594,11 +594,11 @@ const server = http.createServer(async(req, res) => {
                 // let date = new Date();
                 let note = {id: uuidv4(), userId, company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, date: parsedJson.date};
 
-                //update notes array - temporary storage
+                //update notes.json array - temporary storage
                 notes.push(note);
 
                 //updates file - constant storage
-                // fs.writeFile(NOTES_FILE, JSON.stringify(notes))
+                // fs.writeFile(NOTES_FILE, JSON.stringify(notes.json))
                 //or
                 await saveNoteToFile(NOTES_FILE, notes);
 
@@ -664,13 +664,13 @@ const server = http.createServer(async(req, res) => {
                 }
 
                 //updates file - constant storage
-                // fs.writeFile(NOTES_FILE, JSON.stringify(notes))
+                // fs.writeFile(NOTES_FILE, JSON.stringify(notes.json))
                 //or
                 await saveNoteToFile(NOTES_FILE, notes);
 
                 //respond to client
                 // res.writeHead(201, {'Content-Type': 'application/json'});
-                // res.end(JSON.stringify(notes[noteIndex]))
+                // res.end(JSON.stringify(notes.json[noteIndex]))
                 //or
                 return sendResponse(res, 201, notes[noteIndex])
 
@@ -700,7 +700,7 @@ const server = http.createServer(async(req, res) => {
         }
         let deletedItem = notes.splice(noteIndex, 1);
 
-        // fs.writeFile(NOTES_FILE, JSON.stringify(notes));
+        // fs.writeFile(NOTES_FILE, JSON.stringify(notes.json));
         //or
         (async () => {
             await saveNoteToFile(NOTES_FILE, notes);

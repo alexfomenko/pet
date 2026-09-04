@@ -7,26 +7,26 @@ const { v4: uuidv4 } = require('uuid'); // Установите через: npm 
 
 // adding fs module
 let notes = [];
-// При старте читаем notes.json, если он есть
+// При старте читаем notes_old.json, если он есть
 try {
-    const data = fs.readFileSync('notes.json', 'utf-8');
+    const data = fs.readFileSync('notes_old.json', 'utf-8');
     notes = JSON.parse(data);
 } catch (e) {
     notes = []; // если файла нет — начинаем с пустого массива
 }
 
-//Каждый раз после POST, PUT, DELETE — нужно переписать файл notes.json:
+//Каждый раз после POST, PUT, DELETE — нужно переписать файл notes_old.json:
 function saveNotes() {
-  fs.writeFileSync('notes.json', JSON.stringify(notes, null, 2));
+  fs.writeFileSync('notes_old.json', JSON.stringify(notes, null, 2));
 }
 
 const server = http.createServer((req, res) => {
-    if (req.url === '/notes' && req.method === 'GET') {
+    if (req.url === '/notes.json' && req.method === 'GET') {
         res.writeHead(200, { 'Content-Type': 'application/json1' });
         res.end(JSON.stringify(notes));
     }
 
-    else if (req.url === '/notes' && req.method === 'POST') {
+    else if (req.url === '/notes.json' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => body += chunk);
         req.on('end', () => {
@@ -44,7 +44,7 @@ const server = http.createServer((req, res) => {
         });
     }
 
-    else if (req.url.startsWith('/notes/') && req.method === 'DELETE') {
+    else if (req.url.startsWith('/notes.json/') && req.method === 'DELETE') {
         const id = req.url.split('/')[2];
         const index = notes.findIndex(note => note.id === id);
         if (index !== -1) {
@@ -57,7 +57,7 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ error: 'Заметка не найдена' }));
         }
     }
-// Добавьте PUT /notes/:id
+// Добавьте PUT /notes.json/:id
 // Логика:
 // вытащить id из URL;
 // найти заметку;
@@ -113,7 +113,7 @@ server.listen(3000, () => {
 // Чтобы перехватить её, нужен try/catch.
 // Синхронный стиль = обычный JavaScript-код с исключениями.
 try {
-    const data = fs.readFileSync('notes.json', 'utf-8');
+    const data = fs.readFileSync('notes_old.json', 'utf-8');
 } catch (err) {
     console.error('Ошибка:', err);
 }
@@ -125,7 +125,7 @@ try {
 // если ошибка → err не null,
 // если всё хорошо → err = null, а результат в data.
 // Это старый стиль работы Node.js, до появления async/await.
-fs.readFile('notes.json', 'utf-8', (err, data) => {
+fs.readFile('notes_old.json', 'utf-8', (err, data) => {
     if (err) {
         console.error('Ошибка:', err);
     } else {
@@ -141,7 +141,7 @@ fs.readFile('notes.json', 'utf-8', (err, data) => {
 const fs = require('fs').promises;
 async function loadNotes() {
     try {
-        const data = await fs.readFile('notes.json', 'utf-8');
+        const data = await fs.readFile('notes_old.json', 'utf-8');
         console.log('Прочитано:', data);
     } catch (err) {
         console.error('Ошибка:', err);
