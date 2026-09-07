@@ -26,8 +26,8 @@ export function createNewRow(reviewId, userId, companyValue, userNameValue, rati
     newReviewItem.appendChild(createReviewColumn(reviewValue, 'column', 'review'));
     newReviewItem.appendChild(createReviewColumn(date, 'column', 'date'));
 
-    newReviewItem.appendChild(createButton('edit-btn', 'Update review', '✏️'));
-    newReviewItem.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
+    // newReviewItem.appendChild(createButton('edit-btn', 'Update review', '✏️'));
+    // newReviewItem.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
     return newReviewItem;
 }
 
