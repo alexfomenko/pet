@@ -9,6 +9,7 @@ import "../components/reviews/reviewsFilterBar.js";
 import "../components/reviews/reviewsSortBar.js"
 import "../components/reviews/reviewsSearchBar.js"
 import "../components/reviews/reviewsAppState.js"
+import {countChars} from "../components/common/countChars.js";
 
 import {getReviews} from '../api/reviewsApi.js';
 import {createNewRow} from "../components/reviews/newReviewRow.js";
@@ -33,10 +34,10 @@ import {renderPagination, loadReviewsPage} from "../components/common/pagination
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
 let sortBar = document.getElementById('sortBar');
-
 let paginationEl = document.getElementById("paginationEl");
 let currentPage = 1;
-
+let field = document.querySelector('.char-count');
+let counter = document.querySelector('.char-counter');
 
 document.addEventListener('DOMContentLoaded', async () => {
     renderAuthNav();
@@ -51,10 +52,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     await populateFilterBar();
 
     // setPaginationData(response.page, response.totalPages, renderReviews);
+    // renderPagination(reviewsAppState.currentPage, response.totalPages, loadReviewsPage);
 
     renderPagination(reviewsAppState.currentPage, response.totalPages, loadReviewsPage, reviewsAppState);
 
-    // renderPagination(reviewsAppState.currentPage, response.totalPages, loadReviewsPage);
+    countChars(field, counter);
 })
 
 

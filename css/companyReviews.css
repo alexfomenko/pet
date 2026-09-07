@@ -393,7 +393,7 @@ body {
     margin-top: 30px;
 }
 
-.active {
+.page-btn.active {
     background-color: #007bff;
     color: white;
     border-color: #007bff;
@@ -488,12 +488,29 @@ textarea#company_review{
     font-size: 14px;
     font-weight: 600;
     color: #333;
+    position: relative;
 }
 
 .error{
     color: #ff4d4d;
     font-size: 12px;
     margin-top: 4px;
+}
+
+/*charCount*/
+.char-counter {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+
+    color: #777;
+    font-size: 12px;
+    font-weight: normal;
+    pointer-events: none;
+}
+
+.char-counter--warning {
+    color: #d97706;
 }
 
 /*rating stars*/

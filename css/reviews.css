@@ -186,6 +186,7 @@
 
 .review-form {
     flex: 1;
+    align-self: flex-start;
     display: none;
     margin-top: 20px;
     padding: 20px;
@@ -207,14 +208,11 @@
     width: 90%;
     padding: 8px;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
 .review-form input {
     margin-bottom: 15px;
-}
-
-.review-form textarea {
-    margin-bottom: 55px;
 }
 
 .review-form #results {
@@ -225,23 +223,6 @@
     display: none;
 }
 
-.char-counter--warning {
-    color: #d97706;
-}
-
-textarea + span {
-    display: block;
-    font-size: 11px;
-    color: #888;
-    text-align: right;
-    max-width: 500px;
-    /* Pulls the span up and inside the textarea */
-    margin-top: -54px;
-    padding-right: 15px;
-    pointer-events: none; /* Prevents the counter from blocking mouse clicks inside the textarea */
-}
-
-/*test*/
 .review-form label.review-field {
     position: relative;
     display: block;
@@ -254,6 +235,7 @@ textarea + span {
     margin: 5px 0 0;
     padding: 8px 8px 28px;
     box-sizing: border-box;
+    resize: vertical;
 }
 
 .review-form .review-field .char-counter {

@@ -224,14 +224,20 @@
         <div class="rating-error"></div>
 
         <div class="modal-review">
-            <label for="company_review" class="form-label">Write your review</label>
-            <textarea id="company_review" placeholder="Share your experience..."></textarea>
+            <label for="company_review" class="form-label">Write your review
+            <textarea id="company_review" class="char-count"
+                      maxlength="500" placeholder="Share your experience..."></textarea>
+<!--                charCount-->
+                <span id="review-counter" class="char-counter">
+                    <span class="js-current-count">0</span> / 500
+                </span>
+            </label>
         </div>
 
         <div class="review-error"></div>
 
         <!--        Char count-->
-        <div class="char-count">0/500 </div>
+<!--        <div class="char-count">0/500 </div>-->
 <!--Personal data-->
         <div class="personal-data hidden" id="personal_data">
 

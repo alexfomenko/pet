@@ -11,6 +11,10 @@ import {renderCompanyHeader} from "../components/company/companyAboutRender.js";
 import {renderAuthNav} from "../components/common/authNav.js";
 import {renderPagination, loadCompanyReviewsPage} from "../components/common/pagination.js";
 import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
+import {countChars} from "../components/common/countChars.js";
+
+let field = document.querySelector('.char-count');
+let counter = document.querySelector('.char-counter');
 
 document.addEventListener("DOMContentLoaded", async ()=> {
     // console.log('hi');
@@ -34,5 +38,6 @@ document.addEventListener("DOMContentLoaded", async ()=> {
     // await renderPaginationV2(company);
     renderPagination(companyReviewsState.currentPage, result.pagesTotalNumber, loadCompanyReviewsPage.bind(null, company), companyReviewsState);
 
+    countChars(field, counter);
 })
 
