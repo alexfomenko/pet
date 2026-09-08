@@ -14,6 +14,10 @@ export function renderCompletedProfile(user){
        <div class="completed-state">
                                 <div class="success-banner">
                                     <strong>The profile has been filled out</strong>
+<!--                                    test-->
+                                    <button type="button" id="edit-profile" class="btn">Edit</button>
+                                    
+<!--                                    test-->
                                 </div>
                                 <div class="done-layout">
                                     <div class="about-card card">
@@ -40,3 +44,11 @@ export function renderCompletedProfile(user){
 }
 
 // I'm a Frontend Developer with 5 years of experience developing web interfaces. I specialize in React, TypeScript, and modern UI solutions. I love creating fast and user-friendly interfaces.
+
+export function handleEditCompletedProfile () {
+    // console.log('hi')
+    let editProfileBtn = document.getElementById('edit-profile');
+    editProfileBtn.addEventListener('click', (e) => {
+        location.hash = 'fill';
+    })
+}

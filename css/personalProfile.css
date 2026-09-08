@@ -255,7 +255,8 @@ body {
 .success-banner{
     background: #e9f8f1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     gap: 6px;
     border: 1px solid #bfe8d3;
     border-radius: 16px;

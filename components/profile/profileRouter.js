@@ -10,7 +10,7 @@ import {handleProfileHeaderEdit} from "./profileHeader.js";
 import {getUserReviews} from "../../api/personalProfileApi.js";
 import {getProfileData} from "../../api/personalProfileApi.js";
 import {logOutFunction} from "./profileHeader.js";
-
+import {handleEditCompletedProfile} from "./completedProfile.js";
 
 // GET CURRENT PROFILE STATE AND DETERMINE WHICH HASH AND, CORRESPONDINGLY, PAGE TO SHOW
 export function getProfileState(user) {
@@ -85,7 +85,7 @@ export function getProfileState(user) {
 const pageConfig = {
     empty:     { render: () => renderEmptyProfile(),         init: null },
     fill:      { render: () => renderFillProfile(),          init: handleUpdateProfileActions },
-    completed: { render: ({ user }) => renderCompletedProfile(user), init: null },
+    completed: { render: ({ user }) => renderCompletedProfile(user), init: handleEditCompletedProfile },
     reviews:   { render: ({ reviews }) => renderReviewsProfile(reviews), init: handleChangeReviewActions},
 };
 
