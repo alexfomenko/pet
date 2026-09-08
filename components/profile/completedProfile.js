@@ -14,10 +14,7 @@ export function renderCompletedProfile(user){
        <div class="completed-state">
                                 <div class="success-banner">
                                     <strong>The profile has been filled out</strong>
-<!--                                    test-->
                                     <button type="button" id="edit-profile" class="btn">Edit</button>
-                                    
-<!--                                    test-->
                                 </div>
                                 <div class="done-layout">
                                     <div class="about-card card">
