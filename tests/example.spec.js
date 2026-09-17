@@ -23,19 +23,20 @@ import { test, expect } from '@playwright/test';
 //   await expect(page.getByRole('heading', {name: "All reviews"})).toBeVisible();
 // })
 
-test('add review', async ({page}) => {
-  await page.goto('http://localhost:3000/');
-  await page.getByRole('button', {name: "Add review"}).click();
-
-  await page.getByRole("textbox", {name: "Company"}).fill("kedi");
-  await page.keyboard.press('Tab');
-
-  // await page.getByRole("textbox", {name: "Rating"}).fill("5");
-  await page.locator('input[placeholder="1-5"]').fill('5');
-  await page.keyboard.press('Tab');
-
-  await page.getByRole("textbox", {name: "Review"}).fill('kedikedikedi');
-  await page.keyboard.press('Tab');
-
-  await page.getByRole("button", {name: "Send"}).click();
-})
+// Черновой сценарий отключён: он отправляет отзыв в реальное хранилище.
+// test('add review', async ({page}) => {
+//   await page.goto('http://localhost:3000/');
+//   await page.getByRole('button', {name: "Add review"}).click();
+//
+//   await page.getByRole("textbox", {name: "Company"}).fill("kedi");
+//   await page.keyboard.press('Tab');
+//
+//   // await page.getByRole("textbox", {name: "Rating"}).fill("5");
+//   await page.locator('input[placeholder="1-5"]').fill('5');
+//   await page.keyboard.press('Tab');
+//
+//   await page.getByRole("textbox", {name: "Review"}).fill('kedikedikedi');
+//   await page.keyboard.press('Tab');
+//
+//   await page.getByRole("button", {name: "Send"}).click();
+// })

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "views/oldFirstScript.js",
   "scripts": {
-    "start": "node myserver.js"
+    "start": "node myserver.js",
+    "test:e2e": "playwright test"
   },
   "keywords": [],
   "author": "",
