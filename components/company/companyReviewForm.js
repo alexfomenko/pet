@@ -19,7 +19,6 @@ let reviewErrorField = document.querySelector('.review-error');
 
 addReviewButton.addEventListener('click', async () => {
     //show modal
-    // modal.style.display = 'flex';
     overlay.classList.add('active');
 
     //check if user is logged in and we should show name&email fields
@@ -48,7 +47,6 @@ addReviewButton.addEventListener('click', async () => {
 
 overlay.addEventListener('click',(e) => {
     if(e.target === overlay) {
-        // modal.style.display = 'none';
         overlay.classList.remove('active');
     }
 })
@@ -57,9 +55,6 @@ overlay.addEventListener('click',(e) => {
 modal.addEventListener('input', (e) => {
     if(e.target.id === "company_rating_2" || e.target.id === "company_review") {
         validateForm();
-        //!validateForm() — если форма ок (true), то !true = false = кнопка не disabled.
-        // Если не ок (false), то !false = true = кнопка disabled.
-        // sendReviewButton.disabled = !validateForm();
     }
 })
 
@@ -67,7 +62,6 @@ modal.addEventListener('input', (e) => {
 modal.addEventListener('blur', (e) => {
     if(e.target.id === "company_rating_2" || e.target.id === "company_review") {
         validateForm();
-        // sendReviewButton.disabled =!validateForm();
     }
 }, true)
 
@@ -75,23 +69,11 @@ modal.addEventListener('blur', (e) => {
 sendReviewButton.addEventListener('click', async () => {
     if(!validateForm()) return;
     let company = document.querySelector('.company-name').textContent;
-    // let rating = Number(document.getElementById('company_rating').value);
     let rating = Number(document.getElementById('company_rating_2').value);
     let review = document.getElementById('company_review').value;
     let name = document.getElementById('person_name').value; //TODO
     let email = document.getElementById('person_email').value; //TODO
     let date = new Date().toDateString();
-    // if(!rating) {
-    //     let ratingField = document.querySelector('.rating-error');
-    //     ratingField.classList.toggle('error');
-    //     ratingField.textContent ="Please, select rating";
-    // }
-    //
-    // if(!review) {
-    //     let reviewField = document.querySelector('.review-error');
-    //     reviewField.classList.toggle('error');
-    //     reviewField.textContent ="Please, write your review";
-    // }
     let data = {
         company,
         rating,
@@ -101,11 +83,7 @@ sendReviewButton.addEventListener('click', async () => {
         date,
     };
 
-    // if(validateForm()) {
-        // sendReviewButton.disabled = false;
         let request = await submitReview(data);
-        // let reviewId = requestResult.json.id; //TODO do I need ?
-        // console.log(reviewId)
 
         if(request.success) {
             let companyReviews = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
@@ -114,13 +92,11 @@ sendReviewButton.addEventListener('click', async () => {
             //TODO add clear form
             overlay.classList.remove('active'); //hide form
         }
-    // }
 })
 
 function validateForm() {
     let isValid = true;
 
-    // if(e.target.id === "company_rating") {
     let ratingValue = Number(rating.value);
     if (!ratingValue) {
         ratingErrorField.classList.add("error");
@@ -134,9 +110,6 @@ function validateForm() {
         ratingErrorField.classList.remove("error");
         ratingErrorField.textContent = "";
     }
-// }
-
-    // if(e.target.id === "company_review") {
         if(review.value.length < 10) {
             reviewErrorField.classList.add('error');
             reviewErrorField.textContent ="Text not less than 10";
@@ -146,7 +119,6 @@ function validateForm() {
             reviewErrorField.classList.remove('error');
             reviewErrorField.textContent ="";
         }
-    // }
     return isValid;
 }
 

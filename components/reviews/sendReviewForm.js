@@ -5,14 +5,11 @@ import {getAllCompanies} from "../../api/reviewsApi.js";
 let showFormButton = document.getElementById('showFormButton');
 let reviewForm = document.getElementById('reviewForm');
 let sendReviewButton = document.getElementById('sendReviewButton');
-// console.log('FORM:', document.getElementById('reviewForm'));
 
 // SHOW FORM
 
 if(showFormButton) {
     showFormButton.addEventListener('click', () => {
-        // reviewForm.classList.toggle('.hidden');
-        // console.log("Hello")
         //check if user is logged in in order to show/hide name&email fields
         let token = localStorage.getItem('token');
         if(!token) {
@@ -26,8 +23,6 @@ else {
 }
 
 sendReviewButton.addEventListener('click', async () => {
-    // e.preventDefault(); is required only for submit
-
     //saving data from the form
     let reviewsContainer = document.getElementById('reviewsContainer');
 
@@ -52,8 +47,6 @@ sendReviewButton.addEventListener('click', async () => {
 
     // getting the current date and converting it
     let currentDate = new Date().toISOString();
-    // let date = today.toLocaleDateString('ru-RU', {day: 'numeric', month: 'short', year: 'numeric'});
-
     // unifying data
     let data = {
         company: companyValue,
@@ -64,36 +57,11 @@ sendReviewButton.addEventListener('click', async () => {
 
     //adding review to the page if the request was successful
     let requestResult = await submitReview(data);
-    // if(requestResult.status === 201) {    or   // if(requestResult.success === 201) {
-
     if (requestResult.success) {
         let reviewId = requestResult.parsedResponse.id;
         let userId = requestResult.parsedResponse.userId;
         console.log(reviewId)
         console.log(userId);
-//         // creating a new row
-//         let newReviewItem = document.createElement('div');
-//         newReviewItem.classList.add("review-item");
-//         // newReviewItem.appendChild(deleteButton);
-//
-//         //adding review data to the table
-//         newReviewItem.dataset.id = reviewId;
-// //         newReviewItem.innerHTML = `
-// //              <div class="column company"> ${companyValue} </div>
-// //              <div class="column rating"> ${ratingValue} </div>
-// //              <div class="column review"> ${reviewValue} </div>
-// //              <div class="column date"> ${date} </div>
-// //              <button class ="edit-btn" title = "Update review"> ✏️</button>
-// //              <button class = 'delete-btn' title="Delete review">🗑️</button>
-// // `
-//         newReviewItem.appendChild(createReviewColumn(companyValue, 'column', 'company'));
-//         newReviewItem.appendChild(createReviewColumn(ratingValue, 'column', 'rating'));
-//         newReviewItem.appendChild(createReviewColumn(reviewValue, 'column', 'review'));
-//         newReviewItem.appendChild(createReviewColumn(date, 'column', 'date'));
-//
-//         newReviewItem.appendChild(createButton('edit-btn', 'Update review', '✏️'));
-//         newReviewItem.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
-
         let newReviewItem = createNewRow(reviewId, userId, companyValue, userNameValue, ratingValue, reviewValue, currentDate);
         reviewsContainer.appendChild(newReviewItem);
 
@@ -112,26 +80,9 @@ let searchInput = document.getElementById("company");
 let results = document.getElementById("results"); //ul
 let allCompanies;
 
-// 1st iteration - static array of companies
-// searchInput.addEventListener('click', (event) => {
-//     showCompanies(companies);
-// })
-
-//2nd iteration - sending the request to get the array of companies
-// searchInput.addEventListener('click', async(event) => {
-//     let sendGetReviewRequest = await getReviews(1, 100);
-//     let response = sendGetReviewRequest.items;
-//     // allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
-//     allCompanies = Array.from(new Set(response.map((item) => item.company))); //only unique
-//     showCompanies(allCompanies);
-// })
-
-//3rd iteration - the work of filtering was moved to backend
 searchInput.addEventListener('click', async() => {
     let sendGetAllCompaniesRequest = await getAllCompanies();
     allCompanies = sendGetAllCompaniesRequest.items;
-    // allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
-    // allCompanies = Array.from(new Set(response.map((item) => item.company))); //only unique
     showCompanies(allCompanies);
 })
 
@@ -163,31 +114,5 @@ searchInput.addEventListener('input', () => {
 
         showCompanies(matchingCountries);
 
-        // matchingCountries.forEach((country) => {
-        //     let li = document.createElement('li');
-        //     li.textContent = country;
-        //     results.appendChild(li);
-        //
-        //     li.addEventListener('click', (event) => {
-        //         searchInput.value = li.textContent;
-        //         results.style.display = "none";
-        //
-        //     })
-        // })
     }
 })
-
-// countChars();
-//
-// export function countChars() {
-//     let field = document.querySelector('.char-count');
-//     let counter = document.querySelector('.char-counter');
-//     let currentCount = counter.querySelector(".js-current-count");
-//     let maxLength = field.maxLength;
-//     field.addEventListener('input', (e) => {
-//         let currentLength = field.value.length;
-//         currentCount.textContent = currentLength;
-//         counter.classList.toggle( "char-counter--warning",
-//             currentLength >= maxLength * 0.9)
-//     })
-// }

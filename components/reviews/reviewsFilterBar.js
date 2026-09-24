@@ -1,37 +1,12 @@
 import {getReviews} from "../../api/reviewsApi.js";
 import {renderReviews} from "./newReviewRow.js";
 import {reviewsAppState} from "./reviewsAppState.js";
-// import {renderPagination, updatePaginationUi} from "./reviewsPagination.js";
 import {getAllCompanies} from "../../api/reviewsApi.js";
 import {renderPagination, updatePagination} from "../common/pagination.js";
 
 let reviewsContainer = document.getElementById("reviewsContainer");
 let filterBar = document.getElementById('filterBar');
 
-
-// populate filter bar on DOM content loaded
-// export function populateFilterBar(reviews) {
-//     filterBar.innerHTML = "";
-//
-//     let noFilter = document.createElement('option');
-//     noFilter.value = "";
-//     noFilter.textContent = "All companies";
-//     filterBar.append(noFilter);
-//
-//     //filling out the filterBar
-//     // let options = Array.from(filterBar.options).map(option => option.value);
-//     // const existing = new Set(Array.from(filterBar.options).map(opt => opt.value));
-//     for (let review of reviews) {
-//         let options = Array.from(filterBar.options).map(option => option.value); //html tags
-//         if(!options.includes(review.company)) {
-//             // if (!existing.has(review.company)) {
-//             let option = document.createElement('option');
-//             option.value = review.company;
-//             option.textContent = review.company;
-//             filterBar.append(option);
-//         }
-//     }
-// }
 
 export async function populateFilterBar() {
     filterBar.innerHTML = "";
@@ -54,26 +29,7 @@ export async function populateFilterBar() {
     })
 }
 
-// need to remove this handler as filtering from front end as it is time-consuming to do it there and should be on backend instead
-// filterBar.addEventListener("change", async (e) => {
-//     // console.log("hi");
-//     let selected = e.target.value;
-//     reviewsContainer.innerHTML = "";
-//
-//     let response = await getReviews(1, 100);
-//     let reviews = response.items;
-//
-//     let filteredReviews = reviews.filter((review) => review.company === selected);
-//     // filteredReviews
-//     //     .forEach((review) => {
-//     //     let newRow = createNewRow(review.id, review.company, review.rating, review.review, review.date);
-//     //     reviewsContainer.appendChild(newRow);
-//     // })
-//     renderReviews(filteredReviews);
-// })
-
 filterBar.addEventListener("change", async (e) => {
-    // console.log("hi");
     let selectedCompany = e.target.value;
     reviewsContainer.innerHTML = "";
 
@@ -87,7 +43,6 @@ filterBar.addEventListener("change", async (e) => {
 
     renderReviews(reviews);
     renderPagination(reviewsAppState.currentPage, totalPages);
-    // updatePaginationUi(reviewsAppState.currentPage, totalPages);
     updatePagination(reviewsAppState.currentPage, totalPages);
 
 })

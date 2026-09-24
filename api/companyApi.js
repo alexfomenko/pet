@@ -1,11 +1,9 @@
 export async function getCompanyReviews(company, page, limit, filter, sort) {
     try{
-        // let url = `get-review?page=${page}&limit=${limit}`;
         let url = `/companies/${company}/reviews?page=${page}&limit=${limit}`;
 
         if(filter && filter!== "no_filter") url += `&filter=${filter}`;
         if(sort && sort!=="no_sort") url+= `&sort=${sort}`;
-        // console.log(url);
         let sendRequest = await fetch(url);
 
         if(!sendRequest.ok) {
@@ -38,13 +36,6 @@ export async function getCompanyReviews(company, page, limit, filter, sort) {
             text: sendRequest.statusText,
             ...parsedJsonResponse,
         }
-        // без spread — вручную
-        // return {
-        //     success: true,
-        //     items: parsedJsonResponse.items,
-        //     pagesTotalNumber: parsedJsonResponse.pagesTotalNumber,
-        //     reviewsTotalNumber: parsedJsonResponse.reviewsTotalNumber,
-        // }
     }
     catch {
         return {

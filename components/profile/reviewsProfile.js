@@ -98,13 +98,6 @@ export function renderReviewsProfile(reviews = []) {
 `;
 }
 
-// export function handleChangeReviewActions() {
-//     document.querySelectorAll('.edit-review-btn')[0].addEventListener("click", (event) => {
-//         let text = document.querySelectorAll('.review-text')[0];
-//         text.contentEditable = "true";
-//     });
-// }
-
 export function handleChangeReviewActions() {
     let reviewsContainer = document.querySelector('.reviews-list');
     console.log(reviewsContainer)
@@ -133,12 +126,10 @@ export function handleChangeReviewActions() {
 
                 // saving current values of the fields for Cancel button ! so that I can extract them later from dataset in case the user wants to cancel her actions
                 closestReviewRow.dataset.initialCompanyValue = companyEl.textContent;
-                // closestReviewRow.dataset.initialRatingValue = ratingStars; //todo
                 closestReviewRow.dataset.initialReviewValue = reviewEl.textContent;
 
                 //changing fields to editable text areas with current values ( divs to inputs)
                 companyEl.innerHTML = `<input type = 'text' id='company_updated' value="${closestReviewRow.dataset.initialCompanyValue}">`
-                // ratingStars.innerHTML = `<input type = 'text' value = "${closestReviewRow.dataset.initialRatingValue}">`
                 reviewEl.innerHTML = `<textarea id="review_updated">${closestReviewRow.dataset.initialReviewValue}</textarea>`
 
                 handleStarRatingUpdate(starsContainer);
@@ -153,7 +144,6 @@ export function handleChangeReviewActions() {
             let closestReviewRow = e.target.closest('.review');
             let closestReviewRowId = closestReviewRow.dataset.reviewId;
             let reviewFooterButtons = closestReviewRow.querySelector('.review-footer-buttons');
-            // console.log(closestReviewRowId)
             if (closestReviewRowId) {
                 let updatedCompanyValue = closestReviewRow.querySelector('#company_updated').value;
                 let updatedRatingValue = closestReviewRow.querySelector('.stars').dataset.ratingValue;
@@ -172,14 +162,12 @@ export function handleChangeReviewActions() {
 
                 //changing fields back to divs with current values (inputs tom divs)
                closestReviewRow.querySelector('.company-about').textContent = updatedCompanyValue ;
-               // closestReviewRow .querySelector('').textContent = updatedRatingValue; //todo
                closestReviewRow.querySelector('.review-text').textContent = updatedReviewValue ;
 
                 // removing all old buttons and creating new ones
                 removeAllButtons(closestReviewRow);
                 reviewFooterButtons.appendChild(createButton('edit-review-btn ghost-btn', 'Edit', 'Edit'));
                 reviewFooterButtons.appendChild(createButton('delete-review-btn ghost-btn', 'Delete', 'Delete'));
-                // }
             }
         }
         else if (e.target.tagName === 'BUTTON' && e.target.classList.contains('cancel-review-btn')) {
@@ -189,7 +177,6 @@ export function handleChangeReviewActions() {
             if (closestReviewRow) {
                 // filling back divs with old values
               closestReviewRow.querySelector('.company-about').textContent = closestReviewRow.dataset.initialCompanyValue;
-              // closestReviewRow .querySelector('').textContent = closestReviewRow.dataset.initialRatingValue; //todo
               closestReviewRow.querySelector('.review-text').textContent = closestReviewRow.dataset.initialReviewValue;
 
                 // removing all old buttons and creating new ones

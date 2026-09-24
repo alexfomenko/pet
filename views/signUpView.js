@@ -18,24 +18,6 @@ button.addEventListener('click', async(e) => {
 
     if(!checkFormIsValid()) return;
 
-    // 1st approach - showing errors when clicking on sign up button
-    // // saving current values
-    // let name = signupForm.elements.name.value;
-    // let email = signupForm.elements.email.value;
-    // let password = signupForm.elements.password.value;
-    // // let confirmPassword = signupForm.querySelector('input[name="confirmPassword"]').value;
-    // let confirmPassword = signupForm.elements.confirmPassword.value;
-    //
-    // //checking values are not empty
-    // if(!name || !email || !password || ! confirmPassword) return alert("Please fill out all the fields");
-    //
-    // //checking email
-    // if(!email.includes('@')) return alert("Incorrect email");
-    //
-    // //checking passwords are matching and have correct length
-    // let passwordIsValid = password === confirmPassword && password.length > 2;
-    // if(!passwordIsValid) return alert("Passwords do not match or length is less than 2");
-
     //sending the request
     let sendSignUpRequest = await userSignUp(name.value, email.value, password.value, confirmPassword.value);
 
@@ -55,13 +37,9 @@ button.addEventListener('click', async(e) => {
 // LIVE TESTING
 signupForm.addEventListener('input', async(e) => {
     if(e.target.name === "name" && name.value.length < 3) {
-        // name.classList.add('error');
-        // nameError.textContent = "Name cannot be empty";
         addSignUpFieldError(name, nameError,"Name must be at least 3 characters");
     }
     else if(e.target.name === "name") {
-        // name.classList.remove('error');
-        // nameError.textContent = "";
         removeSignUpFieldError(name, nameError)
     }
     if (e.target.name === "email" && (email.value.length < 3 || !email.value.includes('@'))) {
@@ -111,7 +89,6 @@ function checkFormIsValid() {
 
 function showToast(text, ms = 2500) {
     let toast = document.getElementById("toast");
-    // toast.textContent = sendSignInRequest.message;
     toast.textContent = text;
     toast.classList.add("show");
 

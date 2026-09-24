@@ -2,9 +2,6 @@ export function renderCompletedProfile(user){
     let company = user?.company ?? '-';
     let city = user?.city ?? '-';
     let bio = user?.bio ?? '-';
-    // if(!user || user.id === null) {
-    //     return `<p class="empty=profile">No account registered for the user </p>`;
-    // }
     if (!user || user.id == null) {
         return `<p class="empty-profile">No account registered for the user</p>`;
     }
@@ -43,7 +40,6 @@ export function renderCompletedProfile(user){
 // I'm a Frontend Developer with 5 years of experience developing web interfaces. I specialize in React, TypeScript, and modern UI solutions. I love creating fast and user-friendly interfaces.
 
 export function handleEditCompletedProfile () {
-    // console.log('hi')
     let editProfileBtn = document.getElementById('edit-profile');
     editProfileBtn.addEventListener('click', () => {
         location.hash = 'fill';

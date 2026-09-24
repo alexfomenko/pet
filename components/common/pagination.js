@@ -12,7 +12,6 @@ let currentLoadPageFn = null;
 let currentPaginationState = null;
 
 function getPaginationItems(currentPage, totalPages) {
-    // console.log(currentPage)
     if(totalPages <= 7) return createPageRange(1, totalPages); // [1, 2, 3, 4, 5]
 
     if(currentPage <= 4) return [1, 2, 3, 4, 5, "right_dots", totalPages];//1 2 3 4 5 … 20 user is close to beginning
@@ -60,12 +59,7 @@ export function renderPagination(currentPage, totalPages, loadPageFn, state) {
 
     // getting array of elements that need to be shown
     let paginationItems = getPaginationItems(currentPage, totalPages);
-    // console.log(currentPage)
-    // console.log(paginationItems);
-
     paginationItems.forEach((item) => {
-        // console.log(item);
-        // console.log(typeof item)
         if(typeof item === "number") {
             let numberBtn = createNumberButton(item, currentPage);
             paginationEl.appendChild(numberBtn);
@@ -95,43 +89,10 @@ export function renderPagination(currentPage, totalPages, loadPageFn, state) {
         handlePaginationClick
     );
 
-    // paginationEl.addEventListener('click', async(event) => {
-    //     console.log('hi')
-    //     let clickedBtn = event.target.closest('button');
-    //     // console.log(clickedBtn)
-    //     if(!clickedBtn || !paginationEl.contains(clickedBtn)) return;
-    //
-    //     if(clickedBtn.disabled) return; // не обрабатывать заблокированные стрелки
-    //
-    //     let nextPage = state.currentPage; // assume the page doesn't change
-    //
-    //     if (clickedBtn.classList.contains('prev-btn')) {
-    //         nextPage = state.currentPage - 1;
-    //     }
-    //     if (clickedBtn.classList.contains('next-btn')) {
-    //         nextPage = state.currentPage + 1;
-    //     }
-    //     else if (clickedBtn.dataset.page) {
-    //         nextPage = Number(clickedBtn.dataset.page);
-    //     }
-    //     // console.log({ nextPage, totalPages });
-    //     // nextPage = Math.max(1, Math.min(nextPage, totalPages)); //additional security: value !< 1 !>max
-    //     // need to change current to export function renderPagination(page, pages) {
-    //     //     totalPages = Number(pages);
-    //     // in case I want this check so that the external let totalPages is updated and passed to the event listener
-    //     // console.log(nextPage)
-    //
-    //     if(nextPage === state.currentPage) return;
-    //
-    //     state.currentPage = nextPage; // updating appState
-    //
-    //     await loadPageFn(); // request reviews and update pagination
-    // }, { once: true })
 }
 
 async function handlePaginationClick(event) {
         let clickedBtn = event.target.closest('button');
-        // console.log(clickedBtn)
         if(!clickedBtn || !paginationEl.contains(clickedBtn)) return;
 
         if(clickedBtn.disabled) return; // не обрабатывать заблокированные стрелки
@@ -147,13 +108,6 @@ async function handlePaginationClick(event) {
         else if (clickedBtn.dataset.page) {
             nextPage = Number(clickedBtn.dataset.page);
         }
-        // console.log({ nextPage, totalPages });
-        // nextPage = Math.max(1, Math.min(nextPage, totalPages)); //additional security: value !< 1 !>max
-        // need to change current to export function renderPagination(page, pages) {
-        //     totalPages = Number(pages);
-        // in case I want this check so that the external let totalPages is updated and passed to the event listener
-        // console.log(nextPage)
-
         if(nextPage === currentPaginationState.currentPage) return;
 
         currentPaginationState.currentPage = nextPage; // updating appState

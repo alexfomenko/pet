@@ -23,7 +23,6 @@ let totalPages;
          let numberedButton = document.createElement('button');
          numberedButton.classList.add('number-btn'); //TODO
          numberedButton.textContent = String(i);
-         // console.log(numberedButton.textContent)
          pagination.appendChild(numberedButton);
          if(i === companyReviewsState.currentPage) numberedButton.classList.add('btn-active'); //TODO
      }
@@ -40,28 +39,6 @@ pagination.addEventListener('click', async(e) => {
     if(target.classList.contains('prev-btn')) {
         if(companyReviewsState.currentPage > 1) {
             companyReviewsState.currentPage = companyReviewsState.currentPage - 1;
-            // //1 - change app variables
-            // companyReviewsState.currentPage = companyReviewsState.currentPage - 1;
-            // //2 - send request and render new articles
-            // let response = await getCompanyReviews(company,companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort );
-            // renderReviewsV2(response.items);
-            //
-            // //3 - check enabled/disabled buttons
-            // prevButton.disabled = companyReviewsState.currentPage === 1;
-            // nextButton.disabled = companyReviewsState.currentPage === totalPages;
-            //
-            // //4 - change active buttons
-            // let numberedButtons = document.querySelectorAll('.number-btn');
-            // numberedButtons.forEach((button) => {
-            //     button.classList.remove('btn-active');
-            // })
-            //
-            // numberedButtons.forEach((button) => {
-            //     if(Number(button.textContent) === companyReviewsState.currentPage) {
-            //         button.classList.add('btn-active');
-            //     }
-            // })
-
             //INSTEAD OF DUPLICATE CODE THESE TWO FUNCTIONS
 
             await getReviews();
@@ -78,7 +55,6 @@ pagination.addEventListener('click', async(e) => {
     }
     if(target.classList.contains('number-btn')) {
         let pageNumber = Number(e.target.textContent);
-        // console.log(pageNumber);
         companyReviewsState.currentPage = pageNumber;
 
         await getReviews();

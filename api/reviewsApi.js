@@ -17,7 +17,6 @@ export async function getAllCompanies() {
             };
         }
         if (!sendGetCompaniesRequest.ok) {
-            // throw new Error('Failed to get data'); // instead of this
            return  {
                success: false,
                status: sendGetCompaniesRequest.status,
@@ -25,15 +24,11 @@ export async function getAllCompanies() {
                items: [],
             }
         }
-        // console.log(await sendGetRequest.json())
-        // return await sendGetCompaniesRequest.json(); // instead of this
-        // console.log(parsedJsonBody);
         return {
             success: true,
             status: sendGetCompaniesRequest.status,
             statusText: sendGetCompaniesRequest.statusText,
-            // items: parsedJsonBody?.allCompanies, // 1st option - object
-            items: parsedJsonBody, // 2nd option - array
+            items: parsedJsonBody,
         }
     } catch {
         return {
@@ -45,39 +40,6 @@ export async function getAllCompanies() {
         };
     }
 }
-
-// export async function getReviews(page, limit, company = null) {
-//     try {
-//         let sendGetRequest = await fetch(`/get-review?page=${page}&limit=${limit}`);
-//         if (!sendGetRequest.ok) {
-//             throw new Error('Failed to get data');
-//         }
-//         // console.log(await sendGetRequest.json())
-//         return await sendGetRequest.json();
-//     } catch (error) {
-//         console.log(error);
-//         throw error;
-//     }
-// }
-
-// export async function getReviews(page, limit, company = null) {
-//     try {
-//         let url = `/get-review?page=${page}&limit=${limit}`;
-//
-//         // checking if company parameter was passed
-//         if(company && company !=="all") url += `&company=${encodeURIComponent(company)}`;
-//
-//         let sendGetRequest = await fetch(url);
-//         if (!sendGetRequest.ok) {
-//             throw new Error('Failed to get data');
-//         }
-//         // console.log(await sendGetRequest.json())
-//         return await sendGetRequest.json();
-//     } catch (error) {
-//         console.log(error);
-//         throw error;
-//     }
-// }
 
 export async function getReviews(page, limit, company = null, sort = null, search = null) {
     let sendGetRequest;
@@ -111,7 +73,6 @@ export async function getReviews(page, limit, company = null, sort = null, searc
                 items: null,
             }
         }
-        // console.log(await sendGetRequest.json())
         return {
             success: true,
             status: sendGetRequest.status,
@@ -129,33 +90,11 @@ export async function getReviews(page, limit, company = null, sort = null, searc
     }
 }
 
-// export async function submitReview(data) {
-//     try {
-//         let sendRequest = await fetch('/submit-review', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${localStorage.getItem('token')}`
-//             },
-//             body: JSON.stringify(data),
-//         });
-//         let json = await sendRequest.json();
-//         return {ok: sendRequest.ok, status: sendRequest.status, json};
-//     }
-//     catch (error) {
-//         throw new Error('Failed to send the data');
-//     }
-// }
-
 export async function submitReview(data) {
     try {
         let token = localStorage.getItem('token');
         let sendRequest = await fetch('/submit-review', {
             method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/json',
-            //     'Authorization': `Bearer ${localStorage.getItem('token')}`
-            // },
             headers: {
                 'Content-Type': 'application/json',
                 ...(token ? { 'Authorization': `Bearer ${token}` } : {})

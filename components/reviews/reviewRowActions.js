@@ -1,4 +1,3 @@
-// import {removeAllButtons} from "../utils/utils.js";
 import {createButton} from "./reviewButton.js";
 import {sendDeleteRequest, sendUpdateRequest} from "../../api/reviewsApi.js";
 
@@ -14,15 +13,6 @@ reviewsContainer.addEventListener('click', async (e) => {
             if(deleteResponse.ok) {
                 closestReviewRow.remove();
             }
-
-            // let sendRequest = await fetch(`/delete-review/${closestReviewItemId}`, {
-            //     method: 'DELETE',
-            //     headers: {'Content-type': 'application/json'}
-            // });
-            //
-            // if (sendRequest.ok) {
-            //     closestReviewRow.remove();
-            // }
         }
     }
 
@@ -45,12 +35,6 @@ reviewsContainer.addEventListener('click', async (e) => {
                 columns[2].innerHTML = `<textarea id="review_updated">${closestReviewRow.dataset.initialReviewValue}</textarea>`
 
                 // creating save and cancel buttons
-                // editButton.outerHTML = `<button class="save-btn" title="Save changes"> 💾 </button>
-                //                         <button class="cancel-btn" title="Отмена">❌</button>`
-
-                // let buttons = closestReviewRow.querySelectorAll('button');
-                // buttons.forEach((button) => button.remove());
-
                 removeAllButtons(closestReviewRow);
 
                 closestReviewRow.appendChild(createButton('save-btn', "Save changes", '💾'));
@@ -77,21 +61,8 @@ reviewsContainer.addEventListener('click', async (e) => {
                     review: updatedReviewValue
                 };
 
-                // try {
-                //     let sendPutRequest = await fetch(`/update-review/${closestReviewRowId}`, {
-                //         method: 'PUT',
-                //         headers: {'Content-type': 'application/json'},
-                //         body: JSON.stringify(data)
-                //     });
-                //
-                // }
-                // catch (error) {
-                //     throw new Error("An error occurred while updating data")
-                // }
-
                 let updateResponse = await sendUpdateRequest(closestReviewRowId, data);
                 if(!updateResponse.success) return;
-                // if(updateResponse.ok) {
 
                 //changing fields back to divs with current values (inputs tom divs)
                 columns[0].textContent = updatedCompanyValue;
@@ -103,7 +74,6 @@ reviewsContainer.addEventListener('click', async (e) => {
 
                 closestReviewRow.appendChild(createButton('edit-btn', 'Update review', '✏️'));
                 closestReviewRow.appendChild(createButton('delete-btn', 'Delete review', '🗑️'));
-                // }
             }
         }
         else if (e.target.tagName === 'BUTTON' && e.target.classList.contains('cancel-btn')) {

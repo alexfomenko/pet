@@ -50,38 +50,6 @@ export async function updateProfileData(data) {
         }
     }
 }
-// ## Структура эндпоинта
-// **1. TRY 1 - Сам запрос** — fetch с методом, заголовками, телом:
-// ```js
-// let response = await fetch('/url', {
-//     method: "POST",
-//     headers: { ... },
-//     body: JSON.stringify(data),
-// });
-// **2. Проверка статуса** — сервер ответил с ошибкой:
-//     ```js
-// if (!response.ok) {
-//     return { success: false, status: response.status, ... }
-// }
-//     **3.TRY 2 - Парсинг тела** — сервер ответил ок, но тело может быть сломано:
-//     ```js
-// try {
-//     parsedBody = await response.json();
-// } catch (error) {
-//     return { success: false, text: 'Invalid JSON', ... }
-// }
-//     **4. Возврат результата** — всё прошло успешно:
-//     ```js
-// return { success: true, ...parsedBody }
-//     **5. Внешний catch** — запрос вообще не ушёл (нет сети, сервер недоступен):
-// ```js
-// catch (error) {
-//     throw new Error('Failed to send request')
-// }
-// ---
-//     По сути это цепочка проверок от грубых ошибок к мелким:
-// сеть упала → статус плохой → JSON сломан → всё ок
-
 export async function getOwnProfileData() {
     // 1
     try{
@@ -232,10 +200,6 @@ export async function getUserReviews() {
 }
 
 export async function uploadProfileAvatar(formData) { //todo update endpoint in case json will be sent
-    // const formData = new FormData();
-    // formData.append('avatar', file);
-    // (file) instead of formData
-
     //1 - check if the request was actually sent
     try{
         console.log('token:', localStorage.getItem('token'));
@@ -245,7 +209,6 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint in 
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             body: formData,
-            // body: file,
             //content type is set by browser
         });
 
@@ -288,25 +251,3 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint in 
         }
     }
 }
-
-//todo
-// deleteProfileAvatar()
-// validateAvatarFile(file)
-// PUT    /profile/avatar
-// DELETE /profile/avatar
-// GET    /uploads/avatars/:filename
-
-// Серверный процесс:
-//     Проверить token
-//       ↓
-// Принять файл, максимум 5 MB
-//       ↓
-// Проверить настоящий формат изображения
-//       ↓
-// Обрезать по центру и уменьшить до 512×512
-//       ↓
-// Сохранить как UUID.webp
-//       ↓
-// Записать avatarUrl в пользователя
-//       ↓
-// Вернуть { avatarUrl }

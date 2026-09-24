@@ -4,93 +4,10 @@ import {reviewsAppState} from "./reviewsAppState.js";
 
 
 let paginationEl = document.getElementById("paginationEl");
-// let prevButton;
-// let nextButton;
-
-// I need these global variables because I have:
-// 1 - condition if(currentPage > 1 );
-// 2 - all functions should save the same value of currentPage - loadPage and updatePaginationUi should both know what is current page
-// let currentPage = 1;
 let totalPages = 1;
-// let renderReviews = null;
-
-
-
-// function renderPagination1(currentPage, totalPages) {
-    // let currentPage = response.page;
-    // let totalPages = response.totalPages;
-
-// // creating previous button
-//
-//     let prevButton = document.createElement('button');
-//     prevButton.textContent = '←';
-//     prevButton.disabled = currentPage === 1;
-//     paginationEl.appendChild(prevButton);
-//
-// // creating numbered buttons
-//     for (let i = 1; i <= totalPages; i++) {
-//         let button = document.createElement('button');
-//         button.textContent = i;
-//         button.classList.add('page-btn');
-//         paginationEl.appendChild(button);
-//         if (i === currentPage) button.classList.add('active');
-//
-//         button.addEventListener('click', async(e) => {
-//             let target = e.target;
-//             currentPage = i;
-//             let response = await getReviews(i, 1);
-//             renderReviews(response.items);
-//
-//             removeActivePagButtonClass();
-//
-//             target.classList.add('active');
-//
-//             prevButton.disabled = currentPage === 1;
-//             nextButton.disabled = currentPage === totalPages;
-//         })
-//     }
-//
-// // creating next button
-//
-//     let nextButton = document.createElement('button');
-//     nextButton.textContent = '→';
-//     nextButton.disabled = currentPage >= totalPages;
-//     paginationEl.appendChild(nextButton);
-
-// adding event listeners
-
-    // prevButton.addEventListener('click', async(e) => {
-    //     currentPage = currentPage - 1;
-
-    //     let response = await getReviews(currentPage, 1);
-    //     renderReviews(response.items);
-    //
-    //     prevButton.disabled = currentPage === 1;
-    //
-    //     updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
-    // })
-
-    // nextButton.addEventListener('click', async(e) => {
-    //     currentPage = currentPage + 1;
-
-    //     let response = await getReviews(currentPage, 1);
-    //     renderReviews(response.items);
-    //
-    //     updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
-    // })
-// }
-
-// 2
-// export function setPaginationData(page, pages) {
-//     currentPage = page;
-//     totalPages = pages;
-//     // renderReviews = renderer;
-//     renderPagination();
-// }
 
 // 1 create pagination ui
 export function renderPagination(page, pages) {
-    // currentPage = page;
     totalPages = pages;
     paginationEl.innerHTML = "";
 
@@ -110,19 +27,6 @@ export function renderPagination(page, pages) {
         paginationEl.appendChild(button);
         if (i === page) button.classList.add('active');
 
-//         button.addEventListener('click', async(e) => {
-//             let target = e.target;
-//             currentPage = i;
-//             let response = await getReviews(i, 1);
-//             renderReviews(response.items);
-// // ????????????????????????????????????????????
-//             removeActivePagButtonClass();
-//
-//             target.classList.add('active');
-//
-//             prevButton.disabled = currentPage === 1;
-//             nextButton.disabled = currentPage === totalPages;
-//         })
     }
 
     // creating next button
@@ -132,41 +36,33 @@ export function renderPagination(page, pages) {
     nextButton.disabled = page >= totalPages;
     paginationEl.appendChild(nextButton);
 
-    // updatePaginationUi(prevButton, nextButton, currentPage, totalPages)
 }
 
 // 3 delegating events
 paginationEl.addEventListener('click', async(e) => {
     if(e.target.classList.contains("page-btn")) {
         let pageNum = Number(e.target.dataset.page);
-        reviewsAppState.currentPage = pageNum; // added
+        reviewsAppState.currentPage = pageNum;
         await loadPage();
-        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
         }
 
     if(e.target.classList.contains("prev-btn")) {
-        // if(currentPage > 1 ) await loadPage(currentPage - 1);
         if(reviewsAppState.currentPage > 1 ) {
             reviewsAppState.currentPage -= 1;
-            await loadPage(); // added
+            await loadPage();
         }
-        // prevButton.disabled = currentPage === 1;
-        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
     }
 
     if(e.target.classList.contains("next-btn")) {
-        // if(currentPage < totalPages) await loadPage(currentPage + 1);
         if(reviewsAppState.currentPage < totalPages) {
             reviewsAppState.currentPage += 1;
             await loadPage();
         }
-        // updatePaginationUi(prevButton, nextButton, currentPage, totalPages);
     }
 })
 
 // 4 sending get request when clicking pagination button
 async function loadPage() {
-    // companyReviewsState.currentPage = pageNumber;
     let response = await getReviews(reviewsAppState.currentPage, reviewsAppState.currentPageLimit, reviewsAppState.filterByCompany, reviewsAppState.sorting);
     totalPages = response.totalPages;
 

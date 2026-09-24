@@ -4,9 +4,6 @@ export function renderCompanyHeader(companyData = {}) {
 
     const companyName = companyData.name || company || " ";
 
-    // document.querySelector('.tab-reviews').href =
-    //     `/html/companyReviews?company=${encodeURIComponent(company)}`;
-
     document.querySelector('.tab-about').href =
         `/html/companyAbout?company=${encodeURIComponent(company)}`;
 

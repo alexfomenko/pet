@@ -46,7 +46,6 @@ let companies = [{
 async function getNotesFromFile() {
     try {
         let notes = await fs.readFile(NOTES_FILE, 'utf-8');
-        // console.log(notes.json);
         if(notes.length > 0) {
             return JSON.parse(notes);
         } else {
@@ -63,7 +62,6 @@ async function getNotesFromFile() {
 async function getUsersFromFile() {
     try{
         let users = await fs.readFile(USERS_FILE, 'utf-8');
-        // console.log(users);
         return users.length > 0 ? JSON.parse(users) : [];
     }
     catch (error) {
@@ -77,7 +75,6 @@ async function saveNoteToFile(file, array) {
 }
 
 function sendResponse(res, responseCode, message) {
-    // console.log("hit0");
     res.writeHead(responseCode, {'Content-Type' : 'application/json'})
     res.end(JSON.stringify(message));
 }
@@ -100,13 +97,6 @@ const server = http.createServer(async(req, res) => {
     let parsedUrl = url.parse(req.url, true);
     let { pathname, query} = parsedUrl;
 
-    // in order to return any file which is requested by front-end
-    // const requestedUrl = req.url;
-    // if (req.method === 'GET' && requestedUrl.endsWith('.js')) {
-    //     let fileName = requestedUrl.slice(1);
-    //     sendStaticFile(fileName, 'application/javascript');
-    // }
-
     // GET STATICS
     if(req.method === 'GET' && req.url === '/html/reviews') {
         sendStaticFile(res, 'html/reviews.html', 'text/html')
@@ -115,12 +105,6 @@ const server = http.createServer(async(req, res) => {
         sendStaticFile(res, 'html/test.html', 'text/html')
     }
     else if(req.method === 'GET' && req.url === '/html/login') {
-        // fs.readFile(path.join(__dirname,'reviews.html'))
-        // .then((data) => {
-        //     res.writeHead(200, {'Content-type': 'text/html'})
-        //     res.end(data);
-        // })
-        //or
          sendStaticFile(res, 'html/login.html', 'text/html')
     }
     else if(req.method === 'GET' && req.url === '/html/signup') {
@@ -129,9 +113,6 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && pathname=== '/html/companyReviews') { //changed req.url to pathname
         sendStaticFile(res, 'html/companyReviews.html', 'text/html')
     }
-    // else if(req.method === 'GET' && req.url === '/html/companyAbout') {
-    //     sendStaticFile(res, 'html/companyAbout.html', 'text/html')
-    // }
     else if(req.method === 'GET' && pathname === '/html/companyAbout') {
         sendStaticFile(res, 'html/companyAbout.html', 'text/html')
     }
@@ -157,11 +138,9 @@ const server = http.createServer(async(req, res) => {
          sendStaticFile(res, 'views/oldFirstScript.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/views/reviewsView.js') {
-        // console.log('hi')
          sendStaticFile(res, 'views/reviewsView.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/views/personalAccountView.js') {
-        // console.log('hi')
         sendStaticFile(res, 'views/personalAccountView.js', 'application/javascript')
     }
     else if(req.method === 'GET' && req.url === '/api/authApi.js') {
@@ -279,17 +258,10 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/components/common/countChars.js') {
         sendStaticFile(res, '/components/common/countChars.js', 'application/javascript')
     }
-    // else if(req.method === 'GET' && req.url === '/layout/layout.js') {
-    //     sendStaticFile(res, 'layout/layout.js', 'application/javascript')
-    // }
-
-
     //getting companies for send form
     if(req.method === "GET" && req.url.startsWith("/get-companies")) {
         let allCompanies = Array.from(new Set(notes.map((item) => item.company))); //only unique
-        // console.log(allCompanies);
-        // return sendResponse(res, 200, {allCompanies}); // {allCompanies: allCompanies} 1st option - object
-        return sendResponse(res, 200, allCompanies); // 2nd option - array
+        return sendResponse(res, 200, allCompanies);
     }
 
     // GET ALL REVIEWS
@@ -319,8 +291,6 @@ const server = http.createServer(async(req, res) => {
                 userName: user? user.name : "Unknown"
             }
         });
-
-        // console.log(reviewsWithUsers);
 
         //adding filtering by company
         if(company && company !== "all") {
@@ -360,9 +330,6 @@ const server = http.createServer(async(req, res) => {
         let totalItems = reviewsWithUsers.length;
         let totalPages = Math.ceil(totalItems / limit);
 
-        // res.writeHead(200, {'Content-Type': 'application/json'});
-        // res.end(JSON.stringify(notes.json))
-        //or
         return sendResponse(res, 200, {
             page,
             limit,
@@ -389,8 +356,6 @@ const server = http.createServer(async(req, res) => {
 
     // GET COMPANY REVIEWS
 
-    // if(req.method==="GET" && req.url=== `/companies/${company}/reviews`) {
-    // console.log(req.url);
     console.log(pathname);
     console.log("path 1", /^\/companies\/[\w\s]+\/reviews$/.test(pathname))
 
@@ -400,8 +365,6 @@ const server = http.createServer(async(req, res) => {
         let page = parseInt(query.page) || 1;
         let limit = parseInt(query.limit) || 3;
         let filter = parseInt(query.filter);
-        // console.log(typeof filter);
-        // console.log(filter)
         let sort = query.sort;
 
         let reviewsByCompany = notes.filter((companyName) => {
@@ -418,16 +381,11 @@ const server = http.createServer(async(req, res) => {
                 userName: user? user.name : "Anonymous",
             }
         })
-        // console.log("array1:", reviewsByCompanyWithUsers);
-
         if(filter && !isNaN(filter) ) {
             reviewsByCompanyWithUsers=reviewsByCompanyWithUsers.filter((review) => {
-                // console.log(review.rating);
-                // console.log(Number(review.rating));
                 return Number(review.rating) === filter;
             })
         }
-        // console.log("array2:", reviewsByCompany);
 
         if(sort && sort!== "no_sort") {
             if(sort === "newest") {
@@ -490,15 +448,7 @@ const server = http.createServer(async(req, res) => {
         }, 0)/ reviewsByCompany.length;
         console.log("avgRating:", avgRating);
 
-        // PART 1 find rating and quantity
-        // let ratings = []; // [{}, {}, {}]
-        // [
-        //     { rating: '4', number: 4 },
-        //     { rating: '2', number: 4 },
-        // ]
-
-        // APPROACH TWO
-
+        // Find rating quantities
         let ratings = [
             {rating: 5, quantity: 0 },
             {rating: 4, quantity: 0 },
@@ -514,29 +464,6 @@ const server = http.createServer(async(req, res) => {
             }
         }
         console.log(ratings);
-
-        // APPROACH ONE
-
-        // let ratingStars = []; // 5, 4, 3 ...
-        // for (let item1 of [...reviewsByCompany]) {
-        //     if(!ratingStars.includes(item1.rating)) {
-        //         ratingStars.push(item1.rating)
-        //         ratings.push({
-        //             rating: item1.rating,
-        //             quantity: 1,
-        //         })
-        //     }
-        //     //otherwise
-        //     else {
-        //         for(let item2 of ratings) {
-        //             if(item2.rating === item1.rating) {
-        //                 item2.quantity += 1;
-        //             }
-        //         }
-        //     }
-        // }
-        //
-        // console.log(ratings);
 
         //PART 2 find percentage
         for(let item of ratings) {
@@ -561,7 +488,6 @@ const server = http.createServer(async(req, res) => {
     if(req.method === "POST" && req.url === '/submit-review') {
         //get token if available
         let token = req.headers['authorization']?.split(" ")[1] ?? null;
-        // console.log(token)
         let userId = null;
 
         if(token) {
@@ -573,12 +499,8 @@ const server = http.createServer(async(req, res) => {
                 return sendResponse(res, 401, {message: "Invalid token"});
             }
         }
-        // console.log(token)
         let user = users.find((user) => user.id === userId);
-        // console.log(user)
         let userName = user?.name ?? "Anonymous";
-        // console.log(userName)
-        // console.log(userId);
 
         console.log({ token, userId, users });
 
@@ -588,21 +510,15 @@ const server = http.createServer(async(req, res) => {
         req.on('end', async () => {
             try {
                 let parsedJson = JSON.parse(body);
-                // let date = new Date();
                 let note = {id: uuidv4(), userId, company: parsedJson.company, rating: parsedJson.rating, review: parsedJson.review, date: parsedJson.date};
 
                 //update notes.json array - temporary storage
                 notes.push(note);
 
                 //updates file - constant storage
-                // fs.writeFile(NOTES_FILE, JSON.stringify(notes.json))
-                //or
                 await saveNoteToFile(NOTES_FILE, notes);
 
                 //respond the client
-                // res.writeHead(201, {'Content-Type' : 'application/json'})
-                // res.end(JSON.stringify(note))
-                //or
                 return sendResponse(res, 201, {
                     success: true,
                     message:"Your review has been added",
@@ -613,9 +529,6 @@ const server = http.createServer(async(req, res) => {
                 );
             }
             catch {
-                // res.writeHead(404, {'Content-Type' : 'application/json'})
-                // res.end(JSON.stringify("The received JSON is invalid"))
-                //or
                 return sendResponse(res, 404, "The received JSON is invalid")
             }
         })
@@ -624,14 +537,10 @@ const server = http.createServer(async(req, res) => {
     // updating data
 
     if(req.method === "PUT" && req.url.startsWith('/update-review/')) {
-        // let id = getIdFromUrl(req); // new way to getting pathname and query
         let id = pathname.split('/')[2]; //old way to getting pathname and query
 
         let noteIndex = notes.findIndex(note => note.id === id);
         if(noteIndex === -1) {
-            // res.writeHead(404, {'Content-Type': 'application/json'});
-            // res.end(JSON.stringify({error: "Such note doesn't exist"}));
-            //or
             return sendResponse(res, 404, "Such note doesn't exist")
         }
         let body = "";
@@ -648,11 +557,9 @@ const server = http.createServer(async(req, res) => {
 
                 //validate rating typeof number is not nan infinity range tseloe
                 let rating = Number(parsedJson.rating);
-                // console.log(rating)
                 if(typeof rating === 'number' && !Number.isNaN(rating) && Number.isFinite(rating) && rating > 0 && rating < 10) {
                     notes[noteIndex].rating = rating;
                 }
-                // console.log(typeof rating === 'number' && !Number.isNaN(rating) && Number.isFinite(rating) && rating > 0 && rating < 10)
 
                 //validate review
                 let review = parsedJson.review;
@@ -661,21 +568,13 @@ const server = http.createServer(async(req, res) => {
                 }
 
                 //updates file - constant storage
-                // fs.writeFile(NOTES_FILE, JSON.stringify(notes.json))
-                //or
                 await saveNoteToFile(NOTES_FILE, notes);
 
                 //respond to client
-                // res.writeHead(201, {'Content-Type': 'application/json'});
-                // res.end(JSON.stringify(notes.json[noteIndex]))
-                //or
                 return sendResponse(res, 201, notes[noteIndex])
 
             }
             catch(error) {
-                // res.writeHead(400, {'Content-type:': 'application/json'})
-                // res.end(JSON.stringify({error: "The json is invalid"}))
-                //or
                 console.log(error)
                 return sendResponse(res, 400, {error: "The json is invalid"})
             }
@@ -685,27 +584,18 @@ const server = http.createServer(async(req, res) => {
     // deleting data
 
     if(req.method === "DELETE" && req.url.startsWith('/delete-review')) {
-        // let id = getIdFromUrl(req); // new way to getting pathname and query
         let id = pathname.split('/')[2]; //old way to getting pathname and query
 
         let noteIndex = notes.findIndex(note => note.id === id);
         if(noteIndex === -1) {
-            // res.writeHead(404,{'Content-type': 'application/json'});
-            // res.end(JSON.stringify({error: "Such note doesn't exist"}));
-            //or
             return sendResponse(res, 404, {error: "Such note doesn't exist"})
         }
         let deletedItem = notes.splice(noteIndex, 1);
 
-        // fs.writeFile(NOTES_FILE, JSON.stringify(notes.json));
-        //or
         (async () => {
             await saveNoteToFile(NOTES_FILE, notes);
         })();
 
-        // res.writeHead(201, {"Content-type": 'application/json'})
-        // res.end(JSON.stringify(deletedItem));
-        //or
         return sendResponse(res, 201, deletedItem)
     }
 
@@ -725,33 +615,24 @@ const server = http.createServer(async(req, res) => {
                 }
 
                 // getting data from frontend
-                // let {email, password} = JSON.parse(body);
                 let {email, password} = parsedJsonBody;
 
                 // checking email and password aren't falsy
                 if(!email || !password) return sendResponse(res, 401, {message: "Invalid email or password(falsy)"})
-                // console.log("hit");
-
                 //checking email and password data types are strings
                 if(typeof email !== "string" || typeof password !== "string") return sendResponse(res, 401, {message: "Invalid email or password(not strings"})
 
                 //checking if a user exists
                 let user = users.find(user => user.email === email);
                 if(!user) return sendResponse(res, 401, {message: "Invalid email or password(user doesn't exist)"});
-                // console.log("hit2");
-
                 //comparing password from payload and the one saved on the server
                 let isMatch = await bcrypt.compare(password, user.password);
                 if(!isMatch) return sendResponse(res, 401, {message: "Invalid email or password(password is wrong)"});
-                // console.log("hit3");
-
                 // generating token
                 let token = jwt.sign(
                     {userId: user.id, email: user.email},
                     SECRET,
                     {expiresIn: '1h'});
-                // console.log("hit4");
-
                 //sending response to the server
                 return sendResponse(res, 200, {
                     message: "User signed in successfully",
@@ -786,7 +667,6 @@ const server = http.createServer(async(req, res) => {
                 }
 
                 // getting email and password from the frontend payload
-                // let {name, email, password, confirmPassword} = JSON.parse(body);
                 let {name, email, password, confirmPassword} = parsedJsonBody;
 
                 //validation block
@@ -801,26 +681,15 @@ const server = http.createServer(async(req, res) => {
 
                 //checking name is ok
                 name = name.trim();
-                // if(name.length < 3 || name.length > 10) return sendResponse(res, 400, {message:"Name should be less than 5-10 characters"});
 
                 //checking if the user email already exists
                 email = String(email).trim().toLowerCase();
                 let userExists = users.find(user => user.email.toLowerCase() === email);
                 if(userExists) return sendResponse(res, 409, {message: "User already exists"});
-                // //checking email is correct
-                // let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                // let isEmailCorrect = emailRegex.test(email);
-                // if(!isEmailCorrect) return sendResponse(res,400, "Email is too weak");
-                // // checking email length
                 if(email.length === 0 || email.length > 50) return sendResponse(res, 400, {message: "Invalid email(should be 0-50 characters"});
 
                 // checking password length
                 if(password.length < 3 || password.length > 10) return sendResponse(res, 400, {message: "Password length should be more than 3 and less than 10 letters"});
-                // //checking password strength
-                // let passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-                // let isStrongPassword = passwordRegex.test(password);
-                // if(!isStrongPassword) return sendResponse(res, 400, "Password is too weak");
-
                 // comparing password and confirmPassword values match
                 if(password !== confirmPassword) return sendResponse(res, 400, {message: "Passwords don't match"});
 
@@ -916,9 +785,6 @@ const server = http.createServer(async(req, res) => {
                 if(bio !== undefined) users[userIndex].bio = String(bio.trim());
 
                 //save to file system
-                // async function saveNoteToFile(file, array) {
-                //     await fs.writeFile(file, JSON.stringify(array));
-                // }
                 await saveNoteToFile(USERS_FILE, users);
 
                 console.log(users[userIndex])
@@ -940,10 +806,6 @@ const server = http.createServer(async(req, res) => {
             }
         })
     }
-    // else {
-    //     return sendResponse(res, 404, "Not found")
-    // }
-
     //USER GETS HIS OWN DATA
     if(req.method === "GET" && req.url === '/profile') {
         let token = req.headers['authorization']?.split(" ")[1];
@@ -979,8 +841,7 @@ const server = http.createServer(async(req, res) => {
     //SOMEONE WANTS TO GET USER PROFILE
     if(req.method === "GET" && req.url.startsWith('/users/')) {
         // check if userId was sent in url
-        // let userId = req.url.split('/')[2]; //worse option
-        let userId = pathname.split('/')[2]; //better option
+        let userId = pathname.split('/')[2];
 
         if(!userId) return sendResponse(res, 400, {message: "No user id provided"});
 
@@ -1030,9 +891,6 @@ const server = http.createServer(async(req, res) => {
     }
 
     if(req.method === "PUT" && req.url === '/profile/avatar') {
-        // return {
-        //     "avatarUrl": "/uploads/avatars/87c3df4a.webp"
-        // }
         //token
         let token = req.headers.authorization.split(' ')[1];
         if(!token) {
