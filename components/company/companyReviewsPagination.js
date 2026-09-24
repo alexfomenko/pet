@@ -36,9 +36,6 @@ let totalPages;
  }
 
 pagination.addEventListener('click', async(e) => {
-    let prevButton = document.querySelector('.prev-btn');
-    let nextButton = document.querySelector('.next-btn');
-
     let target = e.target;
     if(target.classList.contains('prev-btn')) {
         if(companyReviewsState.currentPage > 1) {

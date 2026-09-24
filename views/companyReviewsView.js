@@ -10,7 +10,6 @@ import "../components/company/companyReviewForm.js"
 import {renderCompanyHeader} from "../components/company/companyAboutRender.js";
 import {renderAuthNav} from "../components/common/authNav.js";
 import {renderPagination, loadCompanyReviewsPage} from "../components/common/pagination.js";
-import {reviewsAppState} from "../components/reviews/reviewsAppState.js";
 import {countChars} from "../components/common/countChars.js";
 
 let field = document.querySelector('.char-count');
@@ -40,4 +39,3 @@ document.addEventListener("DOMContentLoaded", async ()=> {
 
     countChars(field, counter);
 })
-

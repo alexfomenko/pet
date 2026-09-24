@@ -126,7 +126,6 @@ export function handleChangeReviewActions() {
             // getting current row
             let closestReviewRow = editButton.closest('.review');
             if (closestReviewRow) {
-                let closestReviewRawId = closestReviewRow.dataset.reviewId;
                 let companyEl = closestReviewRow.querySelector('.company-about');
                 let starsContainer = closestReviewRow.querySelector('.stars');
                 let reviewEl = closestReviewRow.querySelector('.review-text');
@@ -169,6 +168,7 @@ export function handleChangeReviewActions() {
 
                 console.log(data)
                 let updateResponse = await sendUpdateRequest(closestReviewRowId, data);
+                if(!updateResponse.success) return;
 
                 //changing fields back to divs with current values (inputs tom divs)
                closestReviewRow.querySelector('.company-about').textContent = updatedCompanyValue ;

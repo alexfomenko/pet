@@ -1,7 +1,6 @@
 import {userLogIn} from '../api/authApi.js';
 
 let button = document.getElementById('sign-in-button');
-let error = document.getElementById("loginError");
 // let toast = document.getElementById("toast");
 
 button.addEventListener('click', async(e) => {

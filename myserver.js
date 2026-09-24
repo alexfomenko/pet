@@ -42,12 +42,6 @@ let companies = [{
 
 ];
 
-// new way to getting pathname and query
-function getIdFromUrl(req) {
-    let {pathname} = new URL(req.url, 'http://localhost' + port);
-    return pathname.split('/')[2];
-}
-
 //read notes.json from file
 async function getNotesFromFile() {
     try {
@@ -94,7 +88,7 @@ function sendStaticFile(res, filePath, contentType) {
             res.writeHead(200, {'Content-type': contentType})
             res.end(data);
         })
-        .catch((error) => {
+        .catch(() => {
             res.writeHead(404, {'Content-type': 'text/plain'})
             res.end('File not found')
         })
@@ -575,7 +569,7 @@ const server = http.createServer(async(req, res) => {
                 let decodedData = jwt.verify(token, SECRET);
                 userId = decodedData.userId;
             }
-            catch(error) {
+            catch {
                 return sendResponse(res, 401, {message: "Invalid token"});
             }
         }
@@ -618,7 +612,7 @@ const server = http.createServer(async(req, res) => {
                     }
                 );
             }
-            catch (error) {
+            catch {
                 // res.writeHead(404, {'Content-Type' : 'application/json'})
                 // res.end(JSON.stringify("The received JSON is invalid"))
                 //or
@@ -726,7 +720,7 @@ const server = http.createServer(async(req, res) => {
                 try {
                     parsedJsonBody = JSON.parse(body||"{}");
                 }
-                catch(error) {
+                catch {
                     return sendResponse(res, 400, {message: "Invalid json"})
                 }
 
@@ -769,7 +763,7 @@ const server = http.createServer(async(req, res) => {
                     }
                 })
             }
-            catch (error) {
+            catch {
                 return sendResponse(res, 500, {message: "Server error"});
             }
         })
@@ -787,7 +781,7 @@ const server = http.createServer(async(req, res) => {
                 try{
                     parsedJsonBody = JSON.parse(body||"{}");
                 }
-                catch (error) {
+                catch {
                    return sendResponse(res, 400, {message: "Invalid json"})
                 }
 
@@ -854,7 +848,7 @@ const server = http.createServer(async(req, res) => {
                     }
                 })
             }
-            catch (error) {
+            catch {
                 return sendResponse(res, 500, {message: "Server error"});
             }
         })
@@ -889,7 +883,7 @@ const server = http.createServer(async(req, res) => {
         try{
             decodedData = jwt.verify(token, SECRET);
         }
-        catch (error) {
+        catch {
             return sendResponse(res, 401, {message: "Invalid token"})
         }
 
@@ -902,7 +896,7 @@ const server = http.createServer(async(req, res) => {
                 try{
                     parsedJson = JSON.parse(body || "{}");
                 }
-                catch (error){
+                catch {
                     return sendResponse(res, 400, {message: "Invalid json"});
                 }
                 let {name, title, email, company, city, bio} = parsedJson;
@@ -941,7 +935,7 @@ const server = http.createServer(async(req, res) => {
                     }
                 })
             }
-            catch (error) {
+            catch {
                 return sendResponse(res, 500, {message: "Server error"})
             }
         })
@@ -960,7 +954,7 @@ const server = http.createServer(async(req, res) => {
         try{
             tokenData = jwt.verify(token, SECRET);
         }
-        catch (error) {
+        catch {
             return sendResponse(res, 401, {message: "Invalid token"});
         }
 
@@ -1015,7 +1009,7 @@ const server = http.createServer(async(req, res) => {
         try{
             tokenData = jwt.verify(token, SECRET);
         }
-        catch (error){
+        catch {
             return sendResponse(res, 401, {message: "Invalid token"})
         }
 
@@ -1049,7 +1043,7 @@ const server = http.createServer(async(req, res) => {
         try{
             decodedData = jwt.verify(token, SECRET);
         }
-        catch (error){
+        catch {
             return sendResponse(res, 401, {message: "Invalid token"})
         }
         //finding user
@@ -1083,10 +1077,10 @@ const server = http.createServer(async(req, res) => {
             fileStream.on('data', (chunk) => {
                 chunks.push(chunk);
             })
-            fileStream.on('limit', (chunk) => {
+            fileStream.on('limit', () => {
                 avatarTooLarge = true;
             })
-            fileStream.on('end', (chunk) => {
+            fileStream.on('end', () => {
                 avatarBuffer = Buffer.concat(chunks);
             })
         })

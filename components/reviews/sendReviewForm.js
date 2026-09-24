@@ -5,7 +5,6 @@ import {getAllCompanies} from "../../api/reviewsApi.js";
 let showFormButton = document.getElementById('showFormButton');
 let reviewForm = document.getElementById('reviewForm');
 let sendReviewButton = document.getElementById('sendReviewButton');
-let reviewContainer = document.getElementById('reviewsContainer');
 // console.log('FORM:', document.getElementById('reviewForm'));
 
 // SHOW FORM
@@ -26,7 +25,7 @@ else {
     console.log("error")
 }
 
-sendReviewButton.addEventListener('click', async (e) => {
+sendReviewButton.addEventListener('click', async () => {
     // e.preventDefault(); is required only for submit
 
     //saving data from the form
@@ -65,13 +64,13 @@ sendReviewButton.addEventListener('click', async (e) => {
 
     //adding review to the page if the request was successful
     let requestResult = await submitReview(data);
-    let reviewId = requestResult.parsedResponse.id;
-    let userId = requestResult.parsedResponse.userId;
-    console.log(reviewId)
-    console.log(userId);
     // if(requestResult.status === 201) {    or   // if(requestResult.success === 201) {
 
     if (requestResult.success) {
+        let reviewId = requestResult.parsedResponse.id;
+        let userId = requestResult.parsedResponse.userId;
+        console.log(reviewId)
+        console.log(userId);
 //         // creating a new row
 //         let newReviewItem = document.createElement('div');
 //         newReviewItem.classList.add("review-item");
@@ -128,7 +127,7 @@ let allCompanies;
 // })
 
 //3rd iteration - the work of filtering was moved to backend
-searchInput.addEventListener('click', async(event) => {
+searchInput.addEventListener('click', async() => {
     let sendGetAllCompaniesRequest = await getAllCompanies();
     allCompanies = sendGetAllCompaniesRequest.items;
     // allCompanies = [...new Set(response.map((item) => item.company))]; //only unique
@@ -145,14 +144,14 @@ function showCompanies(list) {
         li.textContent = country;
         results.appendChild(li);
 
-        li.addEventListener('click', (event) => {
+        li.addEventListener('click', () => {
             searchInput.value = li.textContent;
             results.style.display = "none";
         })
     })
 }
 
-searchInput.addEventListener('input', (e) => {
+searchInput.addEventListener('input', () => {
     results.style.display = "block";
     results.innerHTML = "";
 

@@ -25,7 +25,7 @@ export async function updateProfileData(data) {
         try{
             parsedResponseBody = await sendUpdateRequest.json();
         }
-        catch (error){
+        catch {
             return {
                 success: false,
                 status: sendUpdateRequest.status,
@@ -41,7 +41,7 @@ export async function updateProfileData(data) {
             ...parsedResponseBody,
         }
     }
-    catch (error) {
+    catch {
         return {
             success: false,
             status: null,
@@ -106,7 +106,7 @@ export async function getOwnProfileData() {
         try{
             parsedJsonBody = await sendGetProfileRequest.json();
         }
-        catch (error) {
+        catch {
             return {
                 success: false,
                 status: sendGetProfileRequest.status,
@@ -123,8 +123,14 @@ export async function getOwnProfileData() {
         }
 
     }
-    catch (error) {
-        throw new Error('Failed to send data');
+    catch {
+        return {
+            success: false,
+            status: null,
+            text: "Couldn't load your profile",
+            items: null,
+            user: null,
+        };
     }
 }
 
@@ -147,7 +153,7 @@ export async function getProfileData(userId) {
         try{
             parsedJson = await sendGetProfileRequest.json();
         }
-        catch (error){
+        catch {
             return {
                 success: false,
                 status: sendGetProfileRequest.status,
@@ -163,8 +169,14 @@ export async function getProfileData(userId) {
             ...parsedJson,
         }
     }
-    catch(error) {
-            throw new Error("Failed to send data");
+    catch {
+        return {
+            success: false,
+            status: null,
+            text: "Couldn't load the user profile",
+            items: null,
+            user: null,
+        };
     }
 }
 
@@ -192,7 +204,7 @@ export async function getUserReviews() {
         try{
             parsedResponse = await userReviews.json();
         }
-        catch (error) {
+        catch {
             return {
                 success: false,
                 status: userReviews.status,
@@ -209,7 +221,7 @@ export async function getUserReviews() {
         }
     }
 
-    catch (error){
+    catch {
         return {
             success: false,
             status: null,
@@ -251,7 +263,7 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint in 
         try{
             parsedResponseBody = await sendUpdateRequest.json();
         }
-        catch (error){
+        catch {
             return {
                 success: false,
                 status: sendUpdateRequest.status,
@@ -267,7 +279,7 @@ export async function uploadProfileAvatar(formData) { //todo update endpoint in 
             ...parsedResponseBody,
         }
     }
-    catch (error) {
+    catch {
         return {
             success: false,
             status: null,

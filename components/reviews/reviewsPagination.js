@@ -11,7 +11,6 @@ let paginationEl = document.getElementById("paginationEl");
 // 1 - condition if(currentPage > 1 );
 // 2 - all functions should save the same value of currentPage - loadPage and updatePaginationUi should both know what is current page
 // let currentPage = 1;
-let currentLimit = 5;
 let totalPages = 1;
 // let renderReviews = null;
 
@@ -195,4 +194,3 @@ export function updatePaginationUi(currentPage, totalPages) {
     prevButton.disabled = currentPage === 1;
     nextButton.disabled = currentPage === totalPages;
 }
-

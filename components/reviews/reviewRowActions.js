@@ -31,8 +31,6 @@ reviewsContainer.addEventListener('click', async (e) => {
             // getting current row
             let closestReviewRow = editButton.closest('.review-item');
             if (closestReviewRow) {
-                let closestReviewRawId = closestReviewRow.dataset.id;
-
                 // getting current columns of the row
                 let columns = closestReviewRow.querySelectorAll(".column");
 
@@ -92,6 +90,7 @@ reviewsContainer.addEventListener('click', async (e) => {
                 // }
 
                 let updateResponse = await sendUpdateRequest(closestReviewRowId, data);
+                if(!updateResponse.success) return;
                 // if(updateResponse.ok) {
 
                 //changing fields back to divs with current values (inputs tom divs)
@@ -112,8 +111,6 @@ reviewsContainer.addEventListener('click', async (e) => {
             let closestReviewRow = cancelButton.closest('.review-item');
             let columns = closestReviewRow.querySelectorAll('.column');
             if (closestReviewRow) {
-                let closestReviewRowId = closestReviewRow.dataset.id;
-
                 // filling back divs with old values
                 columns[0].textContent = closestReviewRow.dataset.initialCompanyValue;
                 columns[1].textContent = closestReviewRow.dataset.initialRatingValue;

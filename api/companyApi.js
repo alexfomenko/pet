@@ -13,15 +13,24 @@ export async function getCompanyReviews(company, page, limit, filter, sort) {
                 success: false,
                 status:sendRequest.status,
                 text: sendRequest.statusText,
-                items: null,
+                items: [],
+                pagesTotalNumber: 0,
+                reviewsTotalNumber: 0,
             }
         }
         let parsedJsonResponse;
         try {
             parsedJsonResponse = await sendRequest.json();
         }
-        catch (error) {
-            console.log(`Failed to parse response body: ${error}`)
+        catch {
+            return {
+                success: false,
+                status: sendRequest.status,
+                text: "Couldn't parse the company reviews response",
+                items: [],
+                pagesTotalNumber: 0,
+                reviewsTotalNumber: 0,
+            };
         }
         return {
             success: true,
@@ -37,34 +46,64 @@ export async function getCompanyReviews(company, page, limit, filter, sort) {
         //     reviewsTotalNumber: parsedJsonResponse.reviewsTotalNumber,
         // }
     }
-    catch (error) {
-        throw error;
+    catch {
+        return {
+            success: false,
+            status: null,
+            text: "Couldn't load company reviews",
+            items: [],
+            pagesTotalNumber: 0,
+            reviewsTotalNumber: 0,
+        };
     }
 }
 
 // GET /api/companies/:id/reviews/stats
 export async function calculateGrades(company) {
-    let url = `/companies/${company}/reviews/stats`
-    let sendRequest = await fetch(url);
+    try {
+        let url = `/companies/${company}/reviews/stats`
+        let sendRequest = await fetch(url);
 
-    if(!sendRequest) {
+        if(!sendRequest.ok) {
+            return {
+                success: false,
+                status: sendRequest.status,
+                text: sendRequest.statusText,
+                avgRating: null,
+                ratings: [],
+            }
+        }
+
+        let parsedJson;
+        try {
+            parsedJson = await sendRequest.json();
+        }
+        catch {
+            return {
+                success: false,
+                status: sendRequest.status,
+                text: "Couldn't parse the company grades response",
+                avgRating: null,
+                ratings: [],
+            };
+        }
+
         return {
-            avgRating: null,
-            ratings: null,
+            success: true,
+            status: sendRequest.status,
+            text: sendRequest.statusText,
+            avgRating: parsedJson.avgRating,
+            ratings: parsedJson.ratings,
         }
     }
-
-    let parsedJson;
-    try {
-        parsedJson = await sendRequest.json();
-    }
-    catch (error) {
-        console.log(`Failed to parse response body: ${error}`)
-    }
-
-    return {
-        avgRating: parsedJson.avgRating,
-        ratings: parsedJson.ratings, // []
+    catch {
+        return {
+            success: false,
+            status: null,
+            text: "Couldn't load company grades",
+            avgRating: null,
+            ratings: [],
+        }
     }
 }
 
@@ -86,7 +125,7 @@ export async function getCompanyAboutData(company) {
         try{
             parsedJson = await sendRequest.json();
         }
-        catch (error) {
+        catch {
             return {
                 success: false,
                 status: sendRequest.status,
@@ -102,7 +141,7 @@ export async function getCompanyAboutData(company) {
             ...parsedJson,
         }
     }
-    catch (error) {
+    catch {
        return {
            success: false,
            status: null,

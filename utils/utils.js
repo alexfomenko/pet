@@ -1,5 +1,3 @@
-import {createNewRow} from "../components/reviews/newReviewRow.js";
-
 // export function removeAllButtons(closestReviewRow) {
 //     let buttons = closestReviewRow.querySelectorAll('button');
 //     buttons.forEach((button) => button.remove());
@@ -20,4 +18,3 @@ import {createNewRow} from "../components/reviews/newReviewRow.js";
 //         reviewsContainer.appendChild(newRow);
 //     })
 // }
-

@@ -7,8 +7,14 @@ export async function getAllCompanies() {
         try{
             parsedJsonBody = await sendGetCompaniesRequest.json();
         }
-        catch (error) {
-            parsedJsonBody = null;
+        catch {
+            return {
+                success: false,
+                status: sendGetCompaniesRequest.status,
+                statusText: sendGetCompaniesRequest.statusText,
+                text: "Couldn't parse the companies response",
+                items: [],
+            };
         }
         if (!sendGetCompaniesRequest.ok) {
             // throw new Error('Failed to get data'); // instead of this
@@ -16,7 +22,7 @@ export async function getAllCompanies() {
                success: false,
                status: sendGetCompaniesRequest.status,
                statusText: sendGetCompaniesRequest.statusText,
-               items: null,
+               items: [],
             }
         }
         // console.log(await sendGetRequest.json())
@@ -29,9 +35,14 @@ export async function getAllCompanies() {
             // items: parsedJsonBody?.allCompanies, // 1st option - object
             items: parsedJsonBody, // 2nd option - array
         }
-    } catch (error) {
-        console.log(error);
-        throw error;
+    } catch {
+        return {
+            success: false,
+            status: null,
+            statusText: '',
+            text: "Couldn't load companies",
+            items: [],
+        };
     }
 }
 
@@ -92,7 +103,7 @@ export async function getReviews(page, limit, company = null, sort = null, searc
         try{
             parsedResponse = await sendGetRequest.json();
         }
-        catch (error){
+        catch {
             return {
                 success: false,
                 status: sendGetRequest.status,
@@ -108,7 +119,7 @@ export async function getReviews(page, limit, company = null, sort = null, searc
             ...parsedResponse,
         };
     }
-    catch (error) {
+    catch {
         return {
             success: false,
             status: null,
@@ -165,7 +176,7 @@ export async function submitReview(data) {
         try{
             parsedResponse = await sendRequest.json();
         }
-        catch (error) {
+        catch {
             return {
                 success: false,
                 status: sendRequest.status,
@@ -181,8 +192,14 @@ export async function submitReview(data) {
             parsedResponse,
         };
     }
-    catch (error) {
-        throw new Error('Network error, try again');
+    catch {
+        return {
+            success: false,
+            status: null,
+            text: "Couldn't submit the review",
+            items: null,
+            parsedResponse: {},
+        };
     }
 }
 export async function sendDeleteRequest(closestReviewItemId) {
@@ -193,14 +210,30 @@ export async function sendDeleteRequest(closestReviewItemId) {
         });
 
         if (!sendRequest.ok) {
-            // closestReviewRow.remove();
-            throw new Error("The delete request wasn't successful.")
+            return {
+                success: false,
+                ok: false,
+                status: sendRequest.status,
+                text: sendRequest.statusText || "The delete request wasn't successful",
+                data: null,
+            };
         }
-        return {ok: sendRequest.ok, status: sendRequest.status, data: sendRequest.json()};
+        return {
+            success: true,
+            ok: true,
+            status: sendRequest.status,
+            text: sendRequest.statusText,
+            data: sendRequest.json(),
+        };
     }
-    catch (error) {
-        console.log(error);
-        throw error;
+    catch {
+        return {
+            success: false,
+            ok: false,
+            status: null,
+            text: "Couldn't delete the review",
+            data: null,
+        };
     }
 }
 
@@ -212,12 +245,26 @@ export async function sendUpdateRequest(closestReviewRowId, data) {
             body: JSON.stringify(data)
         });
         if(!sendPutRequest.ok) {
-            throw new Error(`An error ${sendPutRequest.status} occurred while updating data ${sendPutRequest.statusText}`)
+            return {
+                success: false,
+                ok: false,
+                status: sendPutRequest.status,
+                text: sendPutRequest.statusText || "The update request wasn't successful",
+            };
         }
-        return sendPutRequest;
+        return {
+            success: true,
+            ok: true,
+            status: sendPutRequest.status,
+            text: sendPutRequest.statusText,
+        };
     }
-    catch (error) {
-        console.log(error);
-        throw new Error("An error occurred while updating data")
+    catch {
+        return {
+            success: false,
+            ok: false,
+            status: null,
+            text: "Couldn't update the review",
+        };
     }
 }

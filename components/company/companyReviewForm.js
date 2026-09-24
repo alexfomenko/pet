@@ -17,7 +17,7 @@ let review = document.querySelector('#company_review');
 let ratingErrorField = document.querySelector('.rating-error');
 let reviewErrorField = document.querySelector('.review-error');
 
-addReviewButton.addEventListener('click', async (e) => {
+addReviewButton.addEventListener('click', async () => {
     //show modal
     // modal.style.display = 'flex';
     overlay.classList.add('active');
@@ -72,7 +72,7 @@ modal.addEventListener('blur', (e) => {
 }, true)
 
 //SEND FORM
-sendReviewButton.addEventListener('click', async (e) => {
+sendReviewButton.addEventListener('click', async () => {
     if(!validateForm()) return;
     let company = document.querySelector('.company-name').textContent;
     // let rating = Number(document.getElementById('company_rating').value);
@@ -81,7 +81,6 @@ sendReviewButton.addEventListener('click', async (e) => {
     let name = document.getElementById('person_name').value; //TODO
     let email = document.getElementById('person_email').value; //TODO
     let date = new Date().toDateString();
-    let userName = localStorage.getItem('userName') || "Anonymous";
     // if(!rating) {
     //     let ratingField = document.querySelector('.rating-error');
     //     ratingField.classList.toggle('error');
@@ -153,7 +152,7 @@ function validateForm() {
 
 //rating stars
 document.querySelectorAll('.star-rating span').forEach((star) => {
-    star.addEventListener('click', (e) => {
+    star.addEventListener('click', () => {
         let starValue = star.dataset.value;
         document.querySelector('#company_rating_2').value = starValue;
 

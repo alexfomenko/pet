@@ -1,3 +1,3 @@
-export function renderCompanyLayout(content) {
+export function renderCompanyLayout() {
 
 }

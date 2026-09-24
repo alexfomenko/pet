@@ -27,8 +27,15 @@ export async function userLogIn(email, password) {
         try{
             parsedJson = await sendSignInRequest.json();
         }
-        catch (error) {
-            parsedJson = null;
+        catch {
+            return {
+                success: false,
+                status: sendSignInRequest.status,
+                statusText: sendSignInRequest.statusText,
+                message: "Couldn't parse the login response",
+                token: null,
+                user: null,
+            };
         }
 
         if (!sendSignInRequest.ok) {
@@ -50,9 +57,15 @@ export async function userLogIn(email, password) {
             token: parsedJson?.token,
             user: parsedJson?.user,
         }
-    } catch (error) {
-        // console.log(error);
-        throw error;
+    } catch {
+        return {
+            success: false,
+            status: null,
+            statusText: '',
+            message: "Couldn't send the login request",
+            token: null,
+            user: null,
+        };
     }
 }
 
@@ -85,8 +98,15 @@ export async function userSignUp(name,email, password, confirmPassword) {
         try {
             parsedJsonBody = await sendSignUpRequest.json();
         }
-        catch (error) {
-            parsedJsonBody = null;
+        catch {
+            return {
+                success: false,
+                status: sendSignUpRequest.status,
+                statusText: sendSignUpRequest.statusText,
+                message: "Couldn't parse the sign-up response",
+                token: null,
+                user: null,
+            };
         }
         if (!sendSignUpRequest.ok) {
             return {
@@ -106,8 +126,14 @@ export async function userSignUp(name,email, password, confirmPassword) {
             token: parsedJsonBody?.token,
             user: parsedJsonBody?.user,
         };
-    } catch (error) {
-        // console.log(error);
-        throw error;
+    } catch {
+        return {
+            success: false,
+            status: null,
+            statusText: '',
+            message: "Couldn't send the sign-up request",
+            token: null,
+            user: null,
+        };
     }
 }

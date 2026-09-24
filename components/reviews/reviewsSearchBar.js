@@ -11,7 +11,7 @@ searchBar.addEventListener('input', async(e) => {
     reviewsAppState.search = e.target.value;
     reviewsAppState.currentPage = 1;
     clearTimeout(saveTimeOut);
-    saveTimeOut = setTimeout(async (e)=> {
+    saveTimeOut = setTimeout(async ()=> {
         sendRequest = await getReviews(reviewsAppState.currentPage, reviewsAppState.currentPageLimit, reviewsAppState.filterByCompany, reviewsAppState.sorting, reviewsAppState.search );
         renderReviews(sendRequest.items);
 

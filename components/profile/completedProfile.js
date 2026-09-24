@@ -45,7 +45,7 @@ export function renderCompletedProfile(user){
 export function handleEditCompletedProfile () {
     // console.log('hi')
     let editProfileBtn = document.getElementById('edit-profile');
-    editProfileBtn.addEventListener('click', (e) => {
+    editProfileBtn.addEventListener('click', () => {
         location.hash = 'fill';
     })
 }
