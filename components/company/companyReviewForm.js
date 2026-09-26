@@ -88,7 +88,7 @@ sendReviewButton.addEventListener('click', async () => {
         if(request.success) {
             let companyReviews = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
             let reviews = companyReviews.items;
-            renderCompanyReviews(reviews);
+            renderCompanyReviews(reviews, companyReviews.reviewsTotalNumber);
             //TODO add clear form
             overlay.classList.remove('active'); //hide form
         }

@@ -19,7 +19,7 @@ filterBar.addEventListener('change', async(e) => {
 
     console.log(result.items);
 
-    renderCompanyReviews(result.items);
+    renderCompanyReviews(result.items, result.reviewsTotalNumber);
 
     updatePagination(companyReviewsState.currentPage, result.pagesTotalNumber, loadCompanyReviewsPage.bind(null, company), companyReviewsState);
 })

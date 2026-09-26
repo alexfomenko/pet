@@ -134,6 +134,9 @@ const server = http.createServer(async(req, res) => {
     else if(req.method === 'GET' && req.url === '/css/personalProfile.css') {
         sendStaticFile(res, 'css/personalProfile.css', 'text/css')
     }
+    else if(req.method === 'GET' && req.url === '/css/common.css') {
+        sendStaticFile(res, 'css/common.css', 'text/css')
+    }
     else if(req.method === 'GET' && req.url === '/views/oldFirstScript.js') {
          sendStaticFile(res, 'views/oldFirstScript.js', 'application/javascript')
     }

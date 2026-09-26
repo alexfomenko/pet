@@ -19,6 +19,6 @@ sortBar.addEventListener('change', async (e) => {
 
     let result = await getCompanyReviews(company, companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort);
 
-    renderCompanyReviews(result.items);
+    renderCompanyReviews(result.items, result.reviewsTotalNumber);
     updatePagination(companyReviewsState.currentPage, result.pagesTotalNumber, loadCompanyReviewsPage.bind(null, company), companyReviewsState);
 })

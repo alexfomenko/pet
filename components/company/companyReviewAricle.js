@@ -1,6 +1,8 @@
 export function renderCompanyReviews(reviews, reviewsTotal) {
     let reviewsTabNumber = document.querySelector('.reviews-number');
-    reviewsTabNumber.textContent = reviewsTotal;
+    if (reviewsTabNumber && Number.isFinite(reviewsTotal)) {
+        reviewsTabNumber.textContent = reviewsTotal;
+    }
 
     let reviewsContainer = document.querySelector('.content-reviews');
     reviewsContainer.innerHTML = "";

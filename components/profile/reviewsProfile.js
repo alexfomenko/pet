@@ -195,6 +195,7 @@ function removeAllButtons(closestReviewRow) {
 
 function createButton(className, title, textContent) {
     let button = document.createElement('button');
+    button.type = 'button';
     button.className = className;
     button.title = title;
     button.textContent = textContent;

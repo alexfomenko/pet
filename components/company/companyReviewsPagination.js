@@ -64,7 +64,7 @@ pagination.addEventListener('click', async(e) => {
 
 async function getReviews() {
     let response = await getCompanyReviews(company,companyReviewsState.currentPage, companyReviewsState.currentPageLimit, companyReviewsState.filter, companyReviewsState.sort );
-    renderCompanyReviews(response.items);
+    renderCompanyReviews(response.items, response.reviewsTotalNumber);
 }
 
 function updatePagination() {

@@ -23,7 +23,7 @@ export function getProfileState(user) {
 const pageConfig = {
     empty:     { render: () => renderEmptyProfile(),         init: null },
     fill:      { render: () => renderFillProfile(),          init: handleUpdateProfileActions },
-    completed: { render: ({ user }) => renderCompletedProfile(user), init: handleEditCompletedProfile },
+    completed: { render: ({ user, canEdit }) => renderCompletedProfile(user, canEdit), init: handleEditCompletedProfile },
     reviews:   { render: ({ reviews }) => renderReviewsProfile(reviews), init: handleChangeReviewActions},
 };
 
@@ -75,15 +75,17 @@ export async function renderProfilePage(hash, userId=null) {
     <div class="container">
     ${renderProfileHeader(user, !isProfilePublic)}
     ${isProfilePublic? '' : renderProfileTabs()}
-    ${render({ user, reviews })}
+    ${render({ user, reviews, canEdit: !isProfilePublic })}
     </div>
     </section>
     `;
 
     //adding eventListeners
-    await handleProfileHeaderEdit();
-    await handleAvatarChange();
-    logOutFunction();
+    if (!isProfilePublic) {
+        await handleProfileHeaderEdit();
+        await handleAvatarChange();
+        logOutFunction();
+    }
     if (init) init();
 
     if(hash === 'fill') {

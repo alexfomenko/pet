@@ -1,4 +1,4 @@
-export function renderCompletedProfile(user){
+export function renderCompletedProfile(user, canEdit = true){
     let company = user?.company ?? '-';
     let city = user?.city ?? '-';
     let bio = user?.bio ?? '-';
@@ -9,10 +9,10 @@ export function renderCompletedProfile(user){
     return `
 <div class="profile-body card">
        <div class="completed-state">
-                                <div class="success-banner">
+                                ${canEdit ? `<div class="success-banner">
                                     <strong>The profile has been filled out</strong>
                                     <button type="button" id="edit-profile" class="btn">Edit</button>
-                                </div>
+                                </div>` : ''}
                                 <div class="done-layout">
                                     <div class="about-card card">
                                         <h3>About yourself</h3>
@@ -37,10 +37,9 @@ export function renderCompletedProfile(user){
     `
 }
 
-// I'm a Frontend Developer with 5 years of experience developing web interfaces. I specialize in React, TypeScript, and modern UI solutions. I love creating fast and user-friendly interfaces.
-
 export function handleEditCompletedProfile () {
     let editProfileBtn = document.getElementById('edit-profile');
+    if (!editProfileBtn) return;
     editProfileBtn.addEventListener('click', () => {
         location.hash = 'fill';
     })

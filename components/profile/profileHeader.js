@@ -11,8 +11,8 @@ export function renderProfileHeader(user, canEdit = true){
                 <div class="company-about">
                 <div class="avatar-control">
     <img class="profile-avatar" src="${avatarImgSrc}" alt="Profile photo">
-    <button type="button" class="avatar-change-btn" aria-label="Change profile photo">  📷 </button>
-    <input class="avatar-input" type="file" accept="image/jpeg,image/png,image/webp" hidden >
+    ${canEdit ? `<button type="button" class="avatar-change-btn" aria-label="Change profile photo">📷</button>
+    <input class="avatar-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>` : ''}
 </div>
                     <div class="account-data">
                         <h1 class="person-name">${name}</h1>
@@ -21,10 +21,10 @@ export function renderProfileHeader(user, canEdit = true){
                     </div>
                 </div>
                 
-                <div class="header-actions">
-                   ${canEdit ? `<button class="edit-btn btn">Edit</button>` : '' }   
+                ${canEdit ? `<div class="header-actions">
+                    <button class="edit-btn btn">Edit</button>
                     <button type="button" class="logout-btn" id="logoutButton">Log out</button>
-                </div>
+                </div>` : ''}
                     
             </div>`
 }
@@ -36,6 +36,9 @@ export async function handleProfileHeaderEdit() {
     let emailEl = document.querySelector('.person-email');
     let saveBtn;
     let header = document.querySelector('.profile-header');
+    let headerActions = header?.querySelector('.header-actions');
+
+    if (!header || !headerActions || !editBtn) return;
 
     let errorEl = document.createElement('span');
     errorEl.classList.add('header-error');
@@ -51,12 +54,15 @@ export async function handleProfileHeaderEdit() {
 
             editBtn.style.display = "none";
 
-            if(!document.querySelector('.save-btn')) {
+            saveBtn = headerActions.querySelector('.save-btn');
+            if(!saveBtn) {
                 saveBtn = document.createElement('button');
                 saveBtn.classList.add('save-btn','btn');
+                saveBtn.type = 'button';
                 saveBtn.textContent = "Save";
-                header.appendChild(saveBtn);
+                headerActions.insertBefore(saveBtn, document.getElementById('logoutButton'));
             }
+            saveBtn.style.display = 'inline-flex';
 
         }
         else if(e.target.classList.contains('save-btn')) {
@@ -81,7 +87,7 @@ export async function handleProfileHeaderEdit() {
             titleEl.textContent = titleValue;
             emailEl.textContent = emailValue;
 
-            editBtn.style.display = 'inline-block';
+            editBtn.style.display = 'inline-flex';
             saveBtn.style.display = 'none';
         }
     })
@@ -89,6 +95,7 @@ export async function handleProfileHeaderEdit() {
 
 export function logOutFunction() {
     const logoutButton = document.getElementById('logoutButton');
+    if (!logoutButton) return;
     logoutButton.addEventListener('click', () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userName');
@@ -105,6 +112,7 @@ export async function handleAvatarChange() {
     const avatarChangeButton = document.querySelector('.avatar-change-btn');
     const avatarInput = document.querySelector('.avatar-input');
     const avatarImage = document.querySelector('.profile-avatar');
+    if (!avatarChangeButton || !avatarInput || !avatarImage) return;
     let previewUrl = null;
 
     avatarChangeButton.addEventListener('click', () => {

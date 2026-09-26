@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.querySelector(".company-name").textContent = "Company not selected";
         document.querySelector(".company-logo").textContent = " ";
         document.querySelector(".company-about .review-text").textContent = "Please select a company from reviews.";
-        renderCompanyReviews([]);
+        renderCompanyReviews([], 0);
         return;
     }
 
